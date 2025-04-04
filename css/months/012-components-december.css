@@ -1,9 +1,9 @@
 /*  ========================================================================  *\
-    N O V E M B E R   S T Y L E . C S S
+    D E C E M B E R   S T Y L E . C S S
 \*  ========================================================================  */
 
 body {
-    background-image:       url('../images/011-background-november.webp');
+    background-image:       url('../../images/012-background-december.webp');
     background-size:        cover;
     background-repeat:      no-repeat;
     background-attachment:  fixed;
@@ -11,6 +11,6 @@ body {
     transition:             background-image 0.5s ease-in-out;
 }
 header, aside, footer {
-    background-color:  rgba(221, 160, 221, 0.8);
+    background-color:  rgba(65, 105, 225, 0.8);
     transition:        background-color 0.5s ease-in-out;
 }

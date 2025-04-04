@@ -1,9 +1,9 @@
 /*  ========================================================================  *\
-    J A N U A R Y   S T Y L E . C S S
+    M A R C H   S T Y L E . C S S
 \*  ========================================================================  */
 
 body {
-    background-image:       url('../images/001-background-january.webp');
+    background-image:       url('../../images/003-background-march.webp');
     background-size:        cover;
     background-repeat:      no-repeat;
     background-attachment:  fixed;
@@ -11,6 +11,6 @@ body {
     transition:             background-image 0.5s ease-in-out;
 }
 header, aside, footer {
-    background-color:  rgba(245, 222, 179, 0.8);
+    background-color:  rgba(255, 192, 203, 0.8);
     transition:        background-color 0.5s ease-in-out;
 }
