@@ -1,0 +1,16 @@
+/*  ========================================================================  *\
+    A P R I L   S T Y L E . C S S
+\*  ========================================================================  */
+
+body {
+    background-image:       url('../images/004-background-april.webp');
+    background-size:        cover;
+    background-repeat:      no-repeat;
+    background-attachment:  fixed;
+    background-position:    center;
+    transition:             background-image 0.5s ease-in-out;
+}
+header, aside, footer {
+    background-color:  rgba(50, 205, 50, 0.8);
+    transition:        background-color 0.5s ease-in-out;
+}
