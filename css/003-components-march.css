@@ -7,7 +7,7 @@ body {
     background-size:        cover;
     background-repeat:      no-repeat;
     background-attachment:  fixed;
-    background-position:    center;
+    background-position:    left top;
     transition:             background-image 0.5s ease-in-out;
 }
 header, aside, footer {
