@@ -1,7 +1,9 @@
 /*  ========================================================================  *\
-    
+
     S T Y L E M O D I F Y . J S
     
+    Dinamikus stíluslapváltás, tárolás, visszatöltés, animációk + blur effekt.
+
     - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
     Ez a JavaScript fájl a stíluslapok dinamikus betöltésére és 
@@ -22,7 +24,7 @@
 \*  ========================================================================  */
 
 const monthNames = [
-    'January', 'February', 'March', 'April', 'May', 'June', 
+    'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
@@ -41,7 +43,7 @@ const monthToStyle = [
     'css/months/012-components-december.css'
 ];
 
-const defaultStyle = 'css/default-style.css'; // Alapértelmezett stílus
+const defaultStyle = 'css/default-style.css';
 
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
@@ -50,35 +52,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function initTheme() {
     const currentMonth = new Date().getMonth();
-    const themeToLoad = monthToStyle[currentMonth];
+    const savedStyle = localStorage.getItem('selectedStyle');
+    const isValidStyle = savedStyle && (monthToStyle.includes(savedStyle) || savedStyle === defaultStyle);
+    const themeToLoad = isValidStyle ? savedStyle : monthToStyle[currentMonth] || defaultStyle;
 
     const themeLink = document.getElementById('theme-style');
-    if (!themeLink) {
-        console.error('Theme link element not found!');
-        return;
-    }
+    if (!themeLink) return console.error('Theme link element not found!');
 
-    // Próbáljuk meg betölteni a hónap stílusát
-    fetch(themeToLoad)
-        .then(response => {
-            if (response.ok) {
-                // Ha elérhető, betöltjük a hónap stílust
-                themeLink.setAttribute('href', themeToLoad);
-                setActiveTheme(themeToLoad);
-                updateHeaderTitle(themeToLoad);
-            } else {
-                // Ha nem elérhető, betöltjük a default stílust
-                themeLink.setAttribute('href', defaultStyle);
-                setActiveTheme(defaultStyle);
-                updateHeaderTitle(defaultStyle);
-            }
-        })
-        .catch(() => {
-            // Ha hiba van a kérésben (pl. nem elérhető a fájl), betöltjük a default stílust
-            themeLink.setAttribute('href', defaultStyle);
+    themeLink.onload = () => {
+        setActiveTheme(themeToLoad);
+        updateHeaderTitle(themeToLoad);
+    };
+
+    themeLink.onerror = () => {
+        console.warn(`Style not found: ${themeToLoad}. Loading default style.`);
+
+        themeLink.setAttribute('href', defaultStyle);
+        themeLink.onload = () => {
             setActiveTheme(defaultStyle);
             updateHeaderTitle(defaultStyle);
-        });
+        };
+    };
+
+    themeLink.setAttribute('href', themeToLoad);
 }
 
 function setupEventListeners() {
@@ -100,25 +96,26 @@ function setupEventListeners() {
 
 function changeStyle(sheet, element) {
     const themeLink = document.getElementById('theme-style');
-    if (!themeLink) {
-        console.error('Theme link element not found!');
-        return;
-    }
+    if (!themeLink) return console.error('Theme link element not found!');
 
-    themeLink.classList.add('fade-out');
+    // Fade indul
+    document.body.classList.add('fade-out');
+
     setTimeout(() => {
+        // Stílusváltás
         themeLink.setAttribute('href', sheet);
         localStorage.setItem('selectedStyle', sheet);
         setActiveTheme(sheet);
         updateHeaderTitle(sheet);
 
-        themeLink.classList.remove('fade-out');
-        themeLink.classList.add('fade-in');
+        // Visszafakulás
+        document.body.classList.remove('fade-out');
+        document.body.classList.add('fade-in');
 
-        themeLink.addEventListener('transitionend', () => {
-            themeLink.classList.remove('fade-in');
-        }, { once: true });
-    }, 500);
+        setTimeout(() => {
+            document.body.classList.remove('fade-in');
+        }, 1200); // hosszabb idő a cascade-hatásra
+    }, 800); // fade-out idő
 }
 
 function setActiveTheme(theme) {
@@ -141,14 +138,11 @@ function setActiveTheme(theme) {
 
 function updateHeaderTitle(sheet) {
     const headerTitle = document.getElementById('header-title');
-    if (!headerTitle) {
-        console.error('Header title element not found!');
-        return;
-    }
+    if (!headerTitle) return console.error('Header title element not found!');
 
     const monthIndex = monthToStyle.indexOf(sheet);
-    headerTitle.textContent = monthIndex !== -1 
-        ? `${monthNames[monthIndex]} Style` 
+    headerTitle.textContent = monthIndex !== -1
+        ? `${monthNames[monthIndex]} Style`
         : 'Months in Styles';
 }
 

@@ -2,15 +2,16 @@
     F E B R U A R Y   S T Y L E . C S S
 \*  ========================================================================  */
 
+/* Alap háttérkép */
 body {
     background-image:       url('../../images/002-background-february.webp');
     background-size:        cover;
     background-repeat:      no-repeat;
     background-attachment:  fixed;
     background-position:    center;
-    transition:             background-image 0.5s ease-in-out;
 }
+
+/* Header, aside, footer háttérszín */
 header, aside, footer {
     background-color:  rgba(173, 216, 230, 0.8);
-    transition:        background-color 0.5s ease-in-out;
 }

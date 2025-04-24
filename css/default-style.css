@@ -8,9 +8,7 @@ body {
     background-repeat:      no-repeat;
     background-attachment:  fixed;
     background-position:    center;
-    transition:             background-image 0.5s ease-in-out;
 }
 header, aside, footer {
     background-color:  rgba(218, 165, 32, 0.8);
-    transition:        background-color 0.5s ease-in-out;
 }
