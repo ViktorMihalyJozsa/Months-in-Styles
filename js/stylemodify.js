@@ -69,8 +69,14 @@ function initTheme() {
     if (!themeLink) return console.error('Theme link element not found!');
 
     themeLink.onload = () => {
-        setActiveTheme(themeToLoad);
-        updateHeaderTitle(themeToLoad);
+        setActiveTheme(themeToLoad); // Beállítjuk az aktív témát
+        updateHeaderTitle(themeToLoad); // Frissítjük a fejléc címét
+
+        // Fade-in animáció az oldal betöltésekor
+        document.body.classList.add('fade-in');
+        setTimeout(() => {
+            document.body.classList.remove('fade-in');
+        }, 500); // 0.5 másodperc az animáció időtartama
     };
 
     themeLink.onerror = () => {
@@ -80,10 +86,19 @@ function initTheme() {
         themeLink.onload = () => {
             setActiveTheme(defaultStyle);
             updateHeaderTitle(defaultStyle);
+
+            // Fade-in animáció az oldal betöltésekor
+            document.body.classList.add('fade-in');
+            setTimeout(() => {
+                document.body.classList.remove('fade-in');
+            }, 500); // 0.5 másodperc az animáció időtartama
         };
     };
 
     themeLink.setAttribute('href', themeToLoad);
+
+    // Beállítjuk az aktív `li` elemet az aktuális hónaphoz
+    setActiveTheme(themeToLoad);
 }
 
 // Eseménykezelők beállítása
@@ -139,9 +154,27 @@ function updateHeaderTitle(sheet) {
     if (!headerTitle) return console.error('Header title element not found!');
 
     const monthIndex = monthToStyle.indexOf(sheet);
-    headerTitle.textContent = monthIndex !== -1
+    const newTitle = monthIndex !== -1
         ? `${monthNames[monthIndex]} Style`
         : 'Months in Styles';
+
+    // Fade-out animáció
+    headerTitle.classList.add('fade-out');
+
+    // Várunk, amíg a fade-out animáció lefut
+    setTimeout(() => {
+        // Frissítjük a fejléc szövegét
+        headerTitle.textContent = newTitle;
+
+        // Fade-in animáció
+        headerTitle.classList.remove('fade-out');
+        headerTitle.classList.add('fade-in');
+
+        // Töröljük a fade-in osztályt az animáció után
+        setTimeout(() => {
+            headerTitle.classList.remove('fade-in');
+        }, 500); // 0.5 másodperc az animáció időtartama
+    }, 500); // 0.5 másodperc a fade-out animáció időtartama
 }
 
 // Stílusváltás animációval
@@ -175,31 +208,53 @@ function changeStyle(sheet, element) {
     newThemeLink.rel = 'stylesheet';
     newThemeLink.href = sheet;
 
-    newThemeLink.onload = () => {
-        // Az új stíluslap betöltődött
-        themeLink.href = sheet;
+    const startTime = Date.now(); // Rögzítjük a kezdési időt
 
-        // Frissítjük a fejléc címét
-        updateHeaderTitle(sheet);
+    // Maximum 3 másodperc várakozás
+    const timeout = setTimeout(() => {
+        const elapsedTime = Date.now() - startTime; // Eltelt idő
+        const remainingTime = Math.max(3000 - elapsedTime, 0); // Minimum 3 másodperc biztosítása
 
-        // Elrejtjük a betöltésvezérlőt
         setTimeout(() => {
             loadingIndicator.classList.remove('visible');
             loadingIndicator.classList.add('hidden');
-
-            // Fade-in animáció
             document.body.classList.remove('fade-out');
             document.body.classList.add('fade-in');
 
             // Töröljük a fade-in osztályt az animáció után
             setTimeout(() => {
                 document.body.classList.remove('fade-in');
-            }, 2000); // 2 másodperc az animáció időtartama
-        }, 1000); // 1 másodperc várakozás az új stílus betöltése után
+            }, 1000); // 1 másodperc az animáció időtartama
+        }, remainingTime);
+    }, 3000); // 3 másodperc
+
+    newThemeLink.onload = () => {
+        // Az új stíluslap betöltődött
+        clearTimeout(timeout); // Töröljük a maximum várakozási időt
+        themeLink.href = sheet;
+
+        // Frissítjük a fejléc címét
+        updateHeaderTitle(sheet);
+
+        const elapsedTime = Date.now() - startTime; // Eltelt idő
+        const remainingTime = Math.max(3000 - elapsedTime, 0); // Minimum 3 másodperc biztosítása
+
+        setTimeout(() => {
+            loadingIndicator.classList.remove('visible');
+            loadingIndicator.classList.add('hidden');
+            document.body.classList.remove('fade-out');
+            document.body.classList.add('fade-in');
+
+            // Töröljük a fade-in osztályt az animáció után
+            setTimeout(() => {
+                document.body.classList.remove('fade-in');
+            }, 1000); // 1 másodperc az animáció időtartama
+        }, remainingTime);
     };
 
     newThemeLink.onerror = () => {
         console.error(`Failed to load stylesheet: ${sheet}`);
+        clearTimeout(timeout); // Töröljük a maximum várakozási időt
         loadingIndicator.classList.remove('visible');
         loadingIndicator.classList.add('hidden');
         document.body.classList.remove('fade-out'); // Töröljük a fade-out osztályt hiba esetén

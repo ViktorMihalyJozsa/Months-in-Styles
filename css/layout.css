@@ -59,7 +59,7 @@ header, main, aside, footer {
 .fade-in aside,
 .fade-out footer,
 .fade-in footer {
-    opacity: 1 !important;
+    transition: opacity 1s ease-in-out;
 }
 
 /*  ========================================================================  *\
@@ -96,9 +96,19 @@ header {
         line-height:     clamp(2.2rem, 3.3vw, 3.3rem);
         color:           rgba(255, 255, 255, 1);
         text-shadow:     -0.2rem -0.2rem rgba(0, 0, 0, 0.625), 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.625);
-
-        transition:      color 2s ease-in-out, text-shadow 2s ease-in-out, transform 1s ease-in-out;
     }
+
+        /* Fade-out animáció */
+        #header-title.fade-out {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        /* Fade-in animáció */
+        #header-title.fade-in {
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
 
 
 /*  ========================================================================  *\
@@ -106,21 +116,24 @@ header {
 \*  ========================================================================  */
 
     .loading {
-        display:           flex;
-        flex-direction:    column;
-        align-items:       center;
-        justify-content:   center;
+        position:         fixed;
+        top:              0;
+        left:             0;
 
-        width:             100vw;
-        height:            100vh;
-        margin:            0 auto;
-        padding:           0 auto;
+        display:          flex;
+        flex-direction:   column;
+        align-items:      center;
+        justify-content:  center;
 
-        /*background-color:  rgba(255, 255, 255, 0.125);*/
-        transition:        background-color 2s ease-in-out, opacity 2s ease-in-out;
-        opacity:           0;
+        width:            70vw;
+        height:           100vh;
+        margin:           0 auto;
+        padding:          0 auto;
 
-        z-index:           9999;
+        /*background-color: blue;*/
+
+        opacity:          0;
+        z-index:          9999;
     }
 
         .loading.visible {opacity: 1;}
@@ -188,34 +201,35 @@ aside {
             margin:            0vh 0vw 0vh 0vw;
             padding:           0vh 3vw 0vh 3vw;
 
+            border-top:        0.25rem solid rgba(0, 0, 0, 0.5);    /* 4px */
+            border-left:       0.125rem solid rgba(0, 0, 0, 0.5);   /* 2px */
+            border-radius:     1rem 0rem 0rem 1rem;
+            background-color:  rgba(240, 240, 240, 0.5);
+            transition:        background-color 1s, transform 0.5s;
+
             font-family:       "Shadows Into Light", cursive;
             font-size:         clamp(1rem, 1.25vw, 1.25rem);
             font-weight:       bold;
             letter-spacing:    clamp(0.1rem, 0.125vw, 0.125rem);
             line-height:       clamp(1.5rem, 1.75vw, 1.75rem);
             color:             rgba(0, 0, 0, 0.75);
-
-            border-top:        0.25rem solid rgba(0, 0, 0, 0.5);    /* 4px */
-            border-left:       0.125rem solid rgba(0, 0, 0, 0.5);   /* 2px */
-            border-radius:     1rem 0rem 0rem 1rem;
-            background-color:  rgba(240, 240, 240, 0.5);
-            transition:        background-color 1s, transform 0.5s;
         }
-            .style-selector-list .btmli {margin-top:  2vh;}
+        .style-selector-list .btmli {margin-top: 2vh;}
 
             .style-selector-list li:hover {
-                background-color:  lightgrey;
-                color:             white;
+                background-color:  rgba(211, 211, 211, 1);
+                color:             rgba(255, 255, 255, 1);
+                transform:         scale(1.2);
                 text-shadow:       -0.125rem -0.125rem rgba(0, 0, 0, 0.625), 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.625);
-                transition:        background-color 1s, text-shadow 1s, transform 0.5s;
+                transition:        background-color 1s ease-in-out, text-shadow 1s ease-in-out, transform 0.5s ease-in-out;
 
             }
 
-            .style-selector-list li:active {
+            .style-selector-list li.active {
                 background-color:  rgba(0, 0, 0, 0.5);
                 color:             rgba(255, 255, 255, 1);
-                transform:         scale(0.95);
-                transition:        background-color 1s, text-shadow 1s, transform 0.5s;
+                transform:         scale(1.2);
+                transition:        background-color 1s ease-in-out, text-shadow 1s ease-in-out, transform 0.5s ease-in-out;
             }
 
             .style-selector-list li:focus {
