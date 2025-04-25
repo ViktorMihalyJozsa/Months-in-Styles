@@ -81,18 +81,46 @@ header {
         text-shadow:     -0.2rem -0.2rem rgba(0, 0, 0, 0.625), 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.625);
     }
 
-        /* Fade-out animáció */
-        #header-title.fade-out {
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-        }
+/* ========================================================================  */
+/*  HEADER TITLE FADE ANIMATIONS                                         */
+/* ========================================================================  */
 
-        /* Fade-in animáció */
-        #header-title.fade-in {
-            opacity: 1;
-            transition: opacity 1s ease-in-out;
-        }
-
+/* Initial state: ensure header is fully opaque */
+#header-title {
+    opacity: 1;
+    transition: opacity 2s ease-in-out; /* Smooth transition for opacity */
+  }
+  
+  /* Fade-out class: transition to 0 opacity */
+  .fade-out {
+    opacity: 0;
+  }
+  
+  /* Fade-in class: transition back to full opacity */
+  .fade-in {
+    opacity: 1;
+  }
+  
+  /* Optional: slide-in effect combined with fade-in */
+  @keyframes slideIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .fade-in-slide {
+    animation: slideIn 2s ease-in-out;
+  }
+  
+  /* Usage:
+     - When hiding: add .fade-out to #header-title
+     - When showing: remove .fade-out and add .fade-in or .fade-in-slide
+  */
 
 /*  ========================================================================  *\
     A S I D E
