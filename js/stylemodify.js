@@ -1,32 +1,8 @@
 /*  ========================================================================  *\
-
     S T Y L E M O D I F Y . J S
-    
-    Dinamikus stíluslapváltás, tárolás, visszatöltés, animációk + blur effekt.
-
-    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-
-    Ez a JavaScript fájl a stíluslapok dinamikus betöltésére és 
-    a felhasználói választások tárolására szolgál.
-
-    A felhasználó kiválaszthatja a kívánt stílust, amelyet a böngésző helyi 
-    tárolójában tárolunk. 
-    
-    A fájl automatikusan betölti a legutóbb használt stílust, vagy ha ez 
-    nem található, akkor a hónapnak megfelelő stílust alkalmazza. 
-    
-    A stíluslapok közötti váltás animációval történik, 
-    amely simább felhasználói élményt biztosít. 
-    
-    A fájl tartalmaz egy funkciót a fejléc címének frissítésére is, 
-    amely a kiválasztott stílus alapján változik.
-
 \*  ========================================================================  */
 
 // Hónapok nevei
-// A hónapok nevei angolul vannak megadva, de a felhasználói felületen
-// magyarul jelennek meg
-// A hónapok nevei a hónapokhoz tartozó stíluslapok elérési útján alapulnak
 const monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
@@ -50,15 +26,13 @@ const monthToStyle = [
 
 const defaultStyle = 'css/default-style.css';
 
+// Az oldal betöltésekor inicializáljuk a témát
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     setupEventListeners();
 });
 
-// Betöltéskor ellenőrizzük a helyi tárolót és a hónapokhoz tartozó stílusokat
-// Ha a helyi tárolóban van mentett stílus, azt használjuk
-// Ha nincs, akkor a hónapnak megfelelő stílust alkalmazzuk
-// A hónapokhoz tartozó stílusokat a monthToStyle tömb tartalmazza
+// Téma inicializálása
 function initTheme() {
     const currentMonth = new Date().getMonth();
     const savedStyle = localStorage.getItem('selectedStyle');
@@ -69,48 +43,24 @@ function initTheme() {
     if (!themeLink) return console.error('Theme link element not found!');
 
     themeLink.onload = () => {
-        setActiveTheme(themeToLoad); // Beállítjuk az aktív témát
-        updateHeaderTitle(themeToLoad); // Frissítjük a fejléc címét
-
-        // Fade-in animáció az oldal betöltésekor
-        document.body.classList.add('fade-in');
-        setTimeout(() => {
-            document.body.classList.remove('fade-in');
-        }, 1000); // 1 másodperc az animáció időtartama
+        setActiveTheme(themeToLoad);
+        updateHeaderTitle(themeToLoad);
     };
 
     themeLink.onerror = () => {
         console.warn(`Style not found: ${themeToLoad}. Loading default style.`);
-
         themeLink.setAttribute('href', defaultStyle);
         themeLink.onload = () => {
             setActiveTheme(defaultStyle);
             updateHeaderTitle(defaultStyle);
-
-            // Fade-in animáció az oldal betöltésekor
-            document.body.classList.add('fade-in');
-            setTimeout(() => {
-                document.body.classList.remove('fade-in');
-            }, 1000); // 1 másodperc az animáció időtartama
         };
     };
 
     themeLink.setAttribute('href', themeToLoad);
-
-    // Beállítjuk az aktív `li` elemet az aktuális hónaphoz
     setActiveTheme(themeToLoad);
 }
 
 // Eseménykezelők beállítása
-// Ez a funkció beállítja az eseménykezelőket a stílusválasztó listában
-// A lista elemeinek kattintására váltja a stílust
-// és frissíti a fejléc címét
-// A stílusválasztó lista elemeit a HTML-ben kell definiálni
-// és a CSS-ben kell stílusozni
-// A lista elemeinek a data-style attribútumot kell tartalmazniuk
-// amely a stíluslap elérési útját tartalmazza
-// A lista elemeinek a class attribútumot kell tartalmazniuk
-// amely a stíluslap elérési útját tartalmazza
 function setupEventListeners() {
     const styleSelectorItems = document.querySelectorAll('.style-selector-list li');
     if (!styleSelectorItems.length) {
@@ -122,33 +72,46 @@ function setupEventListeners() {
         li.addEventListener('click', function () {
             const stylePath = this.getAttribute('data-style');
             if (stylePath) {
-                changeStyle(stylePath, this); // Az aktuális elem átadása
+                changeStyle(stylePath, this);
             }
         });
     });
 }
 
-// Aktív téma beállítása
-// Ez a funkció beállítja az aktív témát a stílusválasztó listában
-function setActiveTheme(theme) {
-    if (!theme) return;
+// Stíluslap váltása
+function changeStyle(sheet, element) {
+    const themeLink = document.getElementById('theme-style');
+    if (!themeLink) return console.error('Theme link element not found!');
 
-    const styleSelectorItems = document.querySelectorAll('.style-selector-list li');
-    styleSelectorItems.forEach(li => {
-        li.classList.remove('active');
-        li.setAttribute('aria-selected', 'false');
-    });
-
-    const activeLi = document.querySelector(`.style-selector-list li[data-style="${theme}"]`);
-    if (activeLi) {
-        activeLi.classList.add('active');
-        activeLi.setAttribute('aria-selected', 'true');
-    } else {
-        console.warn(`No matching list item found for theme: ${theme}`);
+    // Kiemeljük a kiválasztott elemet
+    if (element) {
+        const styleSelectorItems = document.querySelectorAll('.style-selector-list li');
+        styleSelectorItems.forEach(li => li.classList.remove('active'));
+        element.classList.add('active');
     }
+
+    // Stíluslap váltása
+    const newThemeLink = document.createElement('link');
+    newThemeLink.rel = 'stylesheet';
+    newThemeLink.href = sheet;
+
+    newThemeLink.onload = () => {
+        // Az új stíluslap betöltődött
+        themeLink.href = sheet;
+
+        // Frissítjük a fejléc címét
+        updateHeaderTitle(sheet);
+    };
+
+    newThemeLink.onerror = () => {
+        console.error(`Failed to load stylesheet: ${sheet}`);
+    };
+
+    // Hozzáadjuk az új stíluslapot a dokumentumhoz
+    document.head.appendChild(newThemeLink);
 }
 
-// Frissíti a fejléc címét a kiválasztott stílus alapján
+// Fejléc címének frissítése
 function updateHeaderTitle(sheet) {
     const headerTitle = document.getElementById('header-title');
     if (!headerTitle) return console.error('Header title element not found!');
@@ -162,143 +125,30 @@ function updateHeaderTitle(sheet) {
     headerTitle.classList.add('fade-out');
 
     // Várunk, amíg a fade-out animáció lefut
-    setTimeout(() => {
+    headerTitle.addEventListener('transitionend', () => {
         // Frissítjük a fejléc szövegét
         headerTitle.textContent = newTitle;
 
         // Fade-in animáció
         headerTitle.classList.remove('fade-out');
         headerTitle.classList.add('fade-in');
-
-        // Töröljük a fade-in osztályt az animáció után
-        setTimeout(() => {
-            headerTitle.classList.remove('fade-in');
-        }, 1000); // 1 másodperc az animáció időtartama
-    }, 1000); // 1 másodperc a fade-out animáció időtartama
+    }, { once: true });
 }
 
-// Stílusváltás animációval
-// Ez a funkció váltja a stíluslapot animációval
-// A stíluslap váltásakor a régi stíluslap fade-out animációval eltűnik
-// és az új stíluslap fade-in animációval jelenik meg
-// A stíluslap váltásakor a betöltésvezérlő is megjelenik
-// és eltűnik a stíluslap váltásakor
-function changeStyle(sheet, element) {
-    const themeLink = document.getElementById('theme-style');
-    const loadingIndicator = document.getElementById('loading-indicator');
-    if (!themeLink) return console.error('Theme link element not found!');
-    if (!loadingIndicator) return console.error('Loading indicator not found!');
-
-    // Megjelenítjük a betöltésvezérlőt
-    loadingIndicator.classList.remove('hidden');
-    loadingIndicator.classList.add('visible');
-
-    // Fade-out animáció
-    document.body.classList.add('fade-out');
-
-    // Kiemeljük a kiválasztott elemet
-    if (element) {
-        const styleSelectorItems = document.querySelectorAll('.style-selector-list li');
-        styleSelectorItems.forEach(li => li.classList.remove('active')); // Eltávolítjuk az aktív osztályt
-        element.classList.add('active'); // Hozzáadjuk az aktív osztályt a kiválasztott elemhez
-    }
-
-    // Stíluslap váltása
-    const newThemeLink = document.createElement('link');
-    newThemeLink.rel = 'stylesheet';
-    newThemeLink.href = sheet;
-
-    const startTime = Date.now(); // Rögzítjük a kezdési időt
-
-    // Maximum 2 másodperc várakozás
-    const timeout = setTimeout(() => {
-        const elapsedTime = Date.now() - startTime; // Eltelt idő
-        const remainingTime = Math.max(2000 - elapsedTime, 0); // Minimum 2 másodperc biztosítása
-
-        setTimeout(() => {
-            loadingIndicator.classList.remove('visible');
-            loadingIndicator.classList.add('hidden');
-            document.body.classList.remove('fade-out');
-            document.body.classList.add('fade-in');
-
-            // Töröljük a fade-in osztályt az animáció után
-            setTimeout(() => {
-                document.body.classList.remove('fade-in');
-            }, 1000); // 1 másodperc az animáció időtartama
-        }, remainingTime);
-    }, 2000); // 2 másodperc
-
-    newThemeLink.onload = () => {
-        // Az új stíluslap betöltődött
-        clearTimeout(timeout); // Töröljük a maximum várakozási időt
-        themeLink.href = sheet;
-
-        // Frissítjük a fejléc címét
-        updateHeaderTitle(sheet);
-
-        const elapsedTime = Date.now() - startTime; // Eltelt idő
-        const remainingTime = Math.max(2000 - elapsedTime, 0); // Minimum 2 másodperc biztosítása
-
-        setTimeout(() => {
-            loadingIndicator.classList.remove('visible');
-            loadingIndicator.classList.add('hidden');
-            document.body.classList.remove('fade-out');
-            document.body.classList.add('fade-in');
-
-            // Töröljük a fade-in osztályt az animáció után
-            setTimeout(() => {
-                document.body.classList.remove('fade-in');
-            }, 1000); // 1 másodperc az animáció időtartama
-        }, remainingTime);
-    };
-
-    newThemeLink.onerror = () => {
-        console.error(`Failed to load stylesheet: ${sheet}`);
-        clearTimeout(timeout); // Töröljük a maximum várakozási időt
-        loadingIndicator.classList.remove('visible');
-        loadingIndicator.classList.add('hidden');
-        document.body.classList.remove('fade-out'); // Töröljük a fade-out osztályt hiba esetén
-    };
-
-    // Hozzáadjuk az új stíluslapot a dokumentumhoz
-    document.head.appendChild(newThemeLink);
-}
-
-// Várakozás a képek betöltésére
-// Ez a funkció várakozik, amíg az összes kép betöltődik az oldalon
-// Ez hasznos lehet, ha a stíluslap váltásakor a képek is frissülnek
-function waitForImagesToLoad(callback) {
-    const images = document.querySelectorAll('img');
-    let loadedImages = 0;
-
-    if (images.length === 0) {
-        // Ha nincs kép az oldalon, azonnal hívjuk a callback-et
-        callback();
-        return;
-    }
-
-    images.forEach(img => {
-        if (img.complete) {
-            loadedImages++;
-        } else {
-            img.addEventListener('load', () => {
-                loadedImages++;
-                if (loadedImages === images.length) {
-                    callback();
-                }
-            });
-            img.addEventListener('error', () => {
-                console.warn(`Image failed to load: ${img.src}`);
-                loadedImages++;
-                if (loadedImages === images.length) {
-                    callback();
-                }
-            });
-        }
+// Aktív téma beállítása
+function setActiveTheme(theme) {
+    const styleSelectorItems = document.querySelectorAll('.style-selector-list li');
+    styleSelectorItems.forEach(li => {
+        li.classList.remove('active');
+        li.setAttribute('aria-selected', 'false');
     });
 
-    if (loadedImages === images.length) {
-        callback();
+    const activeLi = document.querySelector(`.style-selector-list li[data-style="${theme}"]`);
+    if (activeLi) {
+        activeLi.classList.add('active');
+        activeLi.setAttribute('aria-selected', 'true');
+    } else {
+        console.warn(`No matching list item found for theme: ${theme}`);
     }
 }
 

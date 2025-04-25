@@ -44,23 +44,10 @@ body {
 }
 
 /* Header, aside, footer háttér szín animáció */
-header, main, aside, footer {
+header, aside, footer {
     transition: background-color 2s ease-in-out;
 }
 
-/* Biztosítjuk, hogy a tartalmak ne tünjenek el váltáskor */
-.fade-out body,
-.fade-in body,
-.fade-out main,
-.fade-in main,
-.fade-out header,
-.fade-in header,
-.fade-out aside,
-.fade-in aside,
-.fade-out footer,
-.fade-in footer {
-    transition: background-image 1s ease-in-out, background-color 1s ease-in-out;
-}
 
 /*  ========================================================================  *\
     H E A D E R
@@ -109,36 +96,6 @@ header {
             opacity: 1;
             transition: opacity 1s ease-in-out;
         }
-
-
-/*  ========================================================================  *\
-    M A I N
-\*  ========================================================================  */
-
-    .loading {
-        position:         fixed;
-        top:              0;
-        left:             0;
-
-        display:          flex;
-        flex-direction:   column;
-        align-items:      center;
-        justify-content:  center;
-
-        width:            70vw;
-        height:           100vh;
-        margin:           0 auto;
-        padding:          0 auto;
-
-        /*background-color: blue;*/
-
-        opacity:          0;
-        z-index:          9999;
-    }
-
-        .loading.visible {opacity: 1;}
-    
-        .hidden {display: none;}
 
 
 /*  ========================================================================  *\
