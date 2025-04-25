@@ -23,11 +23,16 @@
 
 \*  ========================================================================  */
 
+// Hónapok nevei
+// A hónapok nevei angolul vannak megadva, de a felhasználói felületen
+// magyarul jelennek meg
+// A hónapok nevei a hónapokhoz tartozó stíluslapok elérési útján alapulnak
 const monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
+// A hónapokhoz tartozó stíluslapok elérési útja
 const monthToStyle = [
     'css/months/001-components-january.css',
     'css/months/002-components-february.css',
@@ -50,6 +55,10 @@ document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
 });
 
+// Betöltéskor ellenőrizzük a helyi tárolót és a hónapokhoz tartozó stílusokat
+// Ha a helyi tárolóban van mentett stílus, azt használjuk
+// Ha nincs, akkor a hónapnak megfelelő stílust alkalmazzuk
+// A hónapokhoz tartozó stílusokat a monthToStyle tömb tartalmazza
 function initTheme() {
     const currentMonth = new Date().getMonth();
     const savedStyle = localStorage.getItem('selectedStyle');
@@ -77,6 +86,17 @@ function initTheme() {
     themeLink.setAttribute('href', themeToLoad);
 }
 
+
+// Eseménykezelők beállítása
+// Ez a funkció beállítja az eseménykezelőket a stílusválasztó listában
+// A lista elemeinek kattintására váltja a stílust
+// és frissíti a fejléc címét
+// A stílusválasztó lista elemeit a HTML-ben kell definiálni
+// és a CSS-ben kell stílusozni
+// A lista elemeinek a data-style attribútumot kell tartalmazniuk
+// amely a stíluslap elérési útját tartalmazza
+// A lista elemeinek a class attribútumot kell tartalmazniuk
+// amely a stíluslap elérési útját tartalmazza
 function setupEventListeners() {
     const styleSelectorItems = document.querySelectorAll('.style-selector-list li');
     if (!styleSelectorItems.length) {
@@ -94,30 +114,47 @@ function setupEventListeners() {
     });
 }
 
+
+// Betöltésjelző (opcionális)
+// A betöltésjelző megjelenítése és elrejtése a stíluslap váltásakor
+// A betöltésjelzőt a CSS fájlban kell definiálni, és a HTML-ben elhelyezni
 function changeStyle(sheet, element) {
     const themeLink = document.getElementById('theme-style');
+    const loadingIndicator = document.getElementById('loading-indicator'); // Opcionális betöltésjelző
     if (!themeLink) return console.error('Theme link element not found!');
 
-    // Fade indul
+    // Megjelenítjük a betöltésvezérlőt (opcionális)
+    if (loadingIndicator) loadingIndicator.classList.remove('hidden');
+
+    // Fade-out animáció
     document.body.classList.add('fade-out');
 
-    setTimeout(() => {
-        // Stílusváltás
-        themeLink.setAttribute('href', sheet);
-        localStorage.setItem('selectedStyle', sheet);
+    // Stíluslap váltása
+    themeLink.setAttribute('href', sheet);
+    localStorage.setItem('selectedStyle', sheet);
+
+    // Várunk, amíg az összes kép betöltődik
+    waitForImagesToLoad(() => {
+        // Stílusváltás után frissítjük az aktív témát és a fejlécet
         setActiveTheme(sheet);
         updateHeaderTitle(sheet);
 
-        // Visszafakulás
+        // Elrejtjük a betöltésvezérlőt (opcionális)
+        if (loadingIndicator) loadingIndicator.classList.add('hidden');
+
+        // Fade-in animáció
         document.body.classList.remove('fade-out');
         document.body.classList.add('fade-in');
 
         setTimeout(() => {
             document.body.classList.remove('fade-in');
         }, 1200); // hosszabb idő a cascade-hatásra
-    }, 800); // fade-out idő
+    });
 }
 
+
+// Aktív téma beállítása
+// Ez a funkció beállítja az aktív témát a stílusválasztó listában
 function setActiveTheme(theme) {
     if (!theme) return;
 
@@ -136,6 +173,7 @@ function setActiveTheme(theme) {
     }
 }
 
+// Frissíti a fejléc címét a kiválasztott stílus alapján
 function updateHeaderTitle(sheet) {
     const headerTitle = document.getElementById('header-title');
     if (!headerTitle) return console.error('Header title element not found!');
@@ -144,6 +182,44 @@ function updateHeaderTitle(sheet) {
     headerTitle.textContent = monthIndex !== -1
         ? `${monthNames[monthIndex]} Style`
         : 'Months in Styles';
+}
+
+// Várakozás a képek betöltésére
+// Ez a funkció várakozik, amíg az összes kép betöltődik az oldalon
+// Ez hasznos lehet, ha a stíluslap váltásakor a képek is frissülnek
+function waitForImagesToLoad(callback) {
+    const images = document.querySelectorAll('img');
+    let loadedImages = 0;
+
+    if (images.length === 0) {
+        // Ha nincs kép az oldalon, azonnal hívjuk a callback-et
+        callback();
+        return;
+    }
+
+    images.forEach(img => {
+        if (img.complete) {
+            loadedImages++;
+        } else {
+            img.addEventListener('load', () => {
+                loadedImages++;
+                if (loadedImages === images.length) {
+                    callback();
+                }
+            });
+            img.addEventListener('error', () => {
+                console.warn(`Image failed to load: ${img.src}`);
+                loadedImages++;
+                if (loadedImages === images.length) {
+                    callback();
+                }
+            });
+        }
+    });
+
+    if (loadedImages === images.length) {
+        callback();
+    }
 }
 
 /*  ========================================================================  *\

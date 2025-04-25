@@ -62,7 +62,6 @@ header, aside, footer {
     opacity: 1 !important;
 }
 
-
 /*  ========================================================================  *\
     H E A D E R
 \*  ========================================================================  */
@@ -89,6 +88,7 @@ header {
 
         text-transform:  uppercase;
         text-align:      center;
+
         font-family:     "Shadows Into Light", cursive;
         font-size:       clamp(2rem, 3vw, 3rem);
         font-weight:     bold;
@@ -97,8 +97,30 @@ header {
         color:           rgba(255, 255, 255, 1);
         text-shadow:     -0.2rem -0.2rem rgba(0, 0, 0, 0.625), 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.625);
 
-        transition:     color 0.5s, text-shadow 0.5s, transform 0.3s;
+        transition:      color 0.5s, text-shadow 0.5s, transform 0.3s;
     }
+
+
+/*  ========================================================================  *\
+    M A I N
+\*  ========================================================================  */
+
+    .loading {
+        display:           flex;
+        justify-content:   center;
+        align-items:       center;
+
+        width:             100vw;
+        height:            100vh;
+        margin:            0 auto;
+        padding:           0 auto;
+
+        background-color:  rgba(255, 255, 255, 0.125);
+
+        z-index:           9999;
+    }
+    
+        .hidden {display: none;}
 
 
 /*  ========================================================================  *\
