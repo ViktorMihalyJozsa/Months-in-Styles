@@ -86,7 +86,6 @@ function initTheme() {
     themeLink.setAttribute('href', themeToLoad);
 }
 
-
 // Eseménykezelők beállítása
 // Ez a funkció beállítja az eseménykezelőket a stílusválasztó listában
 // A lista elemeinek kattintására váltja a stílust
@@ -108,50 +107,11 @@ function setupEventListeners() {
         li.addEventListener('click', function () {
             const stylePath = this.getAttribute('data-style');
             if (stylePath) {
-                changeStyle(stylePath, this);
+                changeStyle(stylePath, this); // Az aktuális elem átadása
             }
         });
     });
 }
-
-
-// Betöltésjelző (opcionális)
-// A betöltésjelző megjelenítése és elrejtése a stíluslap váltásakor
-// A betöltésjelzőt a CSS fájlban kell definiálni, és a HTML-ben elhelyezni
-function changeStyle(sheet, element) {
-    const themeLink = document.getElementById('theme-style');
-    const loadingIndicator = document.getElementById('loading-indicator'); // Opcionális betöltésjelző
-    if (!themeLink) return console.error('Theme link element not found!');
-
-    // Megjelenítjük a betöltésvezérlőt (opcionális)
-    if (loadingIndicator) loadingIndicator.classList.remove('hidden');
-
-    // Fade-out animáció
-    document.body.classList.add('fade-out');
-
-    // Stíluslap váltása
-    themeLink.setAttribute('href', sheet);
-    localStorage.setItem('selectedStyle', sheet);
-
-    // Várunk, amíg az összes kép betöltődik
-    waitForImagesToLoad(() => {
-        // Stílusváltás után frissítjük az aktív témát és a fejlécet
-        setActiveTheme(sheet);
-        updateHeaderTitle(sheet);
-
-        // Elrejtjük a betöltésvezérlőt (opcionális)
-        if (loadingIndicator) loadingIndicator.classList.add('hidden');
-
-        // Fade-in animáció
-        document.body.classList.remove('fade-out');
-        document.body.classList.add('fade-in');
-
-        setTimeout(() => {
-            document.body.classList.remove('fade-in');
-        }, 1200); // hosszabb idő a cascade-hatásra
-    });
-}
-
 
 // Aktív téma beállítása
 // Ez a funkció beállítja az aktív témát a stílusválasztó listában
@@ -182,6 +142,71 @@ function updateHeaderTitle(sheet) {
     headerTitle.textContent = monthIndex !== -1
         ? `${monthNames[monthIndex]} Style`
         : 'Months in Styles';
+}
+
+// Stílusváltás animációval
+// Ez a funkció váltja a stíluslapot animációval
+// A stíluslap váltásakor a régi stíluslap fade-out animációval eltűnik
+// és az új stíluslap fade-in animációval jelenik meg
+// A stíluslap váltásakor a betöltésvezérlő is megjelenik
+// és eltűnik a stíluslap váltásakor
+function changeStyle(sheet, element) {
+    const themeLink = document.getElementById('theme-style');
+    const loadingIndicator = document.getElementById('loading-indicator');
+    if (!themeLink) return console.error('Theme link element not found!');
+    if (!loadingIndicator) return console.error('Loading indicator not found!');
+
+    // Megjelenítjük a betöltésvezérlőt
+    loadingIndicator.classList.remove('hidden');
+    loadingIndicator.classList.add('visible');
+
+    // Fade-out animáció
+    document.body.classList.add('fade-out');
+
+    // Kiemeljük a kiválasztott elemet
+    if (element) {
+        const styleSelectorItems = document.querySelectorAll('.style-selector-list li');
+        styleSelectorItems.forEach(li => li.classList.remove('active')); // Eltávolítjuk az aktív osztályt
+        element.classList.add('active'); // Hozzáadjuk az aktív osztályt a kiválasztott elemhez
+    }
+
+    // Stíluslap váltása
+    const newThemeLink = document.createElement('link');
+    newThemeLink.rel = 'stylesheet';
+    newThemeLink.href = sheet;
+
+    newThemeLink.onload = () => {
+        // Az új stíluslap betöltődött
+        themeLink.href = sheet;
+
+        // Frissítjük a fejléc címét
+        updateHeaderTitle(sheet);
+
+        // Elrejtjük a betöltésvezérlőt
+        setTimeout(() => {
+            loadingIndicator.classList.remove('visible');
+            loadingIndicator.classList.add('hidden');
+
+            // Fade-in animáció
+            document.body.classList.remove('fade-out');
+            document.body.classList.add('fade-in');
+
+            // Töröljük a fade-in osztályt az animáció után
+            setTimeout(() => {
+                document.body.classList.remove('fade-in');
+            }, 2000); // 2 másodperc az animáció időtartama
+        }, 1000); // 1 másodperc várakozás az új stílus betöltése után
+    };
+
+    newThemeLink.onerror = () => {
+        console.error(`Failed to load stylesheet: ${sheet}`);
+        loadingIndicator.classList.remove('visible');
+        loadingIndicator.classList.add('hidden');
+        document.body.classList.remove('fade-out'); // Töröljük a fade-out osztályt hiba esetén
+    };
+
+    // Hozzáadjuk az új stíluslapot a dokumentumhoz
+    document.head.appendChild(newThemeLink);
 }
 
 // Várakozás a képek betöltésére

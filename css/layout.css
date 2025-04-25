@@ -38,14 +38,14 @@ html, body {
     padding: 0;
 }
 
-/* Alapállapot – háttérkép animáció */
-body, main {
-    transition: background-image 0.8s ease-in-out;
+/* Alapállapot – háttérkép éles */
+body {
+    transition: background-image 2s ease-in-out;
 }
 
 /* Header, aside, footer háttér szín animáció */
-header, aside, footer {
-    transition: background-color 0.8s ease-in-out;
+header, main, aside, footer {
+    transition: background-color 2s ease-in-out;
 }
 
 /* Biztosítjuk, hogy a tartalmak ne tünjenek el váltáskor */
@@ -97,7 +97,7 @@ header {
         color:           rgba(255, 255, 255, 1);
         text-shadow:     -0.2rem -0.2rem rgba(0, 0, 0, 0.625), 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.625);
 
-        transition:      color 0.5s, text-shadow 0.5s, transform 0.3s;
+        transition:      color 2s ease-in-out, text-shadow 2s ease-in-out, transform 1s ease-in-out;
     }
 
 
@@ -107,18 +107,23 @@ header {
 
     .loading {
         display:           flex;
-        justify-content:   center;
+        flex-direction:    column;
         align-items:       center;
+        justify-content:   center;
 
         width:             100vw;
         height:            100vh;
         margin:            0 auto;
         padding:           0 auto;
 
-        background-color:  rgba(255, 255, 255, 0.125);
+        /*background-color:  rgba(255, 255, 255, 0.125);*/
+        transition:        background-color 2s ease-in-out, opacity 2s ease-in-out;
+        opacity:           0;
 
         z-index:           9999;
     }
+
+        .loading.visible {opacity: 1;}
     
         .hidden {display: none;}
 
@@ -194,7 +199,7 @@ aside {
             border-left:       0.125rem solid rgba(0, 0, 0, 0.5);   /* 2px */
             border-radius:     1rem 0rem 0rem 1rem;
             background-color:  rgba(240, 240, 240, 0.5);
-            transition:        background-color 0.5s, transform 0.3s;
+            transition:        background-color 1s, transform 0.5s;
         }
             .style-selector-list .btmli {margin-top:  2vh;}
 
@@ -202,21 +207,19 @@ aside {
                 background-color:  lightgrey;
                 color:             white;
                 text-shadow:       -0.125rem -0.125rem rgba(0, 0, 0, 0.625), 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.625);
-                transition:        background-color 0.5s, text-shadow 0.5s, transform 0.3s;
+                transition:        background-color 1s, text-shadow 1s, transform 0.5s;
 
             }
 
             .style-selector-list li:active {
-                transform:        scale(0.95);
-            }
-            .style-selector-list li:focus {
-                outline:          none;
+                background-color:  rgba(0, 0, 0, 0.5);
+                color:             rgba(255, 255, 255, 1);
+                transform:         scale(0.95);
+                transition:        background-color 1s, text-shadow 1s, transform 0.5s;
             }
 
-            .style-selector-list li.active {
-                background-color:  #555;
-                color:             white;
-                font-weight:       bold;
+            .style-selector-list li:focus {
+                outline:          none;
             }
 
 
