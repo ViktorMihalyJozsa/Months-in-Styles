@@ -59,7 +59,7 @@ header, main, aside, footer {
 .fade-in aside,
 .fade-out footer,
 .fade-in footer {
-    transition: opacity 1s ease-in-out;
+    transition: background-image 1s ease-in-out, background-color 1s ease-in-out;
 }
 
 /*  ========================================================================  *\
@@ -101,13 +101,13 @@ header {
         /* Fade-out animáció */
         #header-title.fade-out {
             opacity: 0;
-            transition: opacity 0.5s ease-in-out;
+            transition: opacity 1s ease-in-out;
         }
 
         /* Fade-in animáció */
         #header-title.fade-in {
             opacity: 1;
-            transition: opacity 0.5s ease-in-out;
+            transition: opacity 1s ease-in-out;
         }
 
 

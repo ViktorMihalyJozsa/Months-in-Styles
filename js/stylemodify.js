@@ -76,7 +76,7 @@ function initTheme() {
         document.body.classList.add('fade-in');
         setTimeout(() => {
             document.body.classList.remove('fade-in');
-        }, 500); // 0.5 másodperc az animáció időtartama
+        }, 1000); // 1 másodperc az animáció időtartama
     };
 
     themeLink.onerror = () => {
@@ -91,7 +91,7 @@ function initTheme() {
             document.body.classList.add('fade-in');
             setTimeout(() => {
                 document.body.classList.remove('fade-in');
-            }, 500); // 0.5 másodperc az animáció időtartama
+            }, 1000); // 1 másodperc az animáció időtartama
         };
     };
 
@@ -173,8 +173,8 @@ function updateHeaderTitle(sheet) {
         // Töröljük a fade-in osztályt az animáció után
         setTimeout(() => {
             headerTitle.classList.remove('fade-in');
-        }, 500); // 0.5 másodperc az animáció időtartama
-    }, 500); // 0.5 másodperc a fade-out animáció időtartama
+        }, 1000); // 1 másodperc az animáció időtartama
+    }, 1000); // 1 másodperc a fade-out animáció időtartama
 }
 
 // Stílusváltás animációval
@@ -210,10 +210,10 @@ function changeStyle(sheet, element) {
 
     const startTime = Date.now(); // Rögzítjük a kezdési időt
 
-    // Maximum 3 másodperc várakozás
+    // Maximum 2 másodperc várakozás
     const timeout = setTimeout(() => {
         const elapsedTime = Date.now() - startTime; // Eltelt idő
-        const remainingTime = Math.max(3000 - elapsedTime, 0); // Minimum 3 másodperc biztosítása
+        const remainingTime = Math.max(2000 - elapsedTime, 0); // Minimum 2 másodperc biztosítása
 
         setTimeout(() => {
             loadingIndicator.classList.remove('visible');
@@ -226,7 +226,7 @@ function changeStyle(sheet, element) {
                 document.body.classList.remove('fade-in');
             }, 1000); // 1 másodperc az animáció időtartama
         }, remainingTime);
-    }, 3000); // 3 másodperc
+    }, 2000); // 2 másodperc
 
     newThemeLink.onload = () => {
         // Az új stíluslap betöltődött
@@ -237,7 +237,7 @@ function changeStyle(sheet, element) {
         updateHeaderTitle(sheet);
 
         const elapsedTime = Date.now() - startTime; // Eltelt idő
-        const remainingTime = Math.max(3000 - elapsedTime, 0); // Minimum 3 másodperc biztosítása
+        const remainingTime = Math.max(2000 - elapsedTime, 0); // Minimum 2 másodperc biztosítása
 
         setTimeout(() => {
             loadingIndicator.classList.remove('visible');
