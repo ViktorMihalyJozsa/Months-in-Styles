@@ -39,10 +39,10 @@ html, body {
 }
 
 /* Alapállapot – háttérkép éles */
-body {transition: background-image 2s ease-in-out;}
+body {transition: background-image 1s ease-in-out;}
 
 /* Header, aside, footer háttér szín animáció */
-header, aside, footer {transition: background-color 2s ease-in-out;}
+header, aside, footer {transition: background-color 1s ease-in-out;}
 
 
 /*  ========================================================================  *\
@@ -79,6 +79,7 @@ header {
         line-height:     clamp(2.2rem, 3.3vw, 3.3rem);
         color:           rgba(255, 255, 255, 1);
         text-shadow:     -0.2rem -0.2rem rgba(0, 0, 0, 0.625), 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.625);
+        transition:      color 1s, text-shadow 1s, transform 0.5s ease-in-out;
     }
 
 /* ========================================================================  */
@@ -88,39 +89,22 @@ header {
 /* Initial state: ensure header is fully opaque */
 #header-title {
     opacity: 1;
-    transition: opacity 2s ease-in-out; /* Smooth transition for opacity */
+    transition:  color 1s, text-shadow 1s, transform 0.5s ease-in-out;
   }
   
   /* Fade-out class: transition to 0 opacity */
-  .fade-out {
+  #header-title.fade-out {
     opacity: 0;
+    transition:  color 1s, text-shadow 1s, transform 0.5s ease-in-out;
+
   }
   
   /* Fade-in class: transition back to full opacity */
-  .fade-in {
+  #header-title.fade-in {
     opacity: 1;
+    transition:  color 1s, text-shadow 1s, transform 0.5s ease-in-out;
   }
   
-  /* Optional: slide-in effect combined with fade-in */
-  @keyframes slideIn {
-    0% {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .fade-in-slide {
-    animation: slideIn 2s ease-in-out;
-  }
-  
-  /* Usage:
-     - When hiding: add .fade-out to #header-title
-     - When showing: remove .fade-out and add .fade-in or .fade-in-slide
-  */
 
 /*  ========================================================================  *\
     A S I D E

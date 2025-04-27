@@ -1,8 +1,9 @@
 /*  ========================================================================  *\
-    S T Y L E M O D I F Y . J S (refactored with immediate title update)
+    S T Y L E M O D I F Y . J S
 \*  ========================================================================  */
 
-// --- Constants & mappings -------------------------------------------------
+// --- Globális változók -----------------------------------------------------
+// Hónapok nevei és stílusok
 const monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
@@ -23,15 +24,24 @@ const monthNames = [
     'css/months/012-components-december.css'
   ];
   
-  const defaultStyle = 'css/default-style.css';
-  const FADE_DURATION = 1000; // ms, match your CSS transition time
   
-  // --- Initialization ------------------------------------------------------
+  // --- CSS fájlok -------------------------------------------------------------
+  // Ez a stílus akkor kerül alkalmazásra, ha a hónaphoz nem tartozik stílus
+  const defaultStyle = 'css/default-style.css';  // Alapértelmezett stílus
+  const FADE_DURATION = 1000;                    // 1 másodperc fade-out animációhoz
+  
+
+  // --- DOMContentLoaded esemény ------------------------------------------------
+  // Az esemény akkor aktiválódik, amikor a DOM teljesen betöltődött
   document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     setupEventListeners();
+
   });
   
+
+  // --- Téma inicializálása ------------------------------------------------
+  // Ellenőrzi a helyi tárolót és beállítja a témát az aktuális hónap alapján
   function initTheme() {
     const currentMonth = new Date().getMonth();
     const savedStyle = localStorage.getItem('selectedStyle');
@@ -40,7 +50,8 @@ const monthNames = [
     loadTheme(theme);
   }
   
-  // --- Theme loading helper ------------------------------------------------
+
+  // --- Téma betöltési segéd ------------------------------------------------
   function loadTheme(href) {
     const linkEl = document.getElementById('theme-style');
     if (!linkEl) {
@@ -48,10 +59,13 @@ const monthNames = [
       return;
     }
   
-    // Setup load/error handlers for fallback
+    // Betöltési események kezelése
     linkEl.onload = () => {
-      // do nothing extra for success
+      console.log(`Loaded: ${href}`);
+      applyActiveAndTitle(href);
     };
+
+    // Hibakezelés
     linkEl.onerror = () => {
       console.warn(`Failed to load: ${href}, falling back to default.`);
       linkEl.setAttribute('href', defaultStyle);
@@ -59,19 +73,22 @@ const monthNames = [
       applyActiveAndTitle(defaultStyle);
     };
   
-    // Apply theme, active state, title, and persist
+    // Téma betöltése
     linkEl.setAttribute('href', href);
     localStorage.setItem('selectedStyle', href);
     applyActiveAndTitle(href);
   }
   
-  // Combined helper to set active UI and header title
+
+  // --- Aktív téma és fejléc cím frissítése --------------------------------
+  // Frissíti a felhasználói felületet és a fejléc címét
   function applyActiveAndTitle(sheet) {
     setActiveTheme(sheet);
     updateHeaderTitle(sheet);
   }
   
-  // --- Event listeners -----------------------------------------------------
+
+  // --- Eseménykezelők -----------------------------------------------------
   function setupEventListeners() {
     const items = document.querySelectorAll('.style-selector-list li');
     if (!items.length) return console.warn('No style selector items found!');
@@ -82,32 +99,48 @@ const monthNames = [
       loadTheme(path);
     }));
   }
+
   
-  // --- Header title animation ---------------------------------------------
+  // --- Fejléc cím animáció ---------------------------------------------
   function updateHeaderTitle(sheet) {
-    const header = document.getElementById('header-title');
-    if (!header) {
-      console.error('Header title element not found!');
-      return;
+    console.log('updateHeaderTitle called with sheet:', sheet);
+
+    const headerTitle = document.getElementById('header-title');
+    if (!headerTitle) {
+        console.error('Header title element not found!');
+        return;
     }
-  
-    const idx = monthToStyle.indexOf(sheet);
-    const text = idx !== -1 ? `${monthNames[idx]} Style` : 'Months in Styles';
-  
-    header.classList.add('fade-out');
-    const fallback = setTimeout(() => {
-      header.textContent = text;
-      header.classList.replace('fade-out', 'fade-in');
-    }, FADE_DURATION);
-  
-    header.addEventListener('transitionend', () => {
-      clearTimeout(fallback);
-      header.textContent = text;
-      header.classList.replace('fade-out', 'fade-in');
-    }, { once: true });
+
+    const monthIndex = monthToStyle.indexOf(sheet);
+    const newTitle = monthIndex !== -1
+        ? `${monthNames[monthIndex]} Style`
+        : 'Months in Styles';
+
+    console.log('New title:', newTitle);
+
+    // Fade-out animáció
+    headerTitle.classList.add('fade-out');
+
+    // Fallback időzítő, ha a transitionend nem aktiválódik
+    const fallbackTimeout = setTimeout(() => {
+        console.log('Fallback: updating title after timeout...');
+        headerTitle.textContent = newTitle;
+        headerTitle.classList.remove('fade-out');
+        headerTitle.classList.add('fade-in');
+    }, 1000); // 1 másodperc, hogy illeszkedjen a CSS animációhoz
+
+    // Várunk a fade-out animáció befejezésére
+    // és csak utána frissítjük a címet
+    headerTitle.addEventListener('transitionend', () => {
+      clearTimeout(fallbackTimeout);  // Töröljük a fallback időzítőt
+      console.log('Fade-out completed, updating title...');
+      headerTitle.textContent = newTitle;
+      headerTitle.classList.add('fade-in');  // Fade-in animáció
+    }, { once: true });  // Csak egyszeri eseménykezelő
   }
   
-  // --- Active theme UI update ---------------------------------------------
+
+  // --- Aktív téma felhasználói felület frissítése ---------------------------------------------
   function setActiveTheme(theme) {
     const items = document.querySelectorAll('.style-selector-list li');
     items.forEach(li => {
@@ -122,7 +155,8 @@ const monthNames = [
     }
   }
   
+
   /*  ========================================================================  *\
-      E N D   O F   S T Y L E M O D I F Y . J S
+      V E G E   A   S T Y L E M O D I F Y . J S
   \*  ========================================================================  */
   
