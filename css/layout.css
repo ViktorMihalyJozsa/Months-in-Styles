@@ -79,7 +79,6 @@ header {
         line-height:     clamp(2.2rem, 3.3vw, 3.3rem);
         color:           rgba(255, 255, 255, 1);
         text-shadow:     -0.2rem -0.2rem rgba(0, 0, 0, 0.625), 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.625);
-        transition:      color 1s, text-shadow 1s, transform 0.5s ease-in-out;
     }
 
 /* ========================================================================  */
@@ -141,10 +140,10 @@ aside {
     .style-selector-list {
         width:                       auto;
         max-height:                  75vh;
-        padding:                     0;
-        margin:                      0;
+        padding:                     0vh 0vw 0vh 1rem;
+        margin:                      0 auto 0 auto;
 
-        overflow:                    hidden;
+        overflow:                    hidden;  /* Hide scrollbars */
         scrollbar-width:             none;    /* Firefox */
         overflow-y:                  auto;    /* Scrollbar for vertical overflow */
         overflow-x:                  hidden;  /* No scrollbar for horizontal overflow */
@@ -156,21 +155,24 @@ aside {
         list-style-type:  none;
     }
 
-        .style-selector-list li {
+        .style-selector-list li,
+        .style-selector-list .btmli {
             display:           block;
             cursor:            pointer;
             text-align:        center;
 
             width:             auto;
             height:            auto;
-            margin:            0vh 0vw 0vh 0vw;
-            padding:           0vh 3vw 0vh 3vw;
+            margin:            0 auto 0 auto;
+            padding:           0 auto 0 auto;
 
             border-top:        0.25rem solid rgba(0, 0, 0, 0.5);    /* 4px */
             border-left:       0.125rem solid rgba(0, 0, 0, 0.5);   /* 2px */
             border-radius:     1rem 0rem 0rem 1rem;
             background-color:  rgba(240, 240, 240, 0.5);
             transition:        background-color 1s, transform 0.5s;
+
+            transform-origin:  right; /* A nagyitás iranya */
 
             font-family:       "Shadows Into Light", cursive;
             font-size:         clamp(1rem, 1.25vw, 1.25rem);
@@ -181,7 +183,8 @@ aside {
         }
         .style-selector-list .btmli {margin-top: 2vh;}
 
-            .style-selector-list li:hover {
+            .style-selector-list li:hover,
+            .style-selector-list .btmli:hover {
                 background-color:  rgba(211, 211, 211, 1);
                 color:             rgba(255, 255, 255, 1);
                 transform:         scale(1.2);
@@ -189,15 +192,28 @@ aside {
                 transition:        background-color 1s ease-in-out, text-shadow 1s ease-in-out, transform 0.5s ease-in-out;
 
             }
+            .style-selector-list .btmli:hover {margin-top: 2vh;}
 
-            .style-selector-list li.active {
+            .style-selector-list li.active,
+            .style-selector-list .btmli.active {
+                width:             auto;
+                height:            auto;
+                margin:            0 auto 0 auto;
+                padding:           0 auto 0 auto;
+
+                border-top:        0.25rem solid rgba(0, 0, 0, 0.5);    /* 4px */
+                border-left:       0.125rem solid rgba(0, 0, 0, 0.5);   /* 2px */
+                border-radius:     1rem 0rem 0rem 1rem;
+
                 background-color:  rgba(0, 0, 0, 0.5);
                 color:             rgba(255, 255, 255, 1);
                 transform:         scale(1.2);
                 transition:        background-color 1s ease-in-out, text-shadow 1s ease-in-out, transform 0.5s ease-in-out;
             }
+            .style-selector-list .btmli.active {margin-top: 2vh;}
 
-            .style-selector-list li:focus {
+            .style-selector-list li:focus,
+            .style-selector-list .btmli:focus {
                 outline:          none;
             }
 
