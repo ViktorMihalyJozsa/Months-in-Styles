@@ -43,18 +43,19 @@ function preloadImages(imageUrls) {
 
 // Az összes háttérkép URL-je
 const backgroundImages = [
-  'images/background-january.jpg',
-  'images/background-february.jpg',
-  'images/background-march.jpg',
-  'images/background-april.jpg',
-  'images/background-may.jpg',
-  'images/background-june.jpg',
-  'images/background-july.jpg',
-  'images/background-august.jpg',
-  'images/background-september.jpg',
-  'images/background-october.jpg',
-  'images/background-november.jpg',
-  'images/background-december.jpg'
+  'images/000-background-first.webp', // Alapértelmezett háttérkép
+  'images/001-background-january.webp',
+  'images/002-background-february.webp',
+  'images/003-background-march.webp',
+  'images/004-background-april.webp',
+  'images/005-background-may.webp',
+  'images/006-background-june.webp',
+  'images/007-background-july.webp',
+  'images/008-background-august.webp',
+  'images/009-background-september.webp',
+  'images/010-background-october.webp',
+  'images/011-background-november.webp',
+  'images/012-background-december.webp'
 ];
 
 
