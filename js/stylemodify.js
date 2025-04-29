@@ -43,7 +43,7 @@ function preloadImages(imageUrls) {
 
 // Az összes háttérkép URL-je
 const backgroundImages = [
-  'images/000-background-first.webp', // Alapértelmezett háttérkép
+  'images/000-background-first.webp',  // Alapértelmezett háttérkép
   'images/001-background-january.webp',
   'images/002-background-february.webp',
   'images/003-background-march.webp',
@@ -152,25 +152,23 @@ function updateHeaderTitle(sheet) {
 
   console.log('New title:', newTitle);
 
-  // Fade-out animáció
+  // Eltűnés animáció (fade-out)
   headerTitle.classList.add('fade-out');
 
-  // Fallback időzítő, ha a transitionend nem aktiválódik
-  const fallbackTimeout = setTimeout(() => {
-      console.log('Fallback: updating title after timeout...');
+  // Várunk az eltűnés animáció végére (1 másodperc)
+  setTimeout(() => {
+      // Szöveg frissítése
       headerTitle.textContent = newTitle;
+
+      // Eltávolítjuk a fade-out osztályt, és hozzáadjuk a fade-in osztályt
       headerTitle.classList.remove('fade-out');
       headerTitle.classList.add('fade-in');
-  }, 1000); // 1 másodperc, hogy illeszkedjen a CSS animációhoz
 
-  // Várunk a fade-out animáció befejezésére
-  // és csak utána frissítjük a címet
-  headerTitle.addEventListener('transitionend', () => {
-    clearTimeout(fallbackTimeout);  // Töröljük a fallback időzítőt
-    console.log('Fade-out completed, updating title...');
-    headerTitle.textContent = newTitle;
-    headerTitle.classList.add('fade-in');  // Fade-in animáció
-  }, { once: true });  // Csak egyszeri eseménykezelő
+      // A fade-in animáció végén eltávolítjuk a fade-in osztályt
+      setTimeout(() => {
+          headerTitle.classList.remove('fade-in');
+      }, 1000); // 1 másodperc fade-in idő
+  }, 1000); // 1 másodperc fade-out idő
 }
   
 
