@@ -1,18 +1,23 @@
-/*  ========================================================================  *\
+/* ======================================================================== *\
 
     S T Y L E M O D I F Y . J S
 
-    A hónapok stílusának módosítása
-    A hónapokhoz tartozó stílusok betöltése és alkalmazása
+  -------------------------------------------------------------------------
 
-\*  ========================================================================  */
+    Ez a teljes kód tartalmazza:
+      - A hónapokhoz tartozó stílusok kezelését.
+      - A fejléc címének animációval történő frissítését.
+      - Az aktív gomb stílusának frissítését.
+      - A hibakezelést és a helyi tároló használatát.
+
+\* ======================================================================== */
 
 // --- Globális változók -----------------------------------------------------
 // Hónapok nevei és stílusok
 const monthNames = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-  ];
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
+];
 
 // Hónapokhoz tartozó stílusok
 const monthToStyle = [
@@ -71,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
 const defaultStyle = 'css/default-style.css';  // Alapértelmezett stílus
 const FADE_DURATION = 1000;                    // 1 másodperc fade-out animációhoz
 
-// --- Téma inicializálása ------------------------------------------------
+// --- Téma inicializálása ----------------------------------------------------
 // Ellenőrzi a helyi tárolót és beállítja a témát az aktuális hónap alapján
 function initTheme() {
   const currentMonth = new Date().getMonth();
@@ -81,7 +86,7 @@ function initTheme() {
   loadTheme(theme);
 }
 
-// --- Téma betöltési segéd ------------------------------------------------
+// --- Téma betöltési segéd --------------------------------------------------
 function loadTheme(href) {
   const linkEl = document.getElementById('theme-style');
   if (!linkEl) {
@@ -121,7 +126,8 @@ function applyActiveAndTitle(sheet) {
 
 // --- Eseménykezelők -----------------------------------------------------
 function setupEventListeners() {
-  const items = document.querySelectorAll('.style-selector-list button');
+  const items = document.querySelectorAll('.style-selector-list button, .style-selector-default-theme button');
+
   if (!items.length) {
       console.warn('Nincs stílusválasztó elem!');
       return;
@@ -148,6 +154,7 @@ function updateHeaderTitle(sheet) {
       return;
   }
 
+  // Ellenőrizzük, hogy a sheet érvényes hónap stílus-e
   const monthIndex = monthToStyle.indexOf(sheet);
   const newTitle = monthIndex !== -1
       ? `${monthNames[monthIndex]} Style`
@@ -176,7 +183,7 @@ function updateHeaderTitle(sheet) {
 
 // --- Aktív téma felhasználói felület frissítése ---------------------------------------------
 function setActiveTheme(theme) {
-  const items = document.querySelectorAll('.style-selector-list button');
+  const items = document.querySelectorAll('.style-selector-list button, .style-selector-default-theme button');
 
   // Alapállapotba állítás
   items.forEach(button => {
@@ -185,12 +192,18 @@ function setActiveTheme(theme) {
   });
 
   // Kiválasztott elem kezelése
-  const match = document.querySelector(`.style-selector-list button[data-style="${theme}"]`);
-  if (match) {
-      console.log(`Téma aktiválása: ${theme}`);
-      match.classList.add('active');
-      match.setAttribute('aria-selected', 'true');
-  } else {
+  const matches = document.querySelectorAll(
+      `.style-selector-list button[data-style="${theme}"], .style-selector-default-theme button[data-style="${theme}"]`
+  );
+
+  if (matches.length > 0) {
+      matches.forEach(match => {
+          console.log(`Téma aktiválása: ${theme}`);
+          match.classList.add('active');
+          match.setAttribute('aria-selected', 'true');
+      });
+  } 
+  else {
       console.warn(`Nem található megfelelő elem a témához: ${theme}`);
   }
 }
