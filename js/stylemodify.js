@@ -10,9 +10,9 @@
 // --- Globális változók -----------------------------------------------------
 // Hónapok nevei és stílusok
 const monthNames = [
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December'
-];
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
 
 // Hónapokhoz tartozó stílusok
 const monthToStyle = [
@@ -30,14 +30,13 @@ const monthToStyle = [
   'css/months/012-components-december.css'
 ];
 
-
 // --- Képek előtöltése ------------------------------------------------------
 // Képek előtöltése
 function preloadImages(imageUrls) {
   imageUrls.forEach(url => {
       const img = new Image();
       img.src = url;
-      console.log(`Preloading image: ${url}`);
+      console.log(`Kép előtöltése: ${url}`);
   });
 }
 
@@ -58,21 +57,19 @@ const backgroundImages = [
   'images/012-background-december.webp'
 ];
 
-
 // --- DOMContentLoaded esemény ------------------------------------------------
 // Az esemény akkor aktiválódik, amikor a DOM teljesen betöltődött
 document.addEventListener('DOMContentLoaded', () => {
+  console.log('A DOM teljesen betöltődött.');
   preloadImages(backgroundImages); // Képek előtöltése
   initTheme(); // Téma inicializálása
   setupEventListeners(); // Eseménykezelők beállítása
 });
-  
-  
+
 // --- CSS fájlok -------------------------------------------------------------
 // Ez a stílus akkor kerül alkalmazásra, ha a hónaphoz nem tartozik stílus
 const defaultStyle = 'css/default-style.css';  // Alapértelmezett stílus
 const FADE_DURATION = 1000;                    // 1 másodperc fade-out animációhoz
-  
 
 // --- Téma inicializálása ------------------------------------------------
 // Ellenőrzi a helyi tárolót és beállítja a témát az aktuális hónap alapján
@@ -83,65 +80,71 @@ function initTheme() {
   const theme = valid ? savedStyle : (monthToStyle[currentMonth] || defaultStyle);
   loadTheme(theme);
 }
-  
 
 // --- Téma betöltési segéd ------------------------------------------------
 function loadTheme(href) {
   const linkEl = document.getElementById('theme-style');
   if (!linkEl) {
-    console.error('Theme <link> element not found!');
-    return;
+      console.error('A <link> elem nem található!');
+      return;
   }
-  
+
   // Betöltési események kezelése
   linkEl.onload = () => {
-    console.log(`Loaded: ${href}`);
-    applyActiveAndTitle(href);
+      console.log(`Betöltve: ${href}`);
+      applyActiveAndTitle(href);
   };
 
   // Hibakezelés
   linkEl.onerror = () => {
-    console.warn(`Failed to load: ${href}, falling back to default.`);
-    linkEl.setAttribute('href', defaultStyle);
-    localStorage.setItem('selectedStyle', defaultStyle);
-    applyActiveAndTitle(defaultStyle);
+      console.warn(`Nem sikerült betölteni: ${href}, visszatérés az alapértelmezett stílusra.`);
+      linkEl.setAttribute('href', defaultStyle);
+      localStorage.setItem('selectedStyle', defaultStyle);
+      applyActiveAndTitle(defaultStyle);
   };
-  
+
   // Téma betöltése
+  console.log(`Téma betöltése: ${href}`);
   linkEl.setAttribute('href', href);
   localStorage.setItem('selectedStyle', href);
+
+  // Frissítjük a fejlécet és a cím animációját azonnal
   applyActiveAndTitle(href);
 }
-  
 
 // --- Aktív téma és fejléc cím frissítése --------------------------------
 // Frissíti a felhasználói felületet és a fejléc címét
 function applyActiveAndTitle(sheet) {
-  setActiveTheme(sheet);
-  updateHeaderTitle(sheet);
+  setActiveTheme(sheet); // Aktív gomb frissítése
+  updateHeaderTitle(sheet); // Fejléc cím frissítése
 }
-  
 
 // --- Eseménykezelők -----------------------------------------------------
 function setupEventListeners() {
-  const items = document.querySelectorAll('.style-selector-list li');
-  if (!items.length) return console.warn('No style selector items found!');
-  
-  items.forEach(li => li.addEventListener('click', () => {
-    const path = li.dataset.style;
-    if (!path) return;
-    loadTheme(path);
-  }));
+  const items = document.querySelectorAll('.style-selector-list button');
+  if (!items.length) {
+      console.warn('Nincs stílusválasztó elem!');
+      return;
+  }
+
+  items.forEach(button => {
+      button.addEventListener('click', () => {
+          const path = button.dataset.style;
+          if (!path) return;
+
+          console.log(`Gomb megnyomva: ${path}`);
+          loadTheme(path); // Téma betöltése
+      });
+  });
 }
 
-  
 // --- Fejléc cím animáció ---------------------------------------------
 function updateHeaderTitle(sheet) {
-  console.log('updateHeaderTitle called with sheet:', sheet);
+  console.log('updateHeaderTitle hívás:', sheet);
 
   const headerTitle = document.getElementById('header-title');
   if (!headerTitle) {
-      console.error('Header title element not found!');
+      console.error('A fejléc cím elem nem található!');
       return;
   }
 
@@ -150,7 +153,7 @@ function updateHeaderTitle(sheet) {
       ? `${monthNames[monthIndex]} Style`
       : 'Months in Styles';
 
-  console.log('New title:', newTitle);
+  console.log('Új cím:', newTitle);
 
   // Eltűnés animáció (fade-out)
   headerTitle.classList.add('fade-out');
@@ -170,30 +173,24 @@ function updateHeaderTitle(sheet) {
       }, 1000); // 1 másodperc fade-in idő
   }, 1000); // 1 másodperc fade-out idő
 }
-  
 
 // --- Aktív téma felhasználói felület frissítése ---------------------------------------------
 function setActiveTheme(theme) {
-  const items = document.querySelectorAll('.style-selector-list li');
-  
+  const items = document.querySelectorAll('.style-selector-list button');
+
   // Alapállapotba állítás
-  items.forEach(li => {
-    li.classList.remove('active');
-    li.setAttribute('aria-selected', 'false');
+  items.forEach(button => {
+      button.classList.remove('active');
+      button.setAttribute('aria-selected', 'false');
   });
 
   // Kiválasztott elem kezelése
-  const match = document.querySelector(`.style-selector-list li[data-style="${theme}"]`);
+  const match = document.querySelector(`.style-selector-list button[data-style="${theme}"]`);
   if (match) {
-    match.classList.add('active');
-    match.setAttribute('aria-selected', 'true');
+      console.log(`Téma aktiválása: ${theme}`);
+      match.classList.add('active');
+      match.setAttribute('aria-selected', 'true');
   } else {
-    console.warn(`No matching item found for theme: ${theme}`);
+      console.warn(`Nem található megfelelő elem a témához: ${theme}`);
   }
 }
-  
-
-  /*  ========================================================================  *\
-      V E G E   A   S T Y L E M O D I F Y . J S
-  \*  ========================================================================  */
-  

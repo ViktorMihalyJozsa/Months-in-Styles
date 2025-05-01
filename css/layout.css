@@ -111,6 +111,7 @@ aside {
 
     width:          auto;
     height:         auto;
+    max-height:     75vh;
     margin:         0 auto;
     padding:        1rem 0rem 0.5rem 1.5rem;
 
@@ -135,9 +136,18 @@ aside {
     }
 
     .style-selector-list {
+        display:                     flex;
+        flex-direction:              column;
+        align-items:                 center;
+        justify-content:             center;
+
+        cursor:                      pointer;
+        text-decoration:             none;
+        text-align:                  center;
+
         width:                       auto;
         height:                      auto;
-        padding:                     0rem 0rem 1rem 2rem;
+        padding:                     0rem 0rem 1rem 2.5rem;
         margin:                      0 auto 0 auto;
 
         overflow:                    hidden;  /* Hide scrollbars */
@@ -145,21 +155,11 @@ aside {
         overflow-y:                  auto;    /* Scrollbar for vertical overflow */
         overflow-x:                  hidden;  /* No scrollbar for horizontal overflow */
         -ms-overflow-style:          none;    /* Internet Explorer and Edge */
-        -webkit-overflow-scrolling:  touch;   /* Safari */
+        -webkit-overflow-scrolling:  touch;   /* Safari and iOS */
     }
 
-    .style-selector-list ul {
-        display:          block;
-        cursor:           pointer;
-        text-decoration:  none;
-        text-align:       center;
-
-        list-style-type:  none;
-    }
-
-        .style-selector-list li,
-        .style-selector-list .btmli {
-            width:             auto;
+        .style-selector-list button {
+            width:             100%;
             height:            auto;
             margin:            0 auto 0 auto;
             padding:           0rem 2rem 0rem 2rem;
@@ -180,8 +180,7 @@ aside {
         }
         .style-selector-list .btmli {margin-top: 2vh;}
 
-            .style-selector-list li:hover,
-            .style-selector-list .btmli:hover {
+            .style-selector-list button:hover {
                 background-color:  rgba(211, 211, 211, 1);
                 color:             rgba(255, 255, 255, 1);
                 transform:         scale(1.2);
@@ -192,8 +191,7 @@ aside {
             }
             .style-selector-list .btmli:hover {margin-top: 2vh;}
 
-            .style-selector-list li.active,
-            .style-selector-list .btmli.active {
+            .style-selector-list button.active {
                 background-color:  rgba(0, 0, 0, 0.5);
                 color:             rgba(255, 255, 255, 1);
                 transform:         scale(1.2);
@@ -201,8 +199,7 @@ aside {
             }
             .style-selector-list .btmli.active {margin-top: 2vh;}
 
-            .style-selector-list li:focus,
-            .style-selector-list .btmli:focus {
+            .style-selector-list button:focus {
                 outline:          none;
             }
 
