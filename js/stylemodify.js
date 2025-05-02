@@ -148,9 +148,10 @@ function setupEventListeners() {
 function updateHeaderTitle(sheet) {
   console.log('updateHeaderTitle hívás:', sheet);
 
-  const headerTitle = document.getElementById('header-title');
-  if (!headerTitle) {
-      console.error('A fejléc cím elem nem található!');
+  // Kiválasztjuk a header-title és header-content elemeket
+  const headerElements = document.querySelectorAll('#header-title, #header-content');
+  if (!headerElements.length) {
+      console.error('A fejléc elemek nem találhatók!');
       return;
   }
 
@@ -163,20 +164,25 @@ function updateHeaderTitle(sheet) {
   console.log('Új cím:', newTitle);
 
   // Eltűnés animáció (fade-out)
-  headerTitle.classList.add('fade-out');
+  headerElements.forEach(element => element.classList.add('fade-out'));
 
   // Várunk az eltűnés animáció végére (1 másodperc)
   setTimeout(() => {
-      // Szöveg frissítése
-      headerTitle.textContent = newTitle;
+      // Szöveg frissítése csak a header-title elemnél
+      const headerTitle = document.getElementById('header-title');
+      if (headerTitle) {
+          headerTitle.textContent = newTitle;
+      }
 
       // Eltávolítjuk a fade-out osztályt, és hozzáadjuk a fade-in osztályt
-      headerTitle.classList.remove('fade-out');
-      headerTitle.classList.add('fade-in');
+      headerElements.forEach(element => {
+          element.classList.remove('fade-out');
+          element.classList.add('fade-in');
+      });
 
       // A fade-in animáció végén eltávolítjuk a fade-in osztályt
       setTimeout(() => {
-          headerTitle.classList.remove('fade-in');
+          headerElements.forEach(element => element.classList.remove('fade-in'));
       }, 1000); // 1 másodperc fade-in idő
   }, 1000); // 1 másodperc fade-out idő
 }
