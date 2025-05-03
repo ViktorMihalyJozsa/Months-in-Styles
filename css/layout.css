@@ -71,20 +71,6 @@ header {
                     border-radius 1s ease-in-out, 
                     box-shadow 1s ease-in-out, 
                     background-color 1s ease-in-out;
-
-    -webkit-transition:  max-width 1s ease-in-out, 
-                         max-height 1s ease-in-out, 
-                         padding 1s ease-in-out, 
-                         border-radius 1s ease-in-out, 
-                         box-shadow 1s ease-in-out, 
-                         background-color 1s ease-in-out;
-
-    -moz-transition:  max-width 1s ease-in-out, 
-                      max-height 1s ease-in-out, 
-                      padding 1s ease-in-out, 
-                      border-radius 1s ease-in-out, 
-                      box-shadow 1s ease-in-out, 
-                      background-color 1s ease-in-out;
 }
 
     #header-content,
@@ -178,7 +164,7 @@ aside {
         width:                       auto;
         height:                      auto;
         margin:                      0 auto;
-        padding:                     0.5rem 0rem 0.5rem 2rem;
+        padding:                     0.5rem 0rem 0.5rem 2.5rem;
 
         overflow:                    hidden;  /* Hide scrollbars */
         scrollbar-width:             none;    /* Firefox */
@@ -233,7 +219,8 @@ aside {
 
             .style-selector-list button:focus,
             .style-selector-default-theme button:focus {
-                outline:          none;
+                outline:         0.125rem dashed rgba(255, 255, 255, 0.5);
+                outline-offset:  0.125rem;
             }
 
 
