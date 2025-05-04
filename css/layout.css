@@ -56,7 +56,7 @@ header {
     left:           0;
 
     min-width:      50vw;
-    max-width:      100vw;
+    max-width:      90vw;
     height:         auto;
     margin:         0 auto;
     padding:        0rem 3rem 0rem 3rem;
@@ -79,7 +79,6 @@ header {
         height:      auto;
         margin:      0 auto;
         padding:     1rem 1.5rem 1rem 2rem;
-        border-bottom:  0.125rem solid rgba(0, 0, 0, 0.25);   /* 2px */
 
         /*background-color:  aqua;  /* Csak teszteléshez */
     }
@@ -123,12 +122,14 @@ header {
         }
 
     #nameday-greeting {
-        text-align:      left;
+        text-align:  left;
 
-        width:           auto;
-        height:          auto;
-        margin:          0 auto;
-        padding:         0.5rem 1.5rem 0.5rem 2rem;
+        width:       auto;
+        height:      auto;
+        margin:      0 auto;
+        padding:     0.5rem 1.5rem 0.5rem 2rem;
+
+        border-top:  0.125rem solid rgba(0, 0, 0, 0.25);   /* 2px */
 
         /*background-color: aqua;  /*Csak teszteléshez */
     }
@@ -157,11 +158,12 @@ header {
 
 aside {
     position:       fixed;
-    top:            20vh;
+    top:            22vh;
     right:          0;
 
     width:          auto;
     height:         auto;
+    max-height:     75vh;
     margin:         0 auto;
     padding:        0rem 0rem 0.5rem 0.5rem;
 
