@@ -211,3 +211,7 @@ function setActiveTheme(theme) {
     warn(`Nem található megfelelő elem a témához: ${theme}`);
   }
 }
+
+/* ======================================================================== *\
+    E N D   O F   S T Y L E M O D I F Y . J S   F I L E
+\* ======================================================================== */
