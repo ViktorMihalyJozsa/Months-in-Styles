@@ -155,12 +155,14 @@ function setupEventListeners() {
 function updateHeaderTitle(sheet) {
   log('updateHeaderTitle hívás:', sheet);
 
+  // Fejléc elemek kiválasztása
   const headerElements = document.querySelectorAll('#header-title, #header-content');
   if (!headerElements.length) {
     error('A fejléc elemek nem találhatók!');
     return;
   }
 
+  // Új cím meghatározása
   const monthIndex = monthToStyle.indexOf(sheet);
   const newTitle = monthIndex !== -1
     ? `${monthNames[monthIndex]} Style`
@@ -168,20 +170,33 @@ function updateHeaderTitle(sheet) {
 
   log('Új cím:', newTitle);
 
+  // Eltűnés animáció
   headerElements.forEach(element => element.classList.add('fade-out'));
 
   setTimeout(() => {
+    // Fejléc cím frissítése
     const headerTitle = document.getElementById('header-title');
+    const headerContent = document.getElementById('header-content');
+
     if (headerTitle) {
       headerTitle.textContent = newTitle;
     }
 
+    if (headerContent) {
+      headerContent.innerHTML = `
+        <h3>Welcome to the:</h3>
+        <h1>${newTitle}</h1>
+      `; // HTML tartalom frissítése
+    }
+
+    // Megjelenés animáció
     headerElements.forEach(element => {
       element.classList.remove('fade-out');
       element.classList.add('fade-in');
     });
 
     setTimeout(() => {
+      // Animáció osztály eltávolítása
       headerElements.forEach(element => element.classList.remove('fade-in'));
     }, FADE_DURATION);
 
