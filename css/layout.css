@@ -257,30 +257,44 @@ aside {
             color:             rgba(0, 0, 0, 0.75);
         }
 
-            .style-selector-list button:hover,
-            .style-selector-default-theme button:hover {
-                background-color:  rgba(211, 211, 211, 1);
-                color:             rgba(255, 255, 255, 1);
-                transform:         scale(1.2);
-                text-shadow:       -0.125rem -0.125rem rgba(0, 0, 0, 0.625), 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.625);
+        .style-selector-list button:hover,
+        .style-selector-default-theme button:hover {
+            background-color: rgba(50, 50, 50, 0.8); /* Sötétebb háttérszín */
+            color: rgba(255, 255, 255, 1);
+            transform: scale(1.2);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Fényhatás */
+            transition: background-color 1s ease, transform 0.5s ease;
+        }
 
-                transition:        background-color 1s ease-in-out, text-shadow 1s ease-in-out, transform 0.5s ease-in-out;
+        .style-selector-list button.active,
+        .style-selector-default-theme button.active {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(50, 50, 50, 0.5));
+            color: rgba(255, 255, 255, 1);
+            transform: scale(1.2);
+            outline: 0.125rem dashed rgba(255, 255, 255, 0.5);
+            outline-offset: 0.125rem;
+            transition: background-color 1s ease, transform 0.5s ease;
+        }
 
+        .style-selector-list button:focus,
+        .style-selector-default-theme button:focus {
+            outline: 0.125rem dashed rgba(255, 255, 255, 0.5);
+            outline-offset: 0.125rem;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Fényhatás */
+            animation: pulse 2s infinite; /* Pulzáló animáció */
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
             }
-
-            .style-selector-list button.active,
-            .style-selector-default-theme button.active {
-                background-color:  rgba(0, 0, 0, 0.5);
-                color:             rgba(255, 255, 255, 1);
-                transform:         scale(1.2);
-                transition:        background-color 1s ease-in-out, text-shadow 1s ease-in-out, transform 0.5s ease-in-out;
+            50% {
+                box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
             }
-
-            .style-selector-list button:focus,
-            .style-selector-default-theme button:focus {
-                outline:         0.125rem dashed rgba(255, 255, 255, 0.5);
-                outline-offset:  0.125rem;
+            100% {
+                box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
             }
+        }
 
 
 /*  ========================================================================  *\
