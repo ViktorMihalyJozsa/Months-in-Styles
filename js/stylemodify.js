@@ -177,29 +177,31 @@ function updateHeaderTitle(sheet) {
     // Fejléc cím frissítése
     const headerTitle = document.getElementById('header-title');
     const headerContent = document.getElementById('header-content');
-
+  
     if (headerTitle) {
       headerTitle.textContent = newTitle;
     }
-
+  
     if (headerContent) {
+      const sanitize = (str) => str.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      const safeTitle = sanitize(newTitle);
       headerContent.innerHTML = `
         <h3>Welcome to the:</h3>
-        <h1>${newTitle}</h1>
-      `; // HTML tartalom frissítése
+        <h1>${safeTitle}</h1>
+      `; // HTML tartalom frissítése biztonságosan
     }
-
+  
     // Megjelenés animáció
     headerElements.forEach(element => {
       element.classList.remove('fade-out');
       element.classList.add('fade-in');
     });
-
+  
     setTimeout(() => {
       // Animáció osztály eltávolítása
       headerElements.forEach(element => element.classList.remove('fade-in'));
     }, FADE_DURATION);
-
+  
   }, FADE_DURATION);
 }
 
