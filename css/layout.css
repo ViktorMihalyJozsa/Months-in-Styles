@@ -33,6 +33,12 @@
 }
 
 html, body {
+    display:  grid;
+    grid-template-columns: 1fr;
+    grid-template-rows:    1fr;
+    grid-template-areas:  "header" "aside" "footer";
+    grid-gap: 0vh 0vw;
+
     width:    100%;
     height:   100vh;
     margin:   0 auto;
@@ -52,7 +58,8 @@ header, aside, footer {transition: background-color 1s ease-in-out;}
 
 /* Alapértelmezett állapot */
 header {
-    position:       absolute;
+    grid-area:      header;
+    position:       fixed;
     top:            0;
     left:           0;
 
@@ -169,7 +176,8 @@ header {
 \*  ========================================================================  */
 
 aside {
-    position:       absolute;
+    grid-area:      aside;
+    position:       fixed;
     top:            23vh;
     right:          0;
 
@@ -301,7 +309,8 @@ aside {
 \*  ========================================================================  */
 
 footer {
-    position:       absolute;
+    grid-area:      footer;
+    position:       fixed;
     bottom:         0;
     left:           0;
 
