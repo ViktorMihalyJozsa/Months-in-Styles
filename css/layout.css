@@ -34,7 +34,7 @@
 
 html, body {
     width:    100%;
-    height:   100%;
+    height:   100vh;
     margin:   0 auto;
     padding:  0 auto;
 }
@@ -170,7 +170,7 @@ header {
 
 aside {
     position:       absolute;
-    top:            24vh;
+    top:            23vh;
     right:          0;
 
     width:          auto;
