@@ -13,5 +13,12 @@ body {
 
 /* Header, aside, footer háttér szín */
 header, aside, footer {
-    background-color:  rgba(65, 105, 225, 0.8);
+    background-color:  rgba(65, 105, 225, 0.75);
+}
+
+/* Header, aside, footer szöveg szín */
+main h2, main p {
+    color:        rgba(0, 0, 255, 0.5);
+    text-shadow:  -0.125rem -0.125rem rgba(0, 0, 0, 0.625), 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.625);
+    transition:   color 1s ease-in-out, text-shadow 1s ease-in-out;
 }

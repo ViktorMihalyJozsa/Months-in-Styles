@@ -9,6 +9,13 @@ body {
     background-attachment:  fixed;
     background-position:    center;
 }
+
 header, aside, footer {
-    background-color:  rgba(218, 165, 32, 0.8);
+    background-color:  rgba(218, 165, 32, 0.75);
+}
+
+main h2, main p {
+    color:        rgba(255, 255, 0, 0.75);
+    text-shadow:  -0.125rem -0.125rem rgba(0, 0, 0, 0.625), 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.625);
+    transition:   color 1s ease-in-out, text-shadow 1s ease-in-out;
 }
