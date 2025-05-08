@@ -174,7 +174,7 @@ aside {
     top:            20vh;      /* 20vh a fejléc alatt */
     right:          0;
 
-    width:          30vw;
+    width:          auto;
     height:         auto;
     margin:         0 auto;
     padding:        0vh 0vw 1vh 1vw;
@@ -210,6 +210,12 @@ aside {
 
     .style-selector-list,
     .style-selector-default-theme {
+        display:          flex;
+        flex-direction:   column;
+        justify-content:  center;
+        align-items:      center;
+        text-align:       center;
+
         width:       auto;
         height:      auto;
         margin:      0 auto;
@@ -234,7 +240,7 @@ aside {
             width:             100%;	
             height:            auto;
             margin:            0 auto;
-            padding:           0 auto;
+            padding:           0vh 2vw 0vh 2vw;
 
             border-top:        0.25rem solid rgba(0, 0, 0, 0.5);    /* 4px */
             border-left:       0.125rem solid rgba(0, 0, 0, 0.5);   /* 2px */
