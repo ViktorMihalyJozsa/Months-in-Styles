@@ -48,11 +48,11 @@ body {
 
 @media screen and (max-width: 768px) {
     body {
-        grid-template-columns:  1fr 1fr 1fr 1.5fr 1.5fr;             /* Mobil nézetben négy oszlop */
+        grid-template-columns:  1fr 1fr 1fr 1fr 2fr;             /* Mobil nézetben négy oszlop */
         grid-template-rows:     auto auto auto;                  /* Mobil nézetben három sor */
         grid-template-areas:    "header header header header ."  /* Mobil nézetben a területek elrendezése */
                                 "main main main aside aside"     /* Mobil nézetben a területek elrendezése */
-                                "footer footer footer . .";      /* Mobil nézetben a területek elrendezése */
+                                "footer footer footer footer .";      /* Mobil nézetben a területek elrendezése */
     }
 }
 
@@ -96,6 +96,9 @@ header {
         grid-area:      header;  /* Grid elrendezésben a fejléc terület */
         grid-column:    1 / span 4;  /* A fejléc a 1. és 3. oszlopban helyezkedik el */
         grid-row:       1;  /* A fejléc az első sorban helyezkedik el */
+
+        width:          100%;  /* Automatikus szélesség */
+        height:         auto;  /* Automatikus magasság */
     }
 }
 
@@ -397,8 +400,11 @@ footer {
 @media screen and (max-width: 768px) {
     footer {
         grid-area:      footer;      /* Grid elrendezésben a footer terület */
-        grid-column:    1 / span 3;  /* A lábléc a 1. és 3. oszlopban helyezkedik el */
+        grid-column:    1 / span 4;  /* A lábléc a 1. és a 4. oszlopban helyezkedik el */
         grid-row:       3;           /* A lábléc a harmadik sorban helyezkedik el */
+
+        width:          100%;  /* Teljes szélesség */
+        height:         auto;  /* Automatikus magasság */
     }
 }
 
