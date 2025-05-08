@@ -48,11 +48,11 @@ body {
 
 @media screen and (max-width: 768px) {
     body {
-        grid-template-columns:  1fr 1fr 1fr 1fr;          /* Mobil nézetben négy oszlop */
-        grid-template-rows:     auto auto auto;           /* Mobil nézetben három sor */
-        grid-template-areas:    "header header header ."  /* Mobil nézetben a területek elrendezése */
-                                "main main aside aside"   /* Mobil nézetben a területek elrendezése */
-                                "footer footer . .";      /* Mobil nézetben a területek elrendezése */
+        grid-template-columns:  1fr 1fr 1fr 1.5fr 1.5fr;             /* Mobil nézetben négy oszlop */
+        grid-template-rows:     auto auto auto;                  /* Mobil nézetben három sor */
+        grid-template-areas:    "header header header header ."  /* Mobil nézetben a területek elrendezése */
+                                "main main main aside aside"     /* Mobil nézetben a területek elrendezése */
+                                "footer footer footer . .";      /* Mobil nézetben a területek elrendezése */
     }
 }
 
@@ -70,10 +70,10 @@ header, main, aside, footer {transition: background-color 1s ease-in-out;}
 /* Alapértelmezett állapot */
 header {
     grid-area:      header;  /* Grid elrendezésben a fejléc terület */
-    grid-column:    1 / span 3;  /* A fejléc a 1. és 3. oszlopban helyezkedik el */
+    grid-column:    1 / span 3;  /* A fejléc a 1. és 4. oszlopban helyezkedik el */
     grid-row:       1;  /* A fejléc az első sorban helyezkedik el */
 
-    width:          100%; /* Automatikus szélesség */
+    width:          100%;  /* Automatikus szélesség */
     height:         21.25vh;
     margin:         0;
     padding:        0vh 5vw 0vh 5vw;
@@ -94,7 +94,7 @@ header {
 @media screen and (max-width: 768px) {
     header {
         grid-area:      header;  /* Grid elrendezésben a fejléc terület */
-        grid-column:    1 / span 3;  /* A fejléc a 1. és 3. oszlopban helyezkedik el */
+        grid-column:    1 / span 4;  /* A fejléc a 1. és 3. oszlopban helyezkedik el */
         grid-row:       1;  /* A fejléc az első sorban helyezkedik el */
     }
 }
@@ -134,10 +134,10 @@ header {
             text-align:      center;
 
             font-family:     "Shadows Into Light", cursive;
-            font-size:       clamp(2rem, 3vw, 3rem);
+            font-size:       clamp(1.8rem, 3vw, 3rem);
             font-weight:     bold;
-            letter-spacing:  clamp(0.25rem, 1vw, 1rem);
-            line-height:     clamp(2.2rem, 3.3vw, 3.3rem);
+            letter-spacing:  clamp(0.6rem, 1vw, 1rem);
+            line-height:     clamp(2rem, 3.3vw, 3.3rem);
             color:           rgba(255, 255, 255, 1);
             text-shadow:     -0.2rem -0.2rem rgba(0, 0, 0, 0.625), 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.625);
 
@@ -149,10 +149,10 @@ header {
             text-align:      left;
 
             font-family:     "Shadows Into Light", cursive;
-            font-size:       clamp(1.25rem, 2vw, 2rem);
+            font-size:       clamp(1.2rem, 2vw, 2rem);
             font-weight:     bold;
-            letter-spacing:  clamp(0.125rem, 0.2vw, 0.2rem);
-            line-height:     clamp(1.5rem, 2.2vw, 2.2rem);
+            letter-spacing:  clamp(0.12rem, 0.2vw, 0.2rem);
+            line-height:     clamp(1.32rem, 2.2vw, 2.2rem);
             color:           rgba(255, 255, 255, 1);
             text-shadow:     -0.125rem -0.125rem rgba(0, 0, 0, 0.625), 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.625);
         }
@@ -214,7 +214,7 @@ main {
 @media screen and (max-width: 768px) {
     main {
         grid-area:    main;  /* Grid elrendezésben a fő tartalom terület */
-        grid-column:  1 / span 2;  /* A fő tartalom a 1. és 2. oszlopban helyezkedik el */
+        grid-column:  1 / span 3;  /* A fő tartalom a 1. és 3. oszlopban helyezkedik el */
         grid-row:     2;  /* A fő tartalom a második sorban helyezkedik el */
 
         margin:       5vh 0vw 5vh 0vw; /* Mobil nézetben a margó beállítása */
@@ -227,9 +227,9 @@ main {
 \*  ========================================================================  */
 
 aside {
-    grid-area:      aside;  /* Grid elrendezésben az aside terület */
-    grid-column:    5;  /* Az aside a 5. oszlopban helyezkedik el */
-    grid-row:       2 / span 2;  /* Az aside a második és harmadik sorban helyezkedik el */
+    grid-area:      aside;       /* Grid elrendezésben az aside terület */
+    grid-column:    5;           /* Az aside a 5. oszlopban helyezkedik el */
+    grid-row:       2 / span 2;  /* Az aside a 2. és 3. sorban helyezkedik el */
 
     width:          100%; /* Teljes szélesség */
     height:         75vh;
@@ -247,9 +247,9 @@ aside {
 
 @media screen and (max-width: 768px) {
     aside {
-        grid-area:      aside;  /* Grid elrendezésben az aside terület */
-        grid-column:    3 / span 2;  /* Az aside a 3. és 4. oszlopban helyezkedik el */
-        grid-row:       2;  /* Az aside a második sorban helyezkedik el */
+        grid-area:      aside;       /* Grid elrendezésben az aside terület */
+        grid-column:    4 / span 2;  /* Az aside a 4. és 5. oszlopban helyezkedik el */
+        grid-row:       2;           /* Az aside a 2. sorban helyezkedik el */
 
         width:          100%; /* Teljes szélesség */
         height:         70vh;
@@ -396,19 +396,19 @@ footer {
 
 @media screen and (max-width: 768px) {
     footer {
-        grid-area:      footer;  /* Grid elrendezésben a footer terület */
+        grid-area:      footer;      /* Grid elrendezésben a footer terület */
         grid-column:    1 / span 3;  /* A lábléc a 1. és 3. oszlopban helyezkedik el */
-        grid-row:       3;  /* A lábléc a harmadik sorban helyezkedik el */
+        grid-row:       3;           /* A lábléc a harmadik sorban helyezkedik el */
     }
 }
 
     main p,
     footer p {
         font-family:     "Shadows Into Light", cursive;
-        font-size:       clamp(1rem, 1.25vw, 1.25rem);
+        font-size:       clamp(0.75rem, 1.25vw, 1.25rem);
         font-weight:     bold;
         letter-spacing:  clamp(0.1rem, 0.125vw, 0.125rem);
-        line-height:     clamp(2rem, 2.5vw, 2.5rem);
+        line-height:     clamp(1.5rem, 2.5vw, 2.5rem);
         color:           rgba(255, 255, 255, 1);
         text-shadow:     -0.125rem -0.125rem rgba(0, 0, 0, 0.625), 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.625);
         transition:      color 1s ease-in-out, text-shadow 1s ease-in-out;

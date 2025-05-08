@@ -166,7 +166,7 @@ function updateHeaderTitle(sheet) {
   const monthIndex = monthToStyle.indexOf(sheet);
   const newTitle = monthIndex !== -1
     ? `${monthNames[monthIndex]} Style`
-    : 'Months in Styles';
+    : 'Monthly Styles';
 
   log('Új cím:', newTitle);
 
@@ -186,7 +186,7 @@ function updateHeaderTitle(sheet) {
       const sanitize = (str) => str.replace(/</g, "&lt;").replace(/>/g, "&gt;");
       const safeTitle = sanitize(newTitle);
       headerContent.innerHTML = `
-        <h3>Welcome to the:</h3>
+        <h3>Welcome</h3>
         <h1>${safeTitle}</h1>
       `; // HTML tartalom frissítése biztonságosan
     }
