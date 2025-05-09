@@ -48,11 +48,11 @@ body {
 
 @media screen and (max-width: 768px) {
     body {
-        grid-template-columns:  1fr 1fr 1fr 1fr 2fr;             /* Mobil nézetben négy oszlop */
+        grid-template-columns:  1fr 1fr 1fr 2fr 1fr;             /* Mobil nézetben négy oszlop */
         grid-template-rows:     auto auto auto;                  /* Mobil nézetben három sor */
         grid-template-areas:    "header header header header ."  /* Mobil nézetben a területek elrendezése */
                                 "main main main aside aside"     /* Mobil nézetben a területek elrendezése */
-                                "footer footer footer footer .";      /* Mobil nézetben a területek elrendezése */
+                                "footer footer footer . .";      /* Mobil nézetben a területek elrendezése */
     }
 }
 
@@ -69,9 +69,9 @@ header, main, aside, footer {transition: background-color 1s ease-in-out;}
 
 /* Alapértelmezett állapot */
 header {
-    grid-area:      header;  /* Grid elrendezésben a fejléc terület */
-    grid-column:    1 / span 3;  /* A fejléc a 1. és 4. oszlopban helyezkedik el */
-    grid-row:       1;  /* A fejléc az első sorban helyezkedik el */
+    grid-area:      header;      /* Grid elrendezésben a fejléc terület */
+    grid-column:    1 / span 3;  /* A fejléc a 1. és 3. oszlopban helyezkedik el */
+    grid-row:       1;           /* A fejléc az első sorban helyezkedik el */
 
     width:          100%;  /* Automatikus szélesség */
     height:         21.25vh;
@@ -103,37 +103,44 @@ header {
 }
 
     #header-content {
-        width:       100%;
-        height:      auto;
-        margin:      0;
-        padding:     1vh 0.5vw 1vh 0.5vw;
-
-        /*background-color:  aqua;  /* Csak teszteléshez */
+        width:    100%;
+        height:   auto;
+        margin:   0;
+        padding:  1vh 0.5vw 1vh 0.5vw;
+        /* background-color: aqua; /* Csak teszthez */
     }
 
-    #header-content,
-    #header-welcome-text,
-    #header-title {
-        opacity:     1; /* Alapértelmezett láthatóság */
-        transform:   scale(1); /* Alapértelmezett méret */
-        transition:  opacity 1s ease-in-out, transform 1s ease-in-out; /* Átmenet az opacity és transform változására */
-    }
+        /* #header-welcome-text és #header-title külön-külön animálódjon */
+        #header-welcome-text,
+        #header-title {
+            opacity:     1;
+            transform:   scale(1);
+            transition:  opacity 1s ease-in-out, transform 1s ease-in-out;
+        }
 
-    #header-content.fade-out,
-    #header-welcome-text.fade-out,
-    #header-title.fade-out {
-        opacity:           0; /* Eltűnés */
-        transform:         scale(0.8); /* Kicsinyítés */
-        transform-origin:  center center; /* Az animáció középről induljon */
-    }
+            #header-welcome-text.fade-out {
+                opacity:           0;
+                transform:         scale(0.6);
+                transform-origin:  left right;
+            }
 
-    #header-content.fade-in,
-    #header-welcome-text.fade-in,
-    #header-title.fade-in {
-        opacity:           1; /* Megjelenés */
-        transform:         scale(1); /* Eredeti méret */
-        transform-origin:  center center; /* Az animáció középről induljon */
-    }
+            #header-title.fade-out {
+                opacity:           0;
+                transform:         scale(0.6);
+                transform-origin:  center left;
+            }
+
+            #header-welcome-text.fade-in {
+                opacity:           1;
+                transform:         scale(1);
+                transform-origin:  right left;
+            }
+
+            #header-title.fade-in {
+                opacity:           1;
+                transform:         scale(1);
+                transform-origin:  right center;
+            }
 
         header h1 {
             text-transform:  uppercase;
@@ -199,9 +206,9 @@ header {
 \*  ========================================================================  */
 
 main {
-    grid-area:      main;  /* Grid elrendezésben a fő tartalom terület */
+    grid-area:      main;        /* Grid elrendezésben a fő tartalom terület */
     grid-column:    1 / span 4;  /* A fő tartalom a 1. és 4. oszlopban helyezkedik el */
-    grid-row:       2;  /* A fő tartalom a második sorban helyezkedik el */
+    grid-row:       2;           /* A fő tartalom a második sorban helyezkedik el */
 
     display:          flex;  /* Flexbox elrendezés */
     flex-direction:   column;  /* Oszlop irányú elrendezés */
@@ -219,9 +226,9 @@ main {
 
 @media screen and (max-width: 768px) {
     main {
-        grid-area:    main;  /* Grid elrendezésben a fő tartalom terület */
+        grid-area:    main;        /* Grid elrendezésben a fő tartalom terület */
         grid-column:  1 / span 3;  /* A fő tartalom a 1. és 3. oszlopban helyezkedik el */
-        grid-row:     2;  /* A fő tartalom a második sorban helyezkedik el */
+        grid-row:     2;           /* A fő tartalom a második sorban helyezkedik el */
 
         margin:       5vh 0vw 5vh 0vw; /* Mobil nézetben a margó beállítása */
     }
@@ -385,7 +392,7 @@ aside {
 
 footer {
     grid-area:      footer;  /* Grid elrendezésben a footer terület */
-    grid-column:    1 / span 2;  /* A lábléc a 1. és 2. oszlopban helyezkedik el */
+    grid-column:    1 / span 2;  /* A lábléc a 1. és a 2. oszlopban helyezkedik el */
     grid-row:       3;  /* A lábléc a harmadik sorban helyezkedik el */
 
     text-align:     center;  /* Szöveg középre igazítása */
@@ -406,7 +413,7 @@ footer {
 @media screen and (max-width: 768px) {
     footer {
         grid-area:      footer;      /* Grid elrendezésben a footer terület */
-        grid-column:    1 / span 4;  /* A lábléc a 1. és a 4. oszlopban helyezkedik el */
+        grid-column:    1 / span 3;  /* A lábléc a 1. és a 3. oszlopban helyezkedik el */
         grid-row:       3;           /* A lábléc a harmadik sorban helyezkedik el */
 
         width:          100%;  /* Teljes szélesség */

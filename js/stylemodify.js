@@ -155,14 +155,14 @@ function setupEventListeners() {
 }
 
 // --- Fejléc cím animáció ---------------------------------------------------
-// A fejléc címének frissítése és animálása
-function updateHeaderTitle(sheet) {
+function updateHeaderTitle(sheet) { 
   log('updateHeaderTitle hívás:', sheet);
 
-  // Fejléc elemek kiválasztása
-  const headerElements = document.querySelectorAll('#header-content, #header-welcome-text, #header-title');
-  if (!headerElements.length) {
-    error('A fejléc elemek nem találhatók!');
+  // Fejléc elemek kiválasztása (csak a szövegelemek)
+  const headerWelcomeText = document.getElementById('header-welcome-text');
+  const headerTitle = document.getElementById('header-title');
+  if (!headerWelcomeText || !headerTitle) {
+    error('A fejléc szövegelemek nem találhatók!');
     return;
   }
 
@@ -175,44 +175,26 @@ function updateHeaderTitle(sheet) {
   log('Új cím:', newTitle);
 
   // Eltűnés animáció
-  headerElements.forEach(element => element.classList.add('fade-out'));
+  headerWelcomeText.classList.add('fade-out');
+  headerTitle.classList.add('fade-out');
 
   setTimeout(() => {
-    const headerContent = document.getElementById('header-content');
-    const headerWelcomeText = document.getElementById('header-welcome-text');
-    const headerTitle = document.getElementById('header-title');
-
     const welcomeText = 'Welcome';
 
-    if (headerContent) {
-      // Üresre állítjuk, majd létrehozunk elemeket biztonságosan
-      headerContent.innerHTML = ''; 
-      const h2 = document.createElement('h2');
-      h2.textContent = welcomeText;
-
-      const h1 = document.createElement('h1');
-      h1.textContent = newTitle;
-
-      headerContent.appendChild(h2);
-      headerContent.appendChild(h1);
-    }
-
-    if (headerWelcomeText) {
-      headerWelcomeText.textContent = welcomeText;
-    }
-
-    if (headerTitle) {
-      headerTitle.textContent = newTitle;
-    }
+    // Szövegek frissítése
+    headerWelcomeText.textContent = welcomeText;
+    headerTitle.textContent = newTitle;
 
     // Megjelenés animáció
-    headerElements.forEach(element => {
-      element.classList.remove('fade-out');
-      element.classList.add('fade-in');
-    });
+    headerWelcomeText.classList.remove('fade-out');
+    headerWelcomeText.classList.add('fade-in');
+    headerTitle.classList.remove('fade-out');
+    headerTitle.classList.add('fade-in');
 
+    // Animációs osztályok törlése a végén
     setTimeout(() => {
-      headerElements.forEach(element => element.classList.remove('fade-in'));
+      headerWelcomeText.classList.remove('fade-in');
+      headerTitle.classList.remove('fade-in');
     }, FADE_DURATION);
 
   }, FADE_DURATION);
