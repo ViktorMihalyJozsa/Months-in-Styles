@@ -48,7 +48,7 @@ body {
 
 @media screen and (max-width: 768px) {
     body {
-        grid-template-columns:  1fr 1fr 1fr 2fr 1fr;             /* Mobil nézetben négy oszlop */
+        grid-template-columns:  2fr 2fr 2fr 2fr 2fr;             /* Mobil nézetben négy oszlop */
         grid-template-rows:     auto auto auto;                  /* Mobil nézetben három sor */
         grid-template-areas:    "header header header header ."  /* Mobil nézetben a területek elrendezése */
                                 "main main main aside aside"     /* Mobil nézetben a területek elrendezése */
