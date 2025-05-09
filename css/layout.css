@@ -112,6 +112,7 @@ header {
     }
 
     #header-content,
+    #header-welcome-text,
     #header-title {
         opacity:     1; /* Alapértelmezett láthatóság */
         transform:   scale(1); /* Alapértelmezett méret */
@@ -119,6 +120,7 @@ header {
     }
 
     #header-content.fade-out,
+    #header-welcome-text.fade-out,
     #header-title.fade-out {
         opacity:           0; /* Eltűnés */
         transform:         scale(0.8); /* Kicsinyítés */
@@ -126,6 +128,7 @@ header {
     }
 
     #header-content.fade-in,
+    #header-welcome-text.fade-in,
     #header-title.fade-in {
         opacity:           1; /* Megjelenés */
         transform:         scale(1); /* Eredeti méret */
@@ -147,7 +150,7 @@ header {
             /*background-color: aqua;  /* Csak teszteléshez */
         }
 
-        header h3 {
+        header h2 {
             text-transform:  uppercase;
             text-align:      left;
 
@@ -272,8 +275,8 @@ aside {
         border-bottom:   0.125rem solid rgba(0, 0, 0, 0.25);   /* 2px */
     }
 
-        main h2,
-        aside h2 {
+        main h3,
+        aside h3 {
             font-family:     "Shadows Into Light", cursive;
             font-size:       clamp(1.25rem, 1.75vw, 1.75rem);
             font-weight:     bold;
@@ -284,8 +287,8 @@ aside {
             transition:      color 1s ease-in-out, text-shadow 1s ease-in-out;
         }
 
-    .style-selector-list,
-    .style-selector-default-theme {
+    .style-selector-list-one,
+    .style-selector-list-two {
         display:                     flex;
         flex-direction:              column;
         justify-content:             center;
@@ -304,13 +307,13 @@ aside {
         -webkit-overflow-scrolling:  touch; /* Safari és iOS: gördülés támogatása */
     }
         
-    .style-selector-list::-webkit-scrollbar,
-    .style-selector-default-theme::-webkit-scrollbar {
+    .style-selector-list-one::-webkit-scrollbar,
+    .style-selector-list-two::-webkit-scrollbar {
         display:  none; /* Webkit-alapú böngészőkben (Chrome, Safari) scrollbar eltüntetése */
     }
 
-        .style-selector-list button,
-        .style-selector-default-theme button {
+        .style-selector-list-one button,
+        .style-selector-list-two button {
             cursor:            pointer;
             
             width:             100%;	
@@ -324,7 +327,10 @@ aside {
 
             background-color:  rgba(240, 240, 240, 0.5);
             transition:        background-color 1s, transform 0.5s;
+        }
 
+        .style-selector-list-one button,
+        .style-selector-list-two button {
             font-family:       "Shadows Into Light", cursive;
             font-size:         clamp(1rem, 1.25vw, 1.25rem);
             font-weight:       bold;
@@ -333,8 +339,8 @@ aside {
             color:             rgba(0, 0, 0, 0.75);
         }
 
-        .style-selector-list button:hover,
-        .style-selector-default-theme button:hover {
+        .style-selector-list-one button:hover,
+        .style-selector-list-two button:hover {
             background-color:  rgba(50, 50, 50, 0.8); /* Sötétebb háttérszín */
             color:             rgba(255, 255, 255, 1);
             transform:         scale(1.2);
@@ -342,8 +348,8 @@ aside {
             transition:        background-color 1s ease, transform 0.5s ease;
         }
 
-        .style-selector-list button.active,
-        .style-selector-default-theme button.active {
+        .style-selector-list-one button.active,
+        .style-selector-list-two button.active {
             background:      linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(50, 50, 50, 0.5));
             color:           rgba(255, 255, 255, 1);
             transform:       scale(1.2);
@@ -352,8 +358,8 @@ aside {
             transition:      background-color 1s ease, transform 0.5s ease;
         }
 
-        .style-selector-list button:focus,
-        .style-selector-default-theme button:focus {
+        .style-selector-list-one button:focus,
+        .style-selector-list-two button:focus {
             outline:         0.125rem dashed rgba(255, 255, 255, 0.5);
             outline-offset:  0.125rem;
             box-shadow:      0 0 10px rgba(255, 255, 255, 0.8); /* Fényhatás */

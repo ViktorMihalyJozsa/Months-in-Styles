@@ -13,13 +13,16 @@
 
 \* ======================================================================== */
 
-// --- Debug mód kapcsoló ---------------------------------------------------
-const debugMode = true;
-
+// --- Debug ONE mód kapcsoló ---------------------------------------------------
+const debugModeOne = true; // true: hibakeresés engedélyezve, false: kikapcsolva
 // --- Segédfüggvények naplózáshoz ------------------------------------------
-function log(...args) { if (debugMode) console.log(...args); }
-function warn(...args) { if (debugMode) console.warn(...args); }
-function error(...args) { if (debugMode) console.error(...args); }
+function log(...args) { if (debugModeOne) console.log(...args); }
+
+// --- Debug mód TWO kapcsoló ---------------------------------------------------
+const debugModeTwo = true; // true: hibakeresés engedélyezve, false: kikapcsolva
+// --- Segédfüggvények naplózáshoz ------------------------------------------
+function warn(...args) { if (debugModeTwo) console.warn(...args); }
+function error(...args) { if (debugModeTwo) console.error(...args); }
 
 // --- Globális változók ----------------------------------------------------
 const monthNames = [
@@ -110,7 +113,7 @@ function loadTheme(href) {
       };
 
       // Téma betöltése
-      console.log(`Téma betöltése: ${href}`);
+      log(`Téma betöltése: ${href}`);
       linkEl.setAttribute('href', href);
       localStorage.setItem('selectedStyle', href);
 
@@ -133,7 +136,7 @@ function applyActiveAndTitle(sheet) {
 
 // --- Eseménykezelők -----------------------------------------------------
 function setupEventListeners() {
-  const items = document.querySelectorAll('.style-selector-list button, .style-selector-default-theme button');
+  const items = document.querySelectorAll('.style-selector-list-one button, .style-selector-list-two button');
 
   if (!items.length) {
     warn('Nincs stílusválasztó elem!');
@@ -151,12 +154,13 @@ function setupEventListeners() {
   });
 }
 
-// --- Fejléc cím animáció ---------------------------------------------
+// --- Fejléc cím animáció ---------------------------------------------------
+// A fejléc címének frissítése és animálása
 function updateHeaderTitle(sheet) {
   log('updateHeaderTitle hívás:', sheet);
 
   // Fejléc elemek kiválasztása
-  const headerElements = document.querySelectorAll('#header-title, #header-content');
+  const headerElements = document.querySelectorAll('#header-content, #header-welcome-text, #header-title');
   if (!headerElements.length) {
     error('A fejléc elemek nem találhatók!');
     return;
@@ -174,40 +178,49 @@ function updateHeaderTitle(sheet) {
   headerElements.forEach(element => element.classList.add('fade-out'));
 
   setTimeout(() => {
-    // Fejléc cím frissítése
-    const headerTitle = document.getElementById('header-title');
     const headerContent = document.getElementById('header-content');
-  
+    const headerWelcomeText = document.getElementById('header-welcome-text');
+    const headerTitle = document.getElementById('header-title');
+
+    const welcomeText = 'Welcome';
+
+    if (headerContent) {
+      // Üresre állítjuk, majd létrehozunk elemeket biztonságosan
+      headerContent.innerHTML = ''; 
+      const h2 = document.createElement('h2');
+      h2.textContent = welcomeText;
+
+      const h1 = document.createElement('h1');
+      h1.textContent = newTitle;
+
+      headerContent.appendChild(h2);
+      headerContent.appendChild(h1);
+    }
+
+    if (headerWelcomeText) {
+      headerWelcomeText.textContent = welcomeText;
+    }
+
     if (headerTitle) {
       headerTitle.textContent = newTitle;
     }
-  
-    if (headerContent) {
-      const sanitize = (str) => str.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-      const safeTitle = sanitize(newTitle);
-      headerContent.innerHTML = `
-        <h3>Welcome</h3>
-        <h1>${safeTitle}</h1>
-      `; // HTML tartalom frissítése biztonságosan
-    }
-  
+
     // Megjelenés animáció
     headerElements.forEach(element => {
       element.classList.remove('fade-out');
       element.classList.add('fade-in');
     });
-  
+
     setTimeout(() => {
-      // Animáció osztály eltávolítása
       headerElements.forEach(element => element.classList.remove('fade-in'));
     }, FADE_DURATION);
-  
+
   }, FADE_DURATION);
 }
 
 // --- Aktív téma felhasználói felület frissítése ----------------------------
 function setActiveTheme(theme) {
-  const items = document.querySelectorAll('.style-selector-list button, .style-selector-default-theme button');
+  const items = document.querySelectorAll('.style-selector-list-one button, .style-selector-list-two button');
 
   items.forEach(button => {
     button.classList.remove('active');
@@ -215,7 +228,7 @@ function setActiveTheme(theme) {
   });
 
   const matches = document.querySelectorAll(
-    `.style-selector-list button[data-style="${theme}"], .style-selector-default-theme button[data-style="${theme}"]`
+    `.style-selector-list-one button[data-style="${theme}"], .style-selector-list-two button[data-style="${theme}"]`
   );
 
   if (matches.length > 0) {

@@ -17,7 +17,7 @@
 <body>
     <header>
         <div id="header-content">
-            <h3 id="header-welcome" aria-live="polite">Welcome</h3>
+            <h2 id="header-welcome-text" aria-live="polite">Welcome</h2>
             <h1 id="header-title" aria-live="polite">Monthly Styles</h1>
         </div>
         <div id="nameday-greeting">
@@ -25,8 +25,8 @@
         </div>
     </header>
     <main>
-        <div class="style-selector-text-box">
-            <h2>Dynamic CSS Theme Switcher</h2>
+        <div class="main-content">
+            <h3>Dynamic CSS Theme Switcher</h3>
             <p>Click on the buttons to change the style of the page.</p>
             <p>Each button corresponds to a different month, and the styles are applied dynamically using JavaScript.</p>
             <p>Click on the "Months in Styles" button to reset the styles to the default theme.</p>
@@ -35,9 +35,9 @@
     </main>
     <aside>
         <div class="style-selector-text-box">
-            <h2>Style selector</h2>
+            <h3>Style selector</h3>
         </div>
-        <div class="style-selector-list">
+        <div class="style-selector-list-one">
             <button data-style="css/months/001-components-january.css" aria-selected="false">January</button>
             <button data-style="css/months/002-components-february.css" aria-selected="false">February</button>
             <button data-style="css/months/003-components-march.css" aria-selected="false">March</button>
@@ -51,7 +51,7 @@
             <button data-style="css/months/011-components-november.css" aria-selected="false">November</button>
             <button data-style="css/months/012-components-december.css" aria-selected="false">December</button>
             </div>
-        <div class="style-selector-default-theme">
+        <div class="style-selector-list-two">
             <button data-style="css/default-style.css" aria-selected="false">Monthly Styles</button>
         </div>
     </aside>
