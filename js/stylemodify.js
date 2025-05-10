@@ -214,7 +214,6 @@ function setupEventListeners() {
 function updateHeaderTitle(sheet) { 
   log('updateHeaderTitle hívás:', sheet);
 
-  // Fejléc elemek kiválasztása (csak a szövegelemek)
   const headerWelcomeText = document.getElementById('header-welcome-text');
   const headerTitle = document.getElementById('header-title');
   if (!headerWelcomeText || !headerTitle) {
@@ -222,32 +221,30 @@ function updateHeaderTitle(sheet) {
     return;
   }
 
-  // Új cím meghatározása
   const monthIndex = monthToStyle.indexOf(sheet);
-  const newTitle = monthIndex !== -1
-    ? `${monthNames[monthIndex]} Style`
-    : 'Monthly Styles';
+  let newTitle;
+
+  if (monthIndex >= 0 && monthIndex < monthNames.length) {
+    newTitle = `${monthNames[monthIndex]} Style`;
+  } else {
+    newTitle = 'Monthly Styles';
+  }
 
   log('Új cím:', newTitle);
 
-  // Eltűnés animáció
+  // Animációs rész változatlan...
   headerWelcomeText.classList.add('fade-out');
   headerTitle.classList.add('fade-out');
 
   setTimeout(() => {
-    const welcomeText = 'Welcome';
-
-    // Szövegek frissítése
-    headerWelcomeText.textContent = welcomeText;
+    headerWelcomeText.textContent = 'Welcome';
     headerTitle.textContent = newTitle;
 
-    // Megjelenés animáció
     headerWelcomeText.classList.remove('fade-out');
     headerWelcomeText.classList.add('fade-in');
     headerTitle.classList.remove('fade-out');
     headerTitle.classList.add('fade-in');
 
-    // Animációs osztályok törlése a végén
     setTimeout(() => {
       headerWelcomeText.classList.remove('fade-in');
       headerTitle.classList.remove('fade-in');
