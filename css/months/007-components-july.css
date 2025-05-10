@@ -17,8 +17,13 @@ header, aside, footer {
 }
 
 /* Header, aside, footer szöveg szín */
-main h3, main p {
+main h4, main p {
     color:        orangered;
-    text-shadow:  -0.125rem -0.125rem white, 0.125rem 0.125rem black;
+    text-shadow:  -0.125rem -0.125rem black, 0.125rem 0.125rem black;
     transition:   color 1s ease-in-out, text-shadow 1s ease-in-out;
 }
+
+
+/*  ========================================================================  *\
+    E N D   O F   J U L Y   S T Y L E . C S S
+\*  ========================================================================  */

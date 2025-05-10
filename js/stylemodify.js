@@ -3,7 +3,6 @@
     S T Y L E M O D I F Y . J S
 
   -------------------------------------------------------------------------
-
     Ez a teljes kód tartalmazza:
       - A hónapokhoz tartozó stílusok kezelését.
       - A fejléc címének animációval történő frissítését.
@@ -42,8 +41,53 @@ const monthToStyle = [
   'css/months/009-components-september.css',
   'css/months/010-components-october.css',
   'css/months/011-components-november.css',
-  'css/months/012-components-december.css'
+  'css/months/012-components-december.css',
+  'css/default-style.css' // Alapértelmezett stílus
 ];
+
+// --- Idézet fájlok ---------------------------------------------------------
+const monthFiles = [
+  'quotes/001-january.html',
+  'quotes/002-february.html',
+  'quotes/003-march.html',
+  'quotes/004-april.html',
+  'quotes/005-may.html',
+  'quotes/006-june.html',
+  'quotes/007-july.html',
+  'quotes/008-august.html',
+  'quotes/009-september.html',
+  'quotes/010-october.html',
+  'quotes/011-november.html',
+  'quotes/012-december.html',
+  'quotes/default.html' // Alapértelmezett idézet fájl
+];
+
+// --- Idézet betöltése ------------------------------------------------------
+function loadQuoteFile(filename) {
+  const quoteEl = document.getElementById('month-quote');
+  if (!quoteEl) return;
+
+  // Fade out
+  quoteEl.classList.remove('fade-in');
+  quoteEl.classList.add('fade-out');
+
+  setTimeout(() => {
+    fetch(filename)
+      .then(response => response.text())
+      .then(text => {
+        quoteEl.innerHTML = text;
+        // Fade in
+        quoteEl.classList.remove('fade-out');
+        quoteEl.classList.add('fade-in');
+      })
+      .catch(err => {
+        quoteEl.textContent = 'Idézet nem elérhető.';
+        quoteEl.classList.remove('fade-out');
+        quoteEl.classList.add('fade-in');
+        console.error(err);
+      });
+  }, 1000); // 1 másodperc fade-out után töltjük be az új szöveget
+}
 
 // --- Képek előtöltése ------------------------------------------------------
 function preloadImages(imageUrls) {
@@ -95,21 +139,21 @@ function initTheme() {
 function loadTheme(href) {
   const linkEl = document.getElementById('theme-style');
   if (!linkEl) {
-      console.error('A <link> elem nem található!');
-      return;
+    console.error('A <link> elem nem található!');
+    return;
   }
 
   // CSS fájl elérhetőségének ellenőrzése fetch() segítségével
   fetch(href, { method: 'HEAD', cache: 'no-cache' })
     .then(response => {
       if (!response.ok) {
-          throw new Error(`Nem található a fájl: ${href}`);
+        throw new Error(`Nem található a fájl: ${href}`);
       }
 
       // Betöltési események kezelése
       linkEl.onload = () => {
-          console.log(`Betöltve: ${href}`);
-          applyActiveAndTitle(href);
+        console.log(`Betöltve: ${href}`);
+        applyActiveAndTitle(href);
       };
 
       // Téma betöltése
@@ -132,6 +176,18 @@ function loadTheme(href) {
 function applyActiveAndTitle(sheet) {
   setActiveTheme(sheet);
   updateHeaderTitle(sheet);
+
+  // Ha a default stílus aktív, akkor a default.html-t töltsük be
+  if (sheet === defaultStyle) {
+    loadQuoteFile('quotes/default.html');
+    return;
+  }
+
+  // Egyébként a hónaphoz tartozó idézetet
+  const monthIndex = monthToStyle.indexOf(sheet);
+  if (monthIndex >= 0) {
+    loadQuoteFile(monthFiles[monthIndex]);
+  }
 }
 
 // --- Eseménykezelők -----------------------------------------------------

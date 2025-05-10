@@ -107,15 +107,18 @@ header {
         height:   auto;
         margin:   0;
         padding:  1vh 0.5vw 1vh 0.5vw;
+
         /* background-color: aqua; /* Csak teszthez */
     }
 
-        /* #header-welcome-text és #header-title külön-külön animálódjon */
+        /* #header-welcome-text és a #header-title külön-külön animálódjon */
         #header-welcome-text,
         #header-title {
             opacity:     1;
             transform:   scale(1);
             transition:  opacity 1s ease-in-out, transform 1s ease-in-out;
+
+            /* background-color: aqua; /* Csak teszteléshez */
         }
 
             #header-welcome-text.fade-out {
@@ -168,6 +171,9 @@ header {
             line-height:     clamp(1.32rem, 2.2vw, 2.2rem);
             color:           rgba(255, 255, 255, 1);
             text-shadow:     -0.125rem -0.125rem rgba(0, 0, 0, 0.625), 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.625);
+
+            /*background-color: aqua;  /* Csak teszteléshez */
+
         }
 
     #nameday-greeting {
@@ -234,6 +240,46 @@ main {
     }
 }
 
+    #month-quote {
+    opacity:     1;
+    transition:  opacity 1s ease-in-out, transform 1s ease-in-out;
+    transform:   translateY(0);
+    }
+    #month-quote.fade-out {opacity: 0;}
+    #month-quote.fade-in  {opacity: 1;}
+
+    main h4 {
+        text-align:      right;
+        text-transform:  uppercase;
+
+        font-family:     "Shadows Into Light", cursive;
+        font-size:       clamp(1rem, 1.75vw, 1.75rem);
+        font-weight:     bold;
+        letter-spacing:  clamp(0.1rem, 0.175vw, 0.175rem);
+        line-height:     clamp(2rem, 3.5vw, 3.5rem);
+        color:           rgba(255, 255, 255, 1);
+        text-shadow:     -0.125rem -0.125rem rgba(0, 0, 0, 0.625), 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.625);
+        transition:      color 1s ease-in-out, text-shadow 1s ease-in-out;
+
+        /*background-color: aqua; /* Csak teszteléshez */
+    }
+
+    main p {
+        text-align:      center;
+        text-transform:  none;
+        
+        font-family:     "Shadows Into Light", cursive;
+        font-size:       clamp(0.75rem, 1.25vw, 1.25rem);
+        font-weight:     bold;
+        letter-spacing:  clamp(0.1rem, 0.15vw, 0.15rem);
+        line-height:     clamp(1.5rem, 2.5vw, 2.5rem);
+        color:           rgba(255, 255, 255, 1);
+        text-shadow:     -0.125rem -0.125rem rgba(0, 0, 0, 0.625), 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.625);
+        transition:      color 1s ease-in-out, text-shadow 1s ease-in-out;
+
+        /*background-color: aqua; /* Csak teszteléshez */
+    }
+
 
 /*  ========================================================================  *\
     A S I D E
@@ -265,7 +311,7 @@ aside {
         grid-row:       2;           /* Az aside a 2. sorban helyezkedik el */
 
         width:          100%; /* Teljes szélesség */
-        height:         70vh;
+        height:         auto; /* Automatikus magasság */
         margin:         5vh 0vw 5vh 0vw; /* Mobil nézetben a margó beállítása */
         padding:        0vh 0vw 1vh 1vw;
     }
@@ -283,7 +329,6 @@ aside {
         border-bottom:   0.125rem solid rgba(0, 0, 0, 0.25);   /* 2px */
     }
 
-        main h3,
         aside h3 {
             font-family:     "Shadows Into Light", cursive;
             font-size:       clamp(1rem, 1.75vw, 1.75rem);
@@ -422,7 +467,6 @@ footer {
     }
 }
 
-    main p,
     footer p {
         font-family:     "Shadows Into Light", cursive;
         font-size:       clamp(0.75rem, 1.25vw, 1.25rem);

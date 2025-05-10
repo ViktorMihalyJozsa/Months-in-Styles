@@ -17,8 +17,13 @@ header, aside, footer {
 }
 
 /* Header, aside, footer szöveg szín */
-main h3, main p {
-    color:        rgba(50, 205, 50, 1);
-    text-shadow:  -0.125rem -0.125rem white, 0.125rem 0.125rem black;
+main h4, main p {
+    color:        lime;
+    text-shadow:  -0.125rem -0.125rem black, 0.125rem 0.125rem black;
     transition:   color 1s ease-in-out, text-shadow 1s ease-in-out;
 }
+
+
+/*  ========================================================================  *\
+    E N D   O F   A P R I L   S T Y L E . C S S
+\*  ========================================================================  */
