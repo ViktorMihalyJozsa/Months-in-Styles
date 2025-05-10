@@ -17,8 +17,8 @@ header, aside, footer {
 }
 
 /* Header, aside, footer szöveg szín */
-main h2, main p {
-    color:        rgba(0, 0, 255, 0.5);
+main h3, main p {
+    color:        rgba(0, 0, 255, 1);
     text-shadow:  -0.125rem -0.125rem rgba(0, 0, 0, 0.625), 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.625);
     transition:   color 1s ease-in-out, text-shadow 1s ease-in-out;
 }

@@ -2,6 +2,7 @@
     F I R S T   S T Y L E . C S S
 \*  ========================================================================  */
 
+/* Alap háttérkép */
 body {
     background-image:       url('../images/000-background-first.webp');
     background-size:        cover;
@@ -10,12 +11,14 @@ body {
     background-position:    center;
 }
 
+/* Header, aside, footer háttér szín */
 header, aside, footer {
     background-color:  rgba(218, 165, 32, 0.75);
 }
 
-main h2, main p {
-    color:        rgba(255, 255, 0, 0.75);
+/* Header, aside, footer szöveg szín */
+main h3, main p {
+    color:        rgba(255, 255, 0, 1);
     text-shadow:  -0.125rem -0.125rem rgba(0, 0, 0, 0.625), 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.625);
     transition:   color 1s ease-in-out, text-shadow 1s ease-in-out;
 }
