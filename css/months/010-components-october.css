@@ -19,6 +19,6 @@ header, aside, footer {
 /* Header, aside, footer szöveg szín */
 main h3, main p {
     color:        rgba(222, 184, 135, 1);
-    text-shadow:  -0.125rem -0.125rem rgba(0, 0, 0, 0.625), 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.625);
+    text-shadow:  -0.125rem -0.125rem white, 0.125rem 0.125rem black;
     transition:   color 1s ease-in-out, text-shadow 1s ease-in-out;
 }
