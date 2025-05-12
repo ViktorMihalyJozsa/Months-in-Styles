@@ -255,6 +255,7 @@ main {
         font-family:     "Shadows Into Light", cursive;
         font-size:       clamp(1rem, 1.75vw, 1.75rem);
         font-weight:     bold;
+        font-style:      italic;
         letter-spacing:  clamp(0.1rem, 0.175vw, 0.175rem);
         line-height:     clamp(2rem, 3.5vw, 3.5rem);
         color:           rgba(255, 255, 255, 1);
@@ -271,7 +272,7 @@ main {
         font-family:     "Shadows Into Light", cursive;
         font-size:       clamp(0.75rem, 1.25vw, 1.25rem);
         font-weight:     bold;
-        letter-spacing:  clamp(0.1rem, 0.15vw, 0.15rem);
+        letter-spacing:  clamp(0.15rem, 0.25vw, 0.25rem);
         line-height:     clamp(1.5rem, 2.5vw, 2.5rem);
         color:           rgba(255, 255, 255, 1);
         text-shadow:     -0.125rem -0.125rem rgba(0, 0, 0, 0.625), 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.625);
@@ -290,10 +291,10 @@ aside {
     grid-column:    5;           /* Az aside a 5. oszlopban helyezkedik el */
     grid-row:       2 / span 2;  /* Az aside a 2. és 3. sorban helyezkedik el */
 
-    width:          100%; /* Teljes szélesség */
-    height:         75vh;
-    margin:         0;
-    padding:        0vh 0vw 1vh 1vw;
+    width:          4.5fr; /* Teljes szélesség */
+    height:         auto; /* Automatikus magasság */
+    margin:         0vh 0vw 2vh 0vw;
+    padding:        0vh 2vw 0vh 2vw;
 
     border-top:     0.375rem solid rgba(0, 0, 0, 0.5);   /* 6px */
     border-bottom:  0.0625rem solid rgba(0, 0, 0, 0.5);  /* 1px */
@@ -310,7 +311,7 @@ aside {
         grid-column:    4 / span 3;  /* Az aside a 4. 5. 6. oszlopban helyezkedik el */
         grid-row:       2;           /* Az aside a 2. sorban helyezkedik el */
 
-        width:          100%; /* Teljes szélesség */
+        width:          3fr; /* Teljes szélesség */
         height:         auto; /* Automatikus magasság */
         margin:         5vh 0vw 5vh 0vw; /* Mobil nézetben a margó beállítása */
         padding:        0vh 0vw 1vh 1vw;
@@ -321,10 +322,10 @@ aside {
         text-align:      center;
         text-transform:  uppercase;
 
-        width:           auto;
+        width:           4.5fr; /* Teljes szélesség */
         height:          auto;
-        margin:          2vh 0vw 1vh 2vw;
-        padding:         0vh 2vw 1vh 1vw;
+        margin:          0vh 0vw 0vh 0vw;
+        padding:         2vh 0vw 1vh 0vw;
 
         border-bottom:   0.125rem solid rgba(0, 0, 0, 0.25);   /* 2px */
     }
@@ -333,103 +334,101 @@ aside {
             font-family:     "Shadows Into Light", cursive;
             font-size:       clamp(1rem, 1.75vw, 1.75rem);
             font-weight:     bold;
-            letter-spacing:  clamp(0.1rem, 0.175vw, 0.175rem);
+            letter-spacing:  clamp(0.2rem, 0.3vw, 0.3rem);
             line-height:     clamp(2rem, 3vw, 3rem);
             color:           rgba(255, 255, 255, 1);
             text-shadow:     -0.125rem -0.125rem rgba(0, 0, 0, 0.625), 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.625);
             transition:      color 1s ease-in-out, text-shadow 1s ease-in-out;
         }
 
-    .style-selector-list-one,
-    .style-selector-list-two {
-        display:                     flex;
-        flex-direction:              column;
-        justify-content:             center;
-        align-items:                 center;
-        text-align:                  center;
+    .style-selector-list-box {
+        width:    4.5fr; /* Teljes szélesség */
+        height:   auto;
+        margin:   0vh 0vw 0vh 0vw;
+        padding:  0vh 0vw 0vh 0vw;
 
-        width:                       auto;
-        height:                      auto;
-        margin:                      0 auto;
-        padding:                     1vh 0vw 1vh 5vw;
-        
-        overflow-y:                  auto; /* Görgetés csak függőlegesen */
-        overflow-x:                  hidden; /* Vízszintes görgetés tiltása */
-        scrollbar-width:             none; /* Firefox: scrollbar eltüntetése */
-        -ms-overflow-style:          none; /* Internet Explorer és Edge: scrollbar eltüntetése */
-        -webkit-overflow-scrolling:  touch; /* Safari és iOS: gördülés támogatása */
-    }
-        
-    .style-selector-list-one::-webkit-scrollbar,
-    .style-selector-list-two::-webkit-scrollbar {
-        display:  none; /* Webkit-alapú böngészőkben (Chrome, Safari) scrollbar eltüntetése */
+        /*background-color: aqua; /* Csak teszteléshez */
     }
 
-        .style-selector-list-one button,
-        .style-selector-list-two button {
-            cursor:            pointer;
-            
-            width:             100%;	
-            height:            auto;
-            margin:            0;
-            padding:           0vh 2vw 0vh 2vw;
+        .style-selector-list-one,
+        .style-selector-list-two {
+            display:          flex;
+            flex-direction:   column;
+            justify-content:  center;  /* Középre igazítás függőlegesen */
+            align-items:      center;
+            text-align:       center;
 
-            border-top:        0.25rem solid rgba(0, 0, 0, 0.5);    /* 4px */
-            border-left:       0.125rem solid rgba(0, 0, 0, 0.5);   /* 2px */
-            border-radius:     1rem 0rem 0rem 1rem;
-
-            background-color:  rgba(240, 240, 240, 0.5);
-            transition:        background-color 1s, transform 0.5s;
+            width:            4.5fr; /* Teljes szélesség */
+            height:           auto;
+            margin:           2vh 0vw 2vh 0vw;
+            padding:          0vh 0vw 0vh 0vw;
         }
 
-        .style-selector-list-one button,
-        .style-selector-list-two button {
-            font-family:       "Shadows Into Light", cursive;
-            font-size:         clamp(1rem, 1.25vw, 1.25rem);
-            font-weight:       bold;
-            letter-spacing:    clamp(0.1rem, 0.125vw, 0.125rem);
-            line-height:       clamp(1.5rem, 1.75vw, 1.75rem);
-            color:             rgba(0, 0, 0, 0.75);
-        }
+            .style-selector-list-one button,
+            .style-selector-list-two button {
+                cursor:            pointer;
+                
+                width:             80%; /* Teljes szélesség */	
+                height:            auto;
+                margin:            0.2vh 0vw 0vh 0vw;
+                padding:           0;
 
-        .style-selector-list-one button:hover,
-        .style-selector-list-two button:hover {
-            background-color:  rgba(50, 50, 50, 0.8); /* Sötétebb háttérszín */
-            color:             rgba(255, 255, 255, 1);
-            transform:         scale(1.2);
-            text-shadow:       0 0 0.75rem rgba(255, 255, 255, 0.8); /* Fényhatás */
-            transition:        background-color 1s ease, transform 0.5s ease;
-        }
+                border-top:        0.25rem solid rgba(0, 0, 0, 0.5);    /* 4px */
+                border-left:       0.125rem solid rgba(0, 0, 0, 0.5);   /* 2px */
+                border-radius:     1rem 1rem 1rem 1rem;
 
-        .style-selector-list-one button.active,
-        .style-selector-list-two button.active {
-            background:      linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(50, 50, 50, 0.5));
-            color:           rgba(255, 255, 255, 1);
-            transform:       scale(1.2);
-            outline:         0.125rem dashed rgba(255, 255, 255, 0.5);
-            outline-offset:  0.125rem;
-            transition:      background-color 1s ease, transform 0.5s ease;
-        }
-
-        .style-selector-list-one button:focus,
-        .style-selector-list-two button:focus {
-            outline:         0.125rem dashed rgba(255, 255, 255, 0.5);
-            outline-offset:  0.125rem;
-            box-shadow:      0 0 10px rgba(255, 255, 255, 0.8); /* Fényhatás */
-            animation:       pulse 2s infinite; /* Pulzáló animáció */
-        }
-        
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+                background-color:  rgba(240, 240, 240, 0.5);
+                transition:        background-color 1s, transform 0.5s;
             }
-            50% {
-                box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+
+            .style-selector-list-one button,
+            .style-selector-list-two button {
+                font-family:       "Shadows Into Light", cursive;
+                font-size:         clamp(1rem, 1.25vw, 1.25rem);
+                font-weight:       bold;
+                letter-spacing:    clamp(0.1rem, 0.125vw, 0.125rem);
+                line-height:       clamp(1.5rem, 1.75vw, 1.75rem);
+                color:             rgba(0, 0, 0, 0.75);
             }
-            100% {
-                box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-            }
-        }
+
+                .style-selector-list-one button:hover,
+                .style-selector-list-two button:hover {
+                    background-color:  rgba(50, 50, 50, 0.8); /* Sötétebb háttérszín */
+                    color:             rgba(255, 255, 255, 1);
+                    transform:         scale(1.2);
+                    text-shadow:       0 0 0.75rem rgba(255, 255, 255, 0.8); /* Fényhatás */
+                    transition:        background-color 1s ease, transform 0.5s ease;
+                }
+
+                .style-selector-list-one button.active,
+                .style-selector-list-two button.active {
+                    background:      linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(50, 50, 50, 0.5));
+                    color:           rgba(255, 255, 255, 1);
+                    transform:       scale(1.2);
+                    outline:         0.125rem dashed rgba(255, 255, 255, 0.5);
+                    outline-offset:  0.125rem;
+                    transition:      background-color 1s ease, transform 0.5s ease;
+                }
+
+                .style-selector-list-one button:focus,
+                .style-selector-list-two button:focus {
+                    outline:         0.125rem dashed rgba(255, 255, 255, 0.5);
+                    outline-offset:  0.125rem;
+                    box-shadow:      0 0 10px rgba(255, 255, 255, 0.8); /* Fényhatás */
+                    animation:       pulse 2s infinite; /* Pulzáló animáció */
+                }
+                
+                @keyframes pulse {
+                    0% {
+                        box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+                    }
+                    50% {
+                        box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+                    }
+                    100% {
+                        box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+                    }
+                }
 
 
 /*  ========================================================================  *\
