@@ -48,10 +48,10 @@ body {
 
 @media screen and (max-width: 768px) {
     body {
-        grid-template-columns:  1fr 1fr 1fr 1fr 1fr 1fr;             /* Mobil nézetben négy oszlop */
-        grid-template-rows:     auto auto auto;                  /* Mobil nézetben három sor */
+        grid-template-columns:  1fr 1fr 1fr 1fr 1fr 1fr;                /* Mobil nézetben négy oszlop */
+        grid-template-rows:     auto auto auto;                         /* Mobil nézetben három sor */
         grid-template-areas:    "header header header header header ."  /* Mobil nézetben a területek elrendezése */
-                                "main main main aside aside aside"     /* Mobil nézetben a területek elrendezése */
+                                "main main main aside aside aside"      /* Mobil nézetben a területek elrendezése */
                                 "footer footer footer footer . .";      /* Mobil nézetben a területek elrendezése */
     }
 }
@@ -61,6 +61,43 @@ body {transition: background-image 1s ease-in-out;}
 
 /* Header, main, aside, footer háttér szín animáció */
 header, main, aside, footer {transition: background-color 1s ease-in-out;}
+
+    #warning {
+        display:          none; /* Alapértelmezetten rejtve van */
+        flex-direction:   column;
+        justify-content:  center;
+        align-items:      center;
+        text-align:       center;
+
+        position:         fixed;
+        top:              0;
+        left:             0;
+        width:            100vw;
+        height:           100vh;
+        padding:          5vh 10vw;
+
+        opacity:          0;  /* Kezdeti állapot */
+        transition:       opacity 0.5s ease-in-out;
+        z-index:          1000;
+    }   
+    
+        #warning.show {
+            display:  block;
+            opacity:  1;
+        }
+
+        .landscape-warning {
+            background-color:  rgba(255, 0, 0, 0.8);
+            text-transform:    uppercase;
+
+            font-family:       "Shadows Into Light", cursive;
+            font-size:         clamp(1.5rem, 2.5vw, 2.5rem);
+            font-weight:       bold;
+            letter-spacing:    clamp(0.2rem, 0.3vw, 0.3rem);
+            line-height:       clamp(2rem, 3vw, 3rem);
+            color:             rgba(255, 255, 255, 1);
+            text-shadow:       -0.125rem -0.125rem rgba(0, 0, 0, 0.625), 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.625);
+        }
 
 
 /*  ========================================================================  *\
