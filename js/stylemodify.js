@@ -114,12 +114,62 @@ const backgroundImages = [
   'images/012-background-december.webp'
 ];
 
+// --- Aside slide-in/slide-out logika ----------------------------------------
+function setupAsideSlide() {
+    const aside = document.querySelector('aside');
+    const toggle = document.getElementById('style-selector-text-box');
+    const styleButtons = aside ? aside.querySelectorAll('.style-selector-list-box button') : [];
+
+    if (aside && toggle) {
+        toggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            aside.classList.toggle('open');
+        });
+    }
+
+    styleButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            aside.classList.remove('open');
+        });
+    });
+
+    document.body.addEventListener('click', (e) => {
+        if (
+            aside.classList.contains('open') &&
+            !aside.contains(e.target)
+        ) {
+            aside.classList.remove('open');
+        }
+    });
+}
+
+// --- Függőleges felirat szétbontása DOMContentLoaded után -------------------
+function splitVerticalLabel() {
+    const label = document.getElementById('vertical-label');
+    if (label) {
+        // Az aktuális (akár fordított) szöveget vesszük alapul
+        const labelText = label.textContent.trim();
+        label.innerHTML = '';
+        for (const char of labelText) {
+            if (char === ' ') {
+                label.appendChild(document.createElement('br'));
+            } else {
+                const span = document.createElement('span');
+                span.textContent = char;
+                label.appendChild(span);
+            }
+        }
+        label.setAttribute('aria-label', labelText);
+    }
+}
+
 // --- DOMContentLoaded esemény ------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
-  log('A DOM teljesen betöltődött.');
-  preloadImages(backgroundImages);
-  initTheme();
-  setupEventListeners();
+    splitVerticalLabel();
+    setupAsideSlide();
+    preloadImages(backgroundImages);
+    initTheme();
+    setupEventListeners();
 });
 
 // --- CSS fájlok -------------------------------------------------------------

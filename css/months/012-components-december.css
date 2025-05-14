@@ -12,8 +12,12 @@ body {
 }
 
 /* Header, aside, footer háttér szín */
-header, aside, footer {
+header, footer {
     background-color:  rgba(65, 105, 225, 0.75);
+}
+
+#style-selector-list-box {
+    background-color:  rgba(65, 105, 255, 1);
 }
 
 /* Header, aside, footer szöveg szín */

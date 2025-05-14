@@ -42,25 +42,36 @@ body {
     grid-template-rows:     auto auto auto;              /* Fejléc, tartalom és lábléc magasságok */
     grid-gap:               0vh 0vw;                     /* Nincs rés a területek között */
     grid-template-areas:    "header header header . ."   /* Grid területek elrendezése */
-                            "main main main main aside"  /* Grid területek elrendezése */
-                            "footer footer . . aside";   /* Grid területek elrendezése */
+                            "main main main main main"  /* Grid területek elrendezése */
+                            "footer footer . . .";   /* Grid területek elrendezése */
+
+    position:    relative;
+    overflow-x:  hidden;
 }
 
 @media screen and (max-width: 768px) {
     body {
-        grid-template-columns:  1fr 1fr 1fr 1fr 1fr 1fr;                /* Mobil nézetben négy oszlop */
-        grid-template-rows:     auto auto auto;                         /* Mobil nézetben három sor */
-        grid-template-areas:    "header header header header header ."  /* Mobil nézetben a területek elrendezése */
-                                "main main main aside aside aside"      /* Mobil nézetben a területek elrendezése */
-                                "footer footer footer footer . .";      /* Mobil nézetben a területek elrendezése */
+        grid-template-columns:  1fr 1fr 1fr 1fr 1fr;             /* Mobil nézetben négy oszlop */
+        grid-template-rows:     auto auto auto;                  /* Mobil nézetben három sor */
+        grid-template-areas:    "header header header header ."  /* Mobil nézetben a területek elrendezése */
+                                "main main main main main"       /* Mobil nézetben a területek elrendezése */
+                                "footer footer footer . .";      /* Mobil nézetben a területek elrendezése */
     }
 }
 
 /* Alapállapot – háttérkép éles */
 body {transition: background-image 1s ease-in-out;}
 
-/* Header, main, aside, footer háttér szín animáció */
-header, main, aside, footer {transition: background-color 1s ease-in-out;}
+/* Header, footer háttérszín animáció */
+header, #style-selector-list-box, footer {
+    transition: background-color 1s ease-in-out;
+}
+
+/* Aside háttérszín animáció */
+aside {
+    transition:        background-color 1s ease-in-out, backdrop-filter 1s;
+    backdrop-filter:   blur(12px); /* vagy pl. blur(8px) */
+}
 
     #warning {
         display:          none; /* Alapértelmezetten rejtve van */
@@ -131,7 +142,7 @@ header {
 @media screen and (max-width: 768px) {
     header {
         grid-area:      header;      /* Grid elrendezésben a fejléc terület */
-        grid-column:    1 / span 5;  /* A fejléc a 1. és 5. oszlopban helyezkedik el */
+        grid-column:    1 / span 4;  /* A fejléc a 1. és 4. oszlopban helyezkedik el */
         grid-row:       1;           /* A fejléc az első sorban helyezkedik el */
 
         width:          100%;  /* Automatikus szélesség */
@@ -250,7 +261,7 @@ header {
 
 main {
     grid-area:      main;        /* Grid elrendezésben a fő tartalom terület */
-    grid-column:    1 / span 4;  /* A fő tartalom a 1. és 4. oszlopban helyezkedik el */
+    grid-column:    1 / span 5;  /* A fő tartalom a 1. és 4. oszlopban helyezkedik el */
     grid-row:       2;           /* A fő tartalom a második sorban helyezkedik el */
 
     display:          flex;  /* Flexbox elrendezés */
@@ -259,10 +270,13 @@ main {
     align-items:      center;  /* Középre igazítás vízszintesen */
     text-align:       center;  /* Szöveg középre igazítása */
 
-    width:          100%; /* Teljes szélesség */
-    height:         71vh;
+    width:          calc(100% - 6vw);  /* Teljes szélesség - aside szélesség */
+    height:         71vh;  /* Teljes magasság */
     margin:         0;
     padding:        0vh 5vw 0vh 5vw;
+
+    /* Ha azt akarod, hogy a main ne mozduljon el, ne adj neki extra margin-t */
+    transition:  filter 0.3s;
 
     /*background-color: aqua; /* Csak teszteléshez */
 }
@@ -270,10 +284,13 @@ main {
 @media screen and (max-width: 768px) {
     main {
         grid-area:    main;        /* Grid elrendezésben a fő tartalom terület */
-        grid-column:  1 / span 3;  /* A fő tartalom a 1. 2. 3. oszlopban helyezkedik el */
+        grid-column:  1 / span 5;  /* A fő tartalom a 1. 2. 3. oszlopban helyezkedik el */
         grid-row:     2;           /* A fő tartalom a második sorban helyezkedik el */
 
+        width:        calc(100% - 12vw);  /* Teljes szélesség - aside szélesség */
+        height:       80vh;  /* Teljes magasság */
         margin:       5vh 0vw 5vh 0vw; /* Mobil nézetben a margó beállítása */
+        padding:      0vh 5vw 0vh 5vw;
     }
 }
 
@@ -324,90 +341,107 @@ main {
 \*  ========================================================================  */
 
 aside {
-    grid-area:      aside;       /* Grid elrendezésben az aside terület */
-    grid-column:    5;           /* Az aside a 5. oszlopban helyezkedik el */
-    grid-row:       2 / span 2;  /* Az aside a 2. és 3. sorban helyezkedik el */
+    position:        fixed;
+    top:             20vh;
+    right:           -24vw; /* kívül van a képernyőn */
 
-    width:          4.5fr; /* Teljes szélesség */
-    height:         auto; /* Automatikus magasság */
-    margin:         0vh 0vw 2vh 0vw;
-    padding:        0vh 2vw 0vh 2vw;
+    width:           30vw;
+    height:          auto;
+    margin:          0vh 0vw 0vh 0vw;
+    padding:         0vh 0vw 0vh 0vw;
 
-    border-top:     0.375rem solid rgba(0, 0, 0, 0.5);   /* 6px */
-    border-bottom:  0.0625rem solid rgba(0, 0, 0, 0.5);  /* 1px */
-    border-left:    0.125rem solid rgba(0, 0, 0, 0.5);   /* 2px */
-    border-radius:  10vh 0vh 0vh 5vh;
-    box-shadow:     0 0 1rem rgba(0, 0, 0, 0.5);
+    border-top:      0.375rem solid rgba(0, 0, 0, 0.5);   /* 6px */
+    border-bottom:   0.0625rem solid rgba(0, 0, 0, 0.5);  /* 1px */
+    border-left:     0.125rem solid rgba(0, 0, 0, 0.5);   /* 2px */
+    border-radius:   10vh 0vh 0vh 5vh;
+    box-shadow:      0 0 1rem rgba(0, 0, 0, 0.5);
 
-    /*background-color: aqua; /* Csak teszteléshez */
+    display:         flex;
+    flex-direction:  row;
+
+    z-index: 1000;
+    transition: right 1s cubic-bezier(.77,0,.18,1), width 1s cubic-bezier(.77,0,.18,1);
+    overflow: hidden;
+
+    /* background-color: aqua;  Csak teszteléshez */
 }
 
-@media screen and (max-width: 768px) {
-    aside {
-        grid-area:      aside;       /* Grid elrendezésben az aside terület */
-        grid-column:    4 / span 3;  /* Az aside a 4. 5. 6. oszlopban helyezkedik el */
-        grid-row:       2;           /* Az aside a 2. sorban helyezkedik el */
-
-        width:          3fr; /* Teljes szélesség */
-        height:         auto; /* Automatikus magasság */
-        margin:         5vh 0vw 5vh 0vw; /* Mobil nézetben a margó beállítása */
-        padding:        0vh 0vw 1vh 1vw;
-    }
-}
-
-    aside .style-selector-text-box {
-        text-align:      center;
-        text-transform:  uppercase;
-
-        width:           4.5fr; /* Teljes szélesség */
-        height:          auto;
-        margin:          0vh 0vw 0vh 0vw;
-        padding:         2vh 0vw 1vh 0vw;
-
-        border-bottom:   0.125rem solid rgba(0, 0, 0, 0.25);   /* 2px */
+    aside.open {
+        right: 0; /* becsúszik a képernyőre */
     }
 
-        aside h3 {
+    #style-selector-text-box {
+        display:          flex;
+        justify-content:  center;  /* Középre igazítás vízszintesen */
+        align-items:      center;  /* Középre igazítás függőlegesen */
+        text-transform:   uppercase;
+
+        width:            6vw;   /* Kezdeti szélesség */
+        max-width:        6vw;   /* vagy amennyi kell */
+        height:           auto;  /* Automatikus magasság */
+        margin:           0vh 0vw 0vh 0vw;
+        padding:          0vh 0vw 0vh 0vw;
+
+        cursor:           pointer;
+        z-index:          2;
+
+        /*background-color: aquamarine;  /* Csak teszteléshez */
+    }
+
+        #style-selector-text-box h3 {
             font-family:     "Shadows Into Light", cursive;
-            font-size:       clamp(1rem, 1.75vw, 1.75rem);
+            font-size:       clamp(1.25rem, 2vw, 2rem);
             font-weight:     bold;
-            letter-spacing:  clamp(0.2rem, 0.3vw, 0.3rem);
-            line-height:     clamp(2rem, 3vw, 3rem);
+            letter-spacing:  clamp(0.125rem, 0.2vw, 0.2rem);
+            line-height:     clamp(1.5rem, 2vw, 2rem);
             color:           rgba(255, 255, 255, 1);
             text-shadow:     -0.125rem -0.125rem rgba(0, 0, 0, 0.625), 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.625);
-            transition:      color 1s ease-in-out, text-shadow 1s ease-in-out;
+
+            /*background-color: aqua; /* Csak teszteléshez */
         }
 
-    .style-selector-list-box {
-        width:    4.5fr; /* Teljes szélesség */
-        height:   auto;
-        margin:   0vh 0vw 0vh 0vw;
-        padding:  0vh 0vw 0vh 0vw;
+        #vertical-label {
+            display:         inline-block;
+            user-select:     none;
+            pointer-events:  none;
+            z-index:         2;
+        }
+
+            #vertical-label span {display: block;}
+
+    #style-selector-list-box {
+        display:          flex;
+        flex-direction:   column;  /* Oszlop irányú elrendezés */
+        justify-content:  center;  /* Középre igazítás függőlegesen */
+        align-items:      center;  /* Középre igazítás vízszintesen */
+        text-align:       center;
+
+        width:            24vw;
+        height:           auto;
+        margin:           0vh 0vw 0vh 0vw;
+        padding:          3vh 0vw 2vh 0vw;
+
+        border:           0.125rem solid rgba(0, 0, 0, 0.5);   /* 2px */
+        border-radius:    10vh 0vh 0vh 5vh;
 
         /*background-color: aqua; /* Csak teszteléshez */
     }
 
         .style-selector-list-one,
         .style-selector-list-two {
-            display:          flex;
-            flex-direction:   column;
-            justify-content:  center;  /* Középre igazítás függőlegesen */
-            align-items:      center;
-            text-align:       center;
-
-            width:            4.5fr; /* Teljes szélesség */
+            width:            95%; /* Teljes szélesség */
             height:           auto;
-            margin:           2vh 0vw 2vh 0vw;
-            padding:          0vh 0vw 0vh 0vw;
+            margin:           1vh 0vw 1vh 0vw;
+            padding:          0vh 3vw 0vh 3vw;
         }
 
             .style-selector-list-one button,
             .style-selector-list-two button {
                 cursor:            pointer;
                 
-                width:             80%; /* Teljes szélesség */	
+                width:             100%; /* Teljes szélesség */	
                 height:            auto;
-                margin:            0.2vh 0vw 0vh 0vw;
+                margin:            0.4vh 0vw 0vh 0vw;
                 padding:           0;
 
                 border-top:        0.25rem solid rgba(0, 0, 0, 0.5);    /* 4px */
@@ -467,6 +501,41 @@ aside {
                     }
                 }
 
+@media screen and (max-width: 768px) {
+    aside {
+        width:   50vw;
+        height:  auto; /* Mobil nézetben automatikus magasság */
+        top:     25vh; /* Mobil nézetben a teteje */
+        right:   -40vw;
+    }
+
+        aside.open {
+            right:  0;
+        }
+
+    #style-selector-text-box {
+        width:      10vw; /* Mobil nézetben szélesebb */
+        max-width:  10vw;
+    }
+
+    #style-selector-list-box {
+        width:   40vw; /* Mobil nézetben szélesebb */
+        height:  auto; /* Mobil nézetben automatikus magasság */
+        margin:  0vh 0vw 0vh 0vw;
+        padding: 3vh 0vw 2vh 0vw;
+    }
+
+        .style-selector-list-one,
+        .style-selector-list-two {
+            width:  80%; /* Mobil nézetben teljes szélesség */
+        }
+
+            .style-selector-list-one button,
+            .style-selector-list-two button {
+                width:  100%; /* Mobil nézetben teljes szélesség */
+            }
+}
+
 
 /*  ========================================================================  *\
     F O O T E R
@@ -495,7 +564,7 @@ footer {
 @media screen and (max-width: 768px) {
     footer {
         grid-area:      footer;      /* Grid elrendezésben a footer terület */
-        grid-column:    1 / span 4;  /* A lábléc a 1. 2. 3. 4. oszlopban helyezkedik el */
+        grid-column:    1 / span 3;  /* A lábléc a 1. 2. 3. 4. oszlopban helyezkedik el */
         grid-row:       3;           /* A lábléc a harmadik sorban helyezkedik el */
 
         width:          100%;  /* Teljes szélesség */
