@@ -503,10 +503,10 @@ aside {
 
 @media screen and (max-width: 768px) {
     aside {
-        width:   50vw;
+        width:   60vw;
         height:  auto; /* Mobil nézetben automatikus magasság */
         top:     25vh; /* Mobil nézetben a teteje */
-        right:   -40vw;
+        right:   -50vw;
     }
 
         aside.open {
@@ -519,7 +519,7 @@ aside {
     }
 
     #style-selector-list-box {
-        width:   40vw; /* Mobil nézetben szélesebb */
+        width:   50vw; /* Mobil nézetben szélesebb */
         height:  auto; /* Mobil nézetben automatikus magasság */
         margin:  0vh 0vw 0vh 0vw;
         padding: 3vh 0vw 2vh 0vw;
