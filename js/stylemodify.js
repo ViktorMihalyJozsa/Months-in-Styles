@@ -4,26 +4,63 @@
 
   -------------------------------------------------------------------------
     Ez a teljes kód tartalmazza:
-      - A hónapokhoz tartozó stílusok kezelését.
-      - A fejléc címének animációval történő frissítését.
-      - Az aktív gomb stílusának frissítését.
-      - A hibakezelést és a helyi tároló használatát.
-      - A naplózás vezérelhető a debugMode segítségével.
+    - Többnyelvű szövegek betöltése
+    - Debug ONE és TWO mód kapcsoló
+    - Segédfüggvények naplózáshoz
+    - Globális változók
+    - Idézet fájlok
+    - Idézet betöltése
+    - Képek előtöltése
+    - Háttérkép váltás elmosódással
+    - Aside slide-in/slide-out logika
+    - DOMContentLoaded esemény
+    - Függőleges felirat szétbontása
+    - CSS fájlok
+    - Téma inicializálása
+    - Téma betöltési segéd
+    - Aktív téma és fejléc cím frissítése
+    - Eseménykezelők
+    - Fejléc cím animáció
+    - Aktív téma felhasználói felület frissítése
+    - Stílusválasztó gombok
+    - Stílusválasztó lista
+    - Stílusválasztó lista gombok
+    - Stílusválasztó lista gombok eseménykezelők
 
 \* ======================================================================== */
 
-// --- Debug ONE mód kapcsoló ---------------------------------------------------
-const debugModeOne = true; // true: hibakeresés engedélyezve, false: kikapcsolva
-// --- Segédfüggvények naplózáshoz ------------------------------------------
+// --- Többnyelvű szövegek betöltése --------------------------------------
+function getUserLang() {
+    return navigator.language.split('-')[0].toLowerCase();
+}
+
+function loadLanguageFile(lang, callback) {
+    const langMap = {
+        en: "language/eng/text-eng.js",
+        hu: "language/hun/text-hun.js"
+        // további nyelvek...
+    };
+    const file = langMap[lang] || langMap["en"];
+    const script = document.createElement('script');
+    script.src = file;
+    script.onload = callback;
+    document.head.appendChild(script);
+}
+
+// --- Debug ONE mód kapcsoló ---------------------------------------------
+// debugModeOne: true - hibakeresés engedélyezve, false - kikapcsolva
+const debugModeOne = true;
+// --- Segédfüggvények naplózáshoz ----------------------------------------
 function log(...args) { if (debugModeOne) console.log(...args); }
 
-// --- Debug mód TWO kapcsoló ---------------------------------------------------
-const debugModeTwo = true; // true: hibakeresés engedélyezve, false: kikapcsolva
-// --- Segédfüggvények naplózáshoz ------------------------------------------
+// --- Debug mód TWO kapcsoló ---------------------------------------------
+// debugModeTwo: true - hibakeresés engedélyezve, false - kikapcsolva
+const debugModeTwo = true; 
+// --- Segédfüggvények naplózáshoz ----------------------------------------
 function warn(...args) { if (debugModeTwo) console.warn(...args); }
 function error(...args) { if (debugModeTwo) console.error(...args); }
 
-// --- Globális változók ----------------------------------------------------
+// --- Globális változók --------------------------------------------------
 const monthNames = [
   'January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December'
@@ -45,24 +82,26 @@ const monthToStyle = [
   'css/default-style.css' // Alapértelmezett stílus
 ];
 
-// --- Idézet fájlok ---------------------------------------------------------
-const monthFiles = [
-  'quotes/001-january.html',
-  'quotes/002-february.html',
-  'quotes/003-march.html',
-  'quotes/004-april.html',
-  'quotes/005-may.html',
-  'quotes/006-june.html',
-  'quotes/007-july.html',
-  'quotes/008-august.html',
-  'quotes/009-september.html',
-  'quotes/010-october.html',
-  'quotes/011-november.html',
-  'quotes/012-december.html',
-  'quotes/default.html' // Alapértelmezett idézet fájl
-];
+// --- Idézetfájl kiválasztása nyelv szerint ------------------------------
+function getQuoteFile(monthIndex, lang) {
+  if (lang === 'hu') {
+    if (monthIndex >= 0 && monthIndex < 12) {
+      // magyar: language/hun/quotes-hun/001-january-quotes-hun.html stb.
+      return `language/hun/quotes-hun/${String(monthIndex + 1).padStart(3, '0')}-${monthNames[monthIndex].toLowerCase()}-quotes-hun.html`;
+    } else {
+      return "language/hun/quotes-hun/default-quotes-hun.html";
+    }
+  } else {
+    if (monthIndex >= 0 && monthIndex < 12) {
+      // angol: language/eng/quotes-eng/001-january-quotes-eng.html stb.
+      return `language/eng/quotes-eng/${String(monthIndex + 1).padStart(3, '0')}-${monthNames[monthIndex].toLowerCase()}-quotes-eng.html`;
+    } else {
+      return "language/eng/quotes-eng/default-quotes-eng.html";
+    }
+  }
+}
 
-// --- Idézet betöltése ------------------------------------------------------
+// --- Idézet betöltése ---------------------------------------------------
 function loadQuoteFile(filename) {
   const quoteEl = document.getElementById('month-quote');
   if (!quoteEl) return;
@@ -89,7 +128,7 @@ function loadQuoteFile(filename) {
   }, 1000); // 1 másodperc fade-out után töltjük be az új szöveget
 }
 
-// --- Képek előtöltése ------------------------------------------------------
+// --- Képek előtöltése ---------------------------------------------------
 function preloadImages(imageUrls) {
   imageUrls.forEach(url => {
     const img = new Image();
@@ -114,7 +153,22 @@ const backgroundImages = [
   'images/012-background-december.webp'
 ];
 
-// --- Aside slide-in/slide-out logika ----------------------------------------
+// --- Háttérkép váltás elmosódással --------------------------------------
+function changeBackgroundImageWithBlur(newImageUrl) {
+    const body = document.body;
+    // Blur rá
+    body.classList.add('bg-blur');
+    setTimeout(() => {
+        // Háttérkép csere, amikor már elmosódott
+        body.style.backgroundImage = `url('${newImageUrl}')`;
+        // Blur vissza
+        setTimeout(() => {
+            body.classList.remove('bg-blur');
+        }, 2000);  // Ez legyen kb. a background-image transition ideje
+    }, 2000);      // Ez legyen kb. a blur transition ideje
+}
+
+// --- Aside slide-in/slide-out logika ------------------------------------
 function setupAsideSlide() {
     const aside = document.querySelector('aside');
     const toggle = document.getElementById('style-selector-text-box');
@@ -143,7 +197,26 @@ function setupAsideSlide() {
     });
 }
 
-// --- Függőleges felirat szétbontása DOMContentLoaded után -------------------
+// --- DOMContentLoaded esemény -------------------------------------------
+document.addEventListener('DOMContentLoaded', () => {
+    const lang = getUserLang();
+    loadLanguageFile(lang, () => {
+        // Szövegek beírása id alapján
+        for (const [id, text] of Object.entries(window.translations)) {
+            const el = document.getElementById(id);
+            if (el) el.textContent = text;
+        }
+        // Függőleges felirat tördelése csak a szöveg beírása után!
+        splitVerticalLabel();
+        // További inicializálás
+        setupAsideSlide();
+        preloadImages(backgroundImages);
+        initTheme();
+        setupEventListeners();
+    });
+});
+
+// --- Függőleges felirat szétbontása DOMContentLoaded után ---------------
 function splitVerticalLabel() {
     const label = document.getElementById('vertical-label');
     if (label) {
@@ -163,20 +236,11 @@ function splitVerticalLabel() {
     }
 }
 
-// --- DOMContentLoaded esemény ------------------------------------------------
-document.addEventListener('DOMContentLoaded', () => {
-    splitVerticalLabel();
-    setupAsideSlide();
-    preloadImages(backgroundImages);
-    initTheme();
-    setupEventListeners();
-});
-
-// --- CSS fájlok -------------------------------------------------------------
+// --- CSS fájlok ---------------------------------------------------------
 const defaultStyle = 'css/default-style.css';
 const FADE_DURATION = 1000;
 
-// --- Téma inicializálása ----------------------------------------------------
+// --- Téma inicializálása ------------------------------------------------
 function initTheme() {
   const currentMonth = new Date().getMonth();
   const savedStyle = localStorage.getItem('selectedStyle');
@@ -185,7 +249,7 @@ function initTheme() {
   loadTheme(theme);
 }
 
-// --- Téma betöltési segéd --------------------------------------------------
+// --- Téma betöltési segéd -----------------------------------------------
 function loadTheme(href) {
   const linkEl = document.getElementById('theme-style');
   if (!linkEl) {
@@ -227,17 +291,17 @@ function applyActiveAndTitle(sheet) {
   setActiveTheme(sheet);
   updateHeaderTitle(sheet);
 
-  // Ha a default stílus aktív, akkor a default.html-t töltsük be
+  const lang = getUserLang();
+  const monthIndex = monthToStyle.indexOf(sheet);
+
   if (sheet === defaultStyle) {
-    loadQuoteFile('quotes/default.html');
+    loadQuoteFile(lang === 'hu'
+      ? 'language/hun/quotes-hun/default-quotes-hun.html'
+      : 'language/eng/quotes-eng/default-quotes-eng.html');
     return;
   }
 
-  // Egyébként a hónaphoz tartozó idézetet
-  const monthIndex = monthToStyle.indexOf(sheet);
-  if (monthIndex >= 0) {
-    loadQuoteFile(monthFiles[monthIndex]);
-  }
+  loadQuoteFile(getQuoteFile(monthIndex, lang));
 }
 
 // --- Eseménykezelők -----------------------------------------------------
@@ -260,7 +324,7 @@ function setupEventListeners() {
   });
 }
 
-// --- Fejléc cím animáció ---------------------------------------------------
+// --- Fejléc cím animáció ------------------------------------------------
 function updateHeaderTitle(sheet) { 
   log('updateHeaderTitle hívás:', sheet);
 
@@ -286,24 +350,33 @@ function updateHeaderTitle(sheet) {
   headerWelcomeText.classList.add('fade-out');
   headerTitle.classList.add('fade-out');
 
-  setTimeout(() => {
-    headerWelcomeText.textContent = 'Welcome';
-    headerTitle.textContent = newTitle;
+setTimeout(() => {
+    headerWelcomeText.textContent = window.translations["header-welcome-text"] || 'Welcome';
 
+    // Ha hónaphoz tartozó cím, akkor a fordítási kulcsot keresd:
+    if (monthIndex >= 0 && monthIndex < monthNames.length) {
+        // Például: "header-title-january", "header-title-february", stb.
+        const monthKey = `header-title-${monthNames[monthIndex].toLowerCase()}`;
+        headerTitle.textContent = window.translations[monthKey] || `${monthNames[monthIndex]} Style`;
+    } else {
+        headerTitle.textContent = window.translations["header-title"] || 'Monthly Styles';
+    }
+
+    // Animaciós osztályok kezelése
     headerWelcomeText.classList.remove('fade-out');
     headerWelcomeText.classList.add('fade-in');
     headerTitle.classList.remove('fade-out');
     headerTitle.classList.add('fade-in');
 
     setTimeout(() => {
-      headerWelcomeText.classList.remove('fade-in');
-      headerTitle.classList.remove('fade-in');
+        headerWelcomeText.classList.remove('fade-in');
+        headerTitle.classList.remove('fade-in');
     }, FADE_DURATION);
 
-  }, FADE_DURATION);
+}, FADE_DURATION);
 }
 
-// --- Aktív téma felhasználói felület frissítése ----------------------------
+// --- Aktív téma felhasználói felület frissítése -------------------------
 function setActiveTheme(theme) {
   const items = document.querySelectorAll('.style-selector-list-one button, .style-selector-list-two button');
 

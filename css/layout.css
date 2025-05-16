@@ -59,18 +59,24 @@ body {
     }
 }
 
-/* Alapállapot – háttérkép éles */
-body {transition: background-image 1s ease-in-out;}
+/* Alapállapot – a háttérkép és a szűrő */
+body {
+    transition: background-image 2s, backdrop-filter 2s;
+    backdrop-filter: blur(0px); /* vagy pl. blur(8px) */
+}
+body.bg-blur {
+    backdrop-filter: blur(16px);
+}
 
 /* Header, footer háttérszín animáció */
 header, #style-selector-list-box, footer {
-    transition: background-color 1s ease-in-out;
+    transition: background-color 2s ease-in-out;
 }
 
 /* Aside háttérszín animáció */
 aside {
-    transition:        background-color 1s ease-in-out, backdrop-filter 1s;
-    backdrop-filter:   blur(12px); /* vagy pl. blur(8px) */
+    background:       rgba(255, 255, 255, 0.2);  /* halvány, áttetsző fehér */
+    backdrop-filter:  blur(8px) saturate(180%);    /* erős blur és szaturáció */
 }
 
     #warning {
@@ -108,6 +114,11 @@ aside {
             line-height:       clamp(2rem, 3vw, 3rem);
             color:             rgba(255, 255, 255, 1);
             text-shadow:       -0.125rem -0.125rem rgba(0, 0, 0, 0.625), 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.625);
+        }
+
+        .notranslate {
+            unicode-bidi:  isolate;
+            direction:     ltr;
         }
 
 
@@ -302,7 +313,7 @@ main {
     #month-quote.fade-out {opacity: 0;}
     #month-quote.fade-in  {opacity: 1;}
 
-    main h4 {
+    .month-quote h4 {
         text-align:      right;
         text-transform:  uppercase;
 
@@ -319,7 +330,7 @@ main {
         /*background-color: aqua; /* Csak teszteléshez */
     }
 
-    main p {
+    .month-quote p {
         text-align:      center;
         text-transform:  none;
         
@@ -359,9 +370,9 @@ aside {
     display:         flex;
     flex-direction:  row;
 
-    z-index: 1000;
-    transition: right 1s cubic-bezier(.77,0,.18,1), width 1s cubic-bezier(.77,0,.18,1);
-    overflow: hidden;
+    z-index:         1000;
+    transition:      right 1s cubic-bezier(.77,0,.18,1), width 1s cubic-bezier(.77,0,.18,1);
+    overflow:        hidden;
 
     /* background-color: aqua;  Csak teszteléshez */
 }
@@ -429,10 +440,10 @@ aside {
 
         .style-selector-list-one,
         .style-selector-list-two {
-            width:            95%; /* Teljes szélesség */
-            height:           auto;
-            margin:           1vh 0vw 1vh 0vw;
-            padding:          0vh 3vw 0vh 3vw;
+            width:    95%; /* Teljes szélesség */
+            height:   auto;
+            margin:   1vh 0vw 1vh 0vw;
+            padding:  0vh 3vw 0vh 3vw;
         }
 
             .style-selector-list-one button,
@@ -542,21 +553,26 @@ aside {
 \*  ========================================================================  */
 
 footer {
-    grid-area:      footer;  /* Grid elrendezésben a footer terület */
-    grid-column:    1 / span 2;  /* A lábléc a 1. és a 2. oszlopban helyezkedik el */
-    grid-row:       3;  /* A lábléc a harmadik sorban helyezkedik el */
+    grid-area:        footer;  /* Grid elrendezésben a footer terület */
+    grid-column:      1 / span 2;  /* A lábléc a 1. és a 2. oszlopban helyezkedik el */
+    grid-row:         3;  /* A lábléc a harmadik sorban helyezkedik el */
 
-    text-align:     center;  /* Szöveg középre igazítása */
+    display:          flex;  /* Flexbox elrendezés */
+    flex-direction:   row;  /* Sor irányú elrendezés */
+    justify-content:  center;  /* Középre igazítás vízszintesen */
+    align-items:      center;  /* Középre igazítás függőlegesen */
 
-    width:          100%; /* Teljes szélesség */
-    height:         7.75vh; /* Teljes magasság */
-    margin:         0;
-    padding:        0.75vh 0vw 0.75vh 0vw;
+    text-align:       center;  /* Szöveg középre igazítása */
 
-    border-top:     0.375rem solid rgba(0, 0, 0, 0.5);   /* 6px */
-    border-right:   0.125rem solid rgba(0, 0, 0, 0.5);   /* 2px */
-    border-radius:  0vh 5vh 0vh 0vh;
-    box-shadow:     0 0 1rem rgba(0, 0, 0, 0.5);
+    width:            100%; /* Teljes szélesség */
+    height:           7.75vh; /* Teljes magasság */
+    margin:           0;
+    padding:          0.75vh 0vw 0.75vh 0vw;
+
+    border-top:       0.375rem solid rgba(0, 0, 0, 0.5);   /* 6px */
+    border-right:     0.125rem solid rgba(0, 0, 0, 0.5);   /* 2px */
+    border-radius:    0vh 5vh 0vh 0vh;
+    box-shadow:       0 0 1rem rgba(0, 0, 0, 0.5);
 
     /*background-color:  yellow; /* Csak teszteléshez */
 }
@@ -576,7 +592,7 @@ footer {
         font-family:     "Shadows Into Light", cursive;
         font-size:       clamp(0.75rem, 1.25vw, 1.25rem);
         font-weight:     bold;
-        letter-spacing:  clamp(0.1rem, 0.125vw, 0.125rem);
+        letter-spacing:  clamp(0.1rem, 0.15vw, 0.15rem);
         line-height:     clamp(1.5rem, 2.5vw, 2.5rem);
         color:           rgba(255, 255, 255, 1);
         text-shadow:     -0.125rem -0.125rem rgba(0, 0, 0, 0.625), 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.625);
@@ -588,19 +604,27 @@ footer {
 
     footer a {
         text-decoration:  none;
-        color:            rgba(255, 255, 255, 1);
+        text-transform:   uppercase;
+        margin-left:      0.5rem;
+
+        font-family:      "Shadows Into Light", cursive;
+        font-size:        clamp(1rem, 1.5vw, 1.5rem);
         font-weight:      bold;
-        text-shadow:      -0.125rem -0.125rem rgba(0, 0, 0, 0.625), 0.25rem 0.25rem 0.25rem rgba(255, 255, 255, 0.625);
+        letter-spacing:   clamp(0.1rem, 0.175vw, 0.175rem);
+        line-height:      clamp(1.5rem, 2.5vw, 2.5rem);
+        color:            rgba(255, 255, 255, 1);
+        text-shadow:      -0.125rem -0.125rem rgba(0, 0, 0, 0.625), 0.25rem 0.25rem 0.25rem black;
         transition:       color 0.5s, text-shadow 0.5s, transform 0.3s;
     }
 
         footer a:hover {
-            color:        rgba(0, 255, 0, 1);
-            text-shadow:  -0.125rem -0.125rem rgba(255, 255, 255, 0.625), 0.25rem 0.25rem 0.25rem rgba(255, 255, 255, 0.625);
+            transform:    scale(1.2);
+            color:        teal;
+            text-shadow:  -0.125rem -0.125rem black, 0.25rem 0.25rem 0.25rem black;
             transition:   color 0.5s, text-shadow 0.5s, transform 0.3s;
         }
         footer a:active {
-            transform:  scale(0.95);
+            transform:  scale(1.2);
         }
 
 

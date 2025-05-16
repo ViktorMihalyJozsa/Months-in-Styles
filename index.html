@@ -1,9 +1,10 @@
 
 <!DOCTYPE html> 
-<html lang="en-US">
+<html translate="no">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
     <title>Months in Styles – Dynamic CSS Theme Switcher</title>
     <link rel="icon" href="images/favicon.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" 
@@ -18,8 +19,8 @@
 <body>
     <header>
         <div id="header-content">
-            <h2 id="header-welcome-text" aria-live="polite">Welcome</h2>
-            <h1 id="header-title" aria-live="polite">Monthly Styles</h1>
+            <h2 id="header-welcome-text" aria-live="polite"></h2>
+            <h1 id="header-title" aria-live="polite"></h1>
         </div>
         <div id="nameday-greeting">
             <script src="js/nameday.js"></script>
@@ -31,40 +32,39 @@
         </div>
     </main>
     <aside>
-        <div id="style-selector-text-box">
-            <h3 id="vertical-label" aria-label="Style selector">Style Selector</h3>
+        <div id="style-selector-text-box" translate="no" class="notranslate">
+            <h3 id="vertical-label" aria-label="Style selector"></h3>
         </div>
         <div id="style-selector-list-box">
             <div class="style-selector-list-one">
-                <button data-style="css/months/001-components-january.css" aria-selected="false">January</button>
-                <button data-style="css/months/002-components-february.css" aria-selected="false">February</button>
-                <button data-style="css/months/003-components-march.css" aria-selected="false">March</button>
-                <button data-style="css/months/004-components-april.css" aria-selected="false">April</button>
-                <button data-style="css/months/005-components-may.css" aria-selected="false">May</button>
-                <button data-style="css/months/006-components-june.css" aria-selected="false">June</button>
-                <button data-style="css/months/007-components-july.css" aria-selected="false">July</button>
-                <button data-style="css/months/008-components-august.css" aria-selected="false">August</button>
-                <button data-style="css/months/009-components-september.css" aria-selected="false">September</button>
-                <button data-style="css/months/010-components-october.css" aria-selected="false">October</button>
-                <button data-style="css/months/011-components-november.css" aria-selected="false">November</button>
-                <button data-style="css/months/012-components-december.css" aria-selected="false">December</button>
+                <button id="btn-january" data-style="css/months/001-components-january.css" aria-selected="false"></button>
+                <button id="btn-february" data-style="css/months/002-components-february.css" aria-selected="false"></button>
+                <button id="btn-march" data-style="css/months/003-components-march.css" aria-selected="false"></button>
+                <button id="btn-april" data-style="css/months/004-components-april.css" aria-selected="false"></button>
+                <button id="btn-may" data-style="css/months/005-components-may.css" aria-selected="false"></button>
+                <button id="btn-june" data-style="css/months/006-components-june.css" aria-selected="false"></button>
+                <button id="btn-july" data-style="css/months/007-components-july.css" aria-selected="false"></button>
+                <button id="btn-august" data-style="css/months/008-components-august.css" aria-selected="false"></button>
+                <button id="btn-september" data-style="css/months/009-components-september.css" aria-selected="false"></button>
+                <button id="btn-october" data-style="css/months/010-components-october.css" aria-selected="false"></button>
+                <button id="btn-november" data-style="css/months/011-components-november.css" aria-selected="false"></button>
+                <button id="btn-december" data-style="css/months/012-components-december.css" aria-selected="false"></button>
             </div>
             <div class="style-selector-list-two">
-                <button data-style="css/default-style.css" aria-selected="false">Monthly Styles</button>
+                <button id="btn-default" data-style="css/default-style.css" aria-selected="false"></button>
             </div>
         </div>
     </aside>
     <footer>
-        <p>&copy; 2025 Months in Styles from <a href="https://viktormihalyjozsa.com/" title="Dear Page" target="_blank">VMJ</a>.</p>
+        <p id="footer-p-text"></p><a id="footer-a-text" href="https://viktormihalyjozsa.github.io/VMJ/" title="VMJ Page" target="_blank"></a>
     </footer>
     <script src="js/stylemodify.js"></script>
         <div id="warning" class="landscape-warning">
-        Please rotate the device back
-        <br>
-        to portrait mode! 
-        <br>
-        📱🔄
-    </div>
+            <h6>
+                <span id="warning-text"></span>
+                <span>📱🔄</span>
+            </h6>
+        </div>
     <script src="js/warning.js" defer></script>
 </body>
 </html>
