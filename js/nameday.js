@@ -1,6 +1,25 @@
 /* ======================================================================== *\
+
     N A M E ' S  D A Y  J A V A S C R I P T
+
+   ------------------------------------------------------------------------
+   
+    A JavaScript kód a névnapok megjelenítésére és kezelésére szolgál
+    Tartalom:
+    - Böngésző nyelvének lekérdezése
+    - Névnapok tárolása hónapok szerint
+    - Névnap lekérdezése
+    - Dátum lekérdezése
+    - Többnyelvű szövegek
+    - Névnap köszöntő beállítása
+    - Meghívás DOMContentLoaded után
+
 \* ======================================================================== */
+
+// Böngésző nyelvének lekérdezése
+function getUserLang() {
+  return navigator.language.split('-')[0].toLowerCase();
+}
 
 // Névnapok tárolása hónapok szerint
 const honapok = [
@@ -38,24 +57,43 @@ const ev = ido.getFullYear();
 const ho = ido.getMonth() + 1;
 const nap = ido.getDate();
 
-// Névnap köszöntő megjelenítése
-const greetingContainer = document.getElementById('nameday-greeting');
+// Többnyelvű szövegek
+const namedayTexts = {
+  hu: {
+    none: "Ma nincs névnap.",
+    today: "A mai névnap : <i>{name}</i>",
+    wish: "Boldog névnapot kívánunk!"
+  },
+  en: {
+    none: "Unfortunately, there is no name day today.",
+    today: "Today is: <i>{name}</i>'s day.",
+    wish: "We wish you many happy name days!"
+  },
+  // További nyelvek itt...
+};
 
-if (greetingContainer) {
+// Névnap köszöntő beállítása
+function setNamedayGreeting() {
+  const lang = getUserLang();
+  const texts = namedayTexts[lang] || namedayTexts['en'];
+  const greetingContainer = document.getElementById('nameday-greeting');
+  if (!greetingContainer) {
+    console.error('A névnap köszöntő konténer nem található!');
+    return;
+  }
   const todayNameDay = havinev(ev, ho, nap);
   if (todayNameDay === "Nincs névnap") {
-    greetingContainer.innerHTML = `
-        <p>Unfortunately, there is no name day today.</p>
-    `;
+    greetingContainer.innerHTML = `<p>${texts.none}</p>`;
   } else {
     greetingContainer.innerHTML = `
-        <p>Today is : <i> ${todayNameDay}</i>'s day . </p>
-        <p>We wish you many happy name days ! </p>
+      <p>${texts.today.replace('{name}', todayNameDay)}</p>
+      <p>${texts.wish}</p>
     `;
   }
-} else {
-  console.error('A névnap köszöntő konténer nem található!');
 }
+
+// Meghívás DOMContentLoaded után
+document.addEventListener('DOMContentLoaded', setNamedayGreeting);
 
 /* ======================================================================== *\
   E N D  O F  N A M E ' S  D A Y  J A V A S C R I P T
