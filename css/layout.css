@@ -354,31 +354,31 @@ main {
 aside {
     position:        fixed;
     top:             20vh;
-    right:           -24vw; /* kívül van a képernyőn */
+    right:           0; /* Az aside a jobb szélen helyezkedik el */
+    z-index:         1000;
 
     width:           30vw;
     height:          auto;
-    margin:          0vh 0vw 0vh 0vw;
-    padding:         0vh 0vw 0vh 0vw;
+    margin:          0;
+    padding:         0;
 
-    border-top:      0.375rem solid rgba(0, 0, 0, 0.5);   /* 6px */
-    border-bottom:   0.0625rem solid rgba(0, 0, 0, 0.5);  /* 1px */
-    border-left:     0.125rem solid rgba(0, 0, 0, 0.5);   /* 2px */
+    border-top:      0.375rem solid rgba(0, 0, 0, 0.5);
+    border-bottom:   0.0625rem solid rgba(0, 0, 0, 0.5);
+    border-left:     0.125rem solid rgba(0, 0, 0, 0.5);
     border-radius:   10vh 0vh 0vh 5vh;
     box-shadow:      0 0 1rem rgba(0, 0, 0, 0.5);
 
     display:         flex;
     flex-direction:  row;
-
     z-index:         1000;
-    transition:      right 1s cubic-bezier(.77,0,.18,1), width 1s cubic-bezier(.77,0,.18,1);
-    overflow:        hidden;
 
-    /* background-color: aqua;  Csak teszteléshez */
+    transition:      transform 1s cubic-bezier(.77,0,.18,1), width 1s cubic-bezier(.77,0,.18,1);
+    overflow:        hidden;
+    transform:       translateX(80%);  /* Kezdetben el van rejtve */
 }
 
     aside.open {
-        right: 0; /* becsúszik a képernyőre */
+        transform: translateX(0);  /* Megjelenik */
     }
 
     #style-selector-text-box {
@@ -514,14 +514,18 @@ aside {
 
 @media screen and (max-width: 768px) {
     aside {
-        width:   60vw;
-        height:  auto; /* Mobil nézetben automatikus magasság */
-        top:     25vh; /* Mobil nézetben a teteje */
-        right:   -50vw;
-    }
+        position:   fixed;
+        top:        25vh; /* Mobil nézetben a teteje */
+        right:      0; /* Mobil nézetben a jobb széle */
 
+        width:      60vw;
+        height:     auto; /* Mobil nézetben automatikus magasság */
+
+        transform:  translateX(80%);  /* Kezdetben el van rejtve */
+
+    }
         aside.open {
-            right:  0;
+            transform:  translateX(0);  /* Megjelenik */
         }
 
     #style-selector-text-box {

@@ -174,16 +174,34 @@ function setupAsideSlide() {
     const toggle = document.getElementById('style-selector-text-box');
     const styleButtons = aside ? aside.querySelectorAll('.style-selector-list-box button') : [];
 
+    // Állítsd be az aside alap translateX értékét (80%-ban rejtve)
+    if (aside) {
+        aside.style.transition = 'transform 0.7s cubic-bezier(.77,0,.18,1)';
+        aside.style.transform = 'translateX(80%)';
+    }
+
+    function openAside() {
+        aside.classList.add('open');
+        aside.style.transform = 'translateX(0)';
+    }
+    function closeAside() {
+        aside.classList.remove('open');
+        aside.style.transform = 'translateX(80%)';
+    }
     if (aside && toggle) {
         toggle.addEventListener('click', (e) => {
             e.stopPropagation();
-            aside.classList.toggle('open');
+            if (aside.classList.contains('open')) {
+                closeAside();
+            } else {
+                openAside();
+            }
         });
     }
 
     styleButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-            aside.classList.remove('open');
+            closeAside();
         });
     });
 
@@ -192,9 +210,29 @@ function setupAsideSlide() {
             aside.classList.contains('open') &&
             !aside.contains(e.target)
         ) {
-            aside.classList.remove('open');
+            closeAside();
         }
     });
+
+    // Touch/swipe támogatás mobilra
+    let startX = null;
+    if (aside) {
+        aside.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        });
+        aside.addEventListener('touchend', (e) => {
+            if (startX !== null) {
+                const endX = e.changedTouches[0].clientX;
+                if (startX - endX > 50) { // balra swipe - zár
+                    closeAside();
+                }
+                if (endX - startX > 50) { // jobbra swipe - nyit
+                    openAside();
+                }
+                startX = null;
+            }
+        });
+    }
 }
 
 // --- DOMContentLoaded esemény -------------------------------------------
