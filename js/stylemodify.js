@@ -36,8 +36,8 @@ function getUserLang() {
 
 function loadLanguageFile(lang, callback) {
     const langMap = {
-        en: "language/eng/text-eng.js",
-        hu: "language/hun/text-hun.js"
+        en: "text/eng/text-eng.js",
+        hu: "text/hun/text-hun.js"
         // további nyelvek...
     };
     const file = langMap[lang] || langMap["en"];
@@ -86,17 +86,17 @@ const monthToStyle = [
 function getQuoteFile(monthIndex, lang) {
   if (lang === 'hu') {
     if (monthIndex >= 0 && monthIndex < 12) {
-      // magyar: language/hun/quotes-hun/001-january-quotes-hun.html stb.
-      return `language/hun/quotes-hun/${String(monthIndex + 1).padStart(3, '0')}-${monthNames[monthIndex].toLowerCase()}-quotes-hun.html`;
+      // magyar: text/hun/quotes-hun/001-january-quotes-hun.html stb.
+      return `text/hun/quotes-hun/${String(monthIndex + 1).padStart(3, '0')}-${monthNames[monthIndex].toLowerCase()}-quotes-hun.html`;
     } else {
-      return "language/hun/quotes-hun/default-quotes-hun.html";
+      return "text/hun/quotes-hun/default-quotes-hun.html";
     }
   } else {
     if (monthIndex >= 0 && monthIndex < 12) {
-      // angol: language/eng/quotes-eng/001-january-quotes-eng.html stb.
-      return `language/eng/quotes-eng/${String(monthIndex + 1).padStart(3, '0')}-${monthNames[monthIndex].toLowerCase()}-quotes-eng.html`;
+      // angol: text/eng/quotes-eng/001-january-quotes-eng.html stb.
+      return `text/eng/quotes-eng/${String(monthIndex + 1).padStart(3, '0')}-${monthNames[monthIndex].toLowerCase()}-quotes-eng.html`;
     } else {
-      return "language/eng/quotes-eng/default-quotes-eng.html";
+      return "text/eng/quotes-eng/default-quotes-eng.html";
     }
   }
 }
@@ -138,19 +138,19 @@ function preloadImages(imageUrls) {
 }
 
 const backgroundImages = [
-  'images/000-background-first.webp',
-  'images/001-background-january.webp',
-  'images/002-background-february.webp',
-  'images/003-background-march.webp',
-  'images/004-background-april.webp',
-  'images/005-background-may.webp',
-  'images/006-background-june.webp',
-  'images/007-background-july.webp',
-  'images/008-background-august.webp',
-  'images/009-background-september.webp',
-  'images/010-background-october.webp',
-  'images/011-background-november.webp',
-  'images/012-background-december.webp'
+  'images/background-images/000-background-default.webp',
+  'images/background-images/001-background-january.webp',
+  'images/background-images/002-background-february.webp',
+  'images/background-images/003-background-march.webp',
+  'images/background-images/004-background-april.webp',
+  'images/background-images/005-background-may.webp',
+  'images/background-images/006-background-june.webp',
+  'images/background-images/007-background-july.webp',
+  'images/background-images/008-background-august.webp',
+  'images/background-images/009-background-september.webp',
+  'images/background-images/010-background-october.webp',
+  'images/background-images/011-background-november.webp',
+  'images/background-images/012-background-december.webp'
 ];
 
 // --- Háttérkép váltás elmosódással --------------------------------------
@@ -176,7 +176,7 @@ function setupAsideSlide() {
 
     // Állítsd be az aside alap translateX értékét (80%-ban rejtve)
     if (aside) {
-        aside.style.transition = 'transform 0.7s cubic-bezier(.77,0,.18,1)';
+        aside.style.transition = 'transform 1s cubic-bezier(.77,0,.18,1)';
         aside.style.transform = 'translateX(80%)';
     }
 
@@ -334,8 +334,8 @@ function applyActiveAndTitle(sheet) {
 
   if (sheet === defaultStyle) {
     loadQuoteFile(lang === 'hu'
-      ? 'language/hun/quotes-hun/default-quotes-hun.html'
-      : 'language/eng/quotes-eng/default-quotes-eng.html');
+      ? 'text/hun/quotes-hun/default-quotes-hun.html'
+      : 'text/eng/quotes-eng/default-quotes-eng.html');
     return;
   }
 

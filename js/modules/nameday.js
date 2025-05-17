@@ -95,6 +95,7 @@ function setNamedayGreeting() {
 // Meghívás DOMContentLoaded után
 document.addEventListener('DOMContentLoaded', setNamedayGreeting);
 
+
 /* ======================================================================== *\
   E N D  O F  N A M E ' S  D A Y  J A V A S C R I P T
 \* ======================================================================== */

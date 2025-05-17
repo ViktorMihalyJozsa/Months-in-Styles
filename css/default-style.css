@@ -4,7 +4,7 @@
 
 /* Alap háttérkép */
 body {
-    background-image:       url('../images/000-background-first.webp');
+    background-image:       url('../images/background-images/000-background-default.webp');
     background-size:        cover;
     background-repeat:      no-repeat;
     background-attachment:  fixed;

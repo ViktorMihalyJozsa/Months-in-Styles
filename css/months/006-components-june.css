@@ -4,7 +4,7 @@
 
 /* Alap háttérkép */
 body {
-    background-image:       url('../../images/006-background-june.webp');
+    background-image:       url('../../images/background-images/006-background-june.webp');
     background-size:        cover;
     background-repeat:      no-repeat;
     background-attachment:  fixed;
