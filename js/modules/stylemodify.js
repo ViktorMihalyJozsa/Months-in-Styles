@@ -79,7 +79,7 @@ const monthToStyle = [
   'css/months/010-components-october.css',
   'css/months/011-components-november.css',
   'css/months/012-components-december.css',
-  'css/default-style.css' // Alapértelmezett stílus
+  'css/default.css' // Alapértelmezett stílus
 ];
 
 // --- Idézetfájl kiválasztása nyelv szerint ------------------------------
@@ -275,7 +275,7 @@ function splitVerticalLabel() {
 }
 
 // --- CSS fájlok ---------------------------------------------------------
-const defaultStyle = 'css/default-style.css';
+const defaultStyle = 'css/default.css';
 const FADE_DURATION = 1000;
 
 // --- Téma inicializálása ------------------------------------------------
