@@ -64,21 +64,20 @@ body {
     transition: background-image 2s, backdrop-filter 2s;
     backdrop-filter: blur(0px); /* vagy pl. blur(8px) */
 }
-body.bg-blur {
-    backdrop-filter: blur(16px);
-}
+    body.bg-blur {backdrop-filter: blur(16px);}
 
 /* Header, footer háttérszín animáció */
-header, #style-selector-list-box, footer {
+header, footer {
     transition: background-color 2s ease-in-out;
 }
 
 /* Aside háttérszín animáció */
 aside {
-    background:       rgba(255, 255, 255, 0.2);  /* halvány, áttetsző fehér */
-    backdrop-filter:  blur(8px) saturate(180%);    /* erős blur és szaturáció */
-    transition:       width 1s cubic-bezier(.77,0,.18,1), backdrop-filter 1s ease-in-out;
+    transition:  width 1s cubic-bezier(.77,0,.18,1), backdrop-filter 1s ease-in-out;
 }
+    #style-selector-list-box {
+        transition:  opacity 1s cubic-bezier(.77,0,.18,1), width 1s ease-in-out, background-color 2s ease-in-out;
+    }
 
     #warning {
         display:          none; /* Alapértelmezetten rejtve van */
@@ -372,6 +371,9 @@ aside {
     border-radius:   10vh 0vh 0vh 5vh;
     box-shadow:      0 0 1rem rgba(0, 0, 0, 0.5);
 
+    background:       rgba(255, 255, 255, 0.2);  /* halvány, áttetsző fehér */
+    backdrop-filter:  blur(8px) saturate(180%);    /* erős blur és szaturáció */
+
     z-index:         1000;
 }
 
@@ -436,6 +438,8 @@ aside {
 
         border:           0.125rem solid rgba(0, 0, 0, 0.5);   /* 2px */
         border-radius:    10vh 0vh 0vh 5vh;
+
+        opacity:          1;
 
         /*background-color: aqua; /* Csak teszteléshez */
     }
