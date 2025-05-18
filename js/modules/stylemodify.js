@@ -168,71 +168,53 @@ function changeBackgroundImageWithBlur(newImageUrl) {
     }, 2000);      // Ez legyen kb. a blur transition ideje
 }
 
-// --- Aside slide-in/slide-out logika ------------------------------------
-function setupAsideSlide() {
+// --- Aside drop-down logika ---------------------------------------------
+function setupAsideDropDown() {
     const aside = document.querySelector('aside');
     const toggle = document.getElementById('style-selector-text-box');
-    const styleButtons = aside ? aside.querySelectorAll('.style-selector-list-box button') : [];
 
-    // Állítsd be az aside alap translateX értékét (80%-ban rejtve)
+    // Alapértelmezett állapot: zárt
     if (aside) {
-        aside.style.transition = 'transform 1s cubic-bezier(.77,0,.18,1)';
-        aside.style.transform = 'translateX(80%)';
-    }
-
-    function openAside() {
-        aside.classList.add('open');
-        aside.style.transform = 'translateX(0)';
-    }
-    function closeAside() {
         aside.classList.remove('open');
-        aside.style.transform = 'translateX(80%)';
     }
+
+    // Nyit/zár logika
+    function toggleAside(e) {
+        e.stopPropagation();
+        aside.classList.toggle('open');
+    }
+
+    // Fülre kattintva nyit/zár
     if (aside && toggle) {
-        toggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (aside.classList.contains('open')) {
-                closeAside();
-            } else {
-                openAside();
-            }
+        toggle.addEventListener('click', toggleAside);
+        // Érintőképernyő támogatás
+        toggle.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            toggleAside(e);
         });
     }
 
-    styleButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            closeAside();
-        });
-    });
-
-    document.body.addEventListener('click', (e) => {
+    // Bárhová máshová kattintva zár
+    document.addEventListener('click', (e) => {
         if (
             aside.classList.contains('open') &&
-            !aside.contains(e.target)
+            !aside.contains(e.target) &&
+            e.target !== toggle
         ) {
-            closeAside();
+            aside.classList.remove('open');
         }
     });
 
-    // Touch/swipe támogatás mobilra
-    let startX = null;
-    if (aside) {
-        aside.addEventListener('touchstart', (e) => {
-            startX = e.touches[0].clientX;
-        });
-        aside.addEventListener('touchend', (e) => {
-            if (startX !== null) {
-                const endX = e.changedTouches[0].clientX;
-                if (startX - endX > 50) { // balra swipe - zár
-                    closeAside();
-                }
-                if (endX - startX > 50) { // jobbra swipe - nyit
-                    openAside();
-                }
-                startX = null;
-            }
-        });
-    }
+    // Érintőképernyőn is bárhová máshová érintve zár
+    document.addEventListener('touchend', (e) => {
+        if (
+            aside.classList.contains('open') &&
+            !aside.contains(e.target) &&
+            e.target !== toggle
+        ) {
+            aside.classList.remove('open');
+        }
+    });
 }
 
 // --- DOMContentLoaded esemény -------------------------------------------
@@ -247,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Függőleges felirat tördelése csak a szöveg beírása után!
         splitVerticalLabel();
         // További inicializálás
-        setupAsideSlide();
+        setupAsideDropDown();
         preloadImages(backgroundImages);
         initTheme();
         setupEventListeners();
