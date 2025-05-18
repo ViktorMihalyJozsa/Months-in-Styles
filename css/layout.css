@@ -361,8 +361,8 @@ aside {
     flex-direction:  row;
     overflow:        hidden;
 
-    width:           6vw;     /* Csak a fül látszik */
-    height:          auto;
+    width:           6vw;    /* Csak a fül látszik */
+    height:          77vh;   /* Teljes magasság */
     margin:          0;
     padding:         0;
 
@@ -376,8 +376,8 @@ aside {
 }
 
     aside.open {
-        width:   30vw;   /* Teljes szélesség nyitva */
-        height:  auto;  /* Automatikus magasság */
+        width:   30vw;  /* Teljes szélesség nyitva */
+        height:  77vh;  /* Automatikus magasság */
     }
 
     #style-selector-text-box {
@@ -526,7 +526,7 @@ aside {
         right:       0; /* Mobil nézetben a jobb széle */
 
         width:       12vw;
-        height:      auto; /* Mobil nézetben automatikus magasság */
+        height:      72vh; /* Mobil nézetben automatikus magasság */
 
         transition:  width 1s cubic-bezier(.77,0,.18,1);
         z-index:     1000;
@@ -534,7 +534,7 @@ aside {
     }
         aside.open {
             width:   60vw;  /* Mobil nézetben teljes szélesség */
-            height:  auto;  /* Mobil nézetben automatikus magasság */
+            height:  72vh;  /* Mobil nézetben automatikus magasság */
         }
 
     #style-selector-text-box {
