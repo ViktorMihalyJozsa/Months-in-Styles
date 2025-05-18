@@ -77,6 +77,7 @@ header, #style-selector-list-box, footer {
 aside {
     background:       rgba(255, 255, 255, 0.2);  /* halvány, áttetsző fehér */
     backdrop-filter:  blur(8px) saturate(180%);    /* erős blur és szaturáció */
+    transition:       width 1s cubic-bezier(.77,0,.18,1), backdrop-filter 1s ease-in-out;
 }
 
     #warning {
@@ -300,7 +301,7 @@ main {
 
         width:        calc(100% - 12vw);  /* Teljes szélesség - aside szélesség */
         height:       75vh;               /* Teljes magasság */
-        margin:       5vh 0vw 5vh 0vw;    /* Mobil nézetben a margó beállítása */
+        margin:       5vh 12vw 5vh 0vw;   /* Mobil nézetben a margó beállítása */
         padding:      0vh 5vw 0vh 5vw;
     }
 }
@@ -353,11 +354,14 @@ main {
 
 aside {
     position:        fixed;
-    top:             20vh;
-    right:           0; /* Az aside a jobb szélen helyezkedik el */
-    z-index:         1000;
+    top:             16vh;
+    right:           0;
 
-    width:           30vw;
+    display:         flex;
+    flex-direction:  row;
+    overflow:        hidden;
+
+    width:           6vw;     /* Csak a fül látszik */
     height:          auto;
     margin:          0;
     padding:         0;
@@ -368,30 +372,25 @@ aside {
     border-radius:   10vh 0vh 0vh 5vh;
     box-shadow:      0 0 1rem rgba(0, 0, 0, 0.5);
 
-    display:         flex;
-    flex-direction:  row;
     z-index:         1000;
-
-    transition:      transform 1s cubic-bezier(.77,0,.18,1), width 1s cubic-bezier(.77,0,.18,1);
-    overflow:        hidden;
-    transform:       translateX(80%);  /* Kezdetben el van rejtve */
 }
 
     aside.open {
-        transform: translateX(0);  /* Megjelenik */
+        width:   30vw;   /* Teljes szélesség nyitva */
+        height:  auto;  /* Automatikus magasság */
     }
 
     #style-selector-text-box {
         display:          flex;
-        justify-content:  center;  /* Középre igazítás vízszintesen */
-        align-items:      center;  /* Középre igazítás függőlegesen */
-        text-transform:   uppercase;
+        flex-direction:   column;  /* Oszlop irányú elrendezés */
+        justify-content:  center;  /* Középre igazítás függőlegesen */
+        align-items:      center;  /* Középre igazítás vízszintesen */
+        text-align:       center;
 
-        width:            6vw;   /* Kezdeti szélesség */
-        max-width:        6vw;   /* vagy amennyi kell */
-        height:           auto;  /* Automatikus magasság */
-        margin:           0vh 0vw 0vh 0vw;
-        padding:          0vh 0vw 0vh 0vw;
+        width:            6vw;   /* Csak a fül látszik */
+        height:           auto;
+        margin:           4vh 0vw 0vh 0vw;
+        padding:          2vh 0vw 2vh 0vw;
 
         cursor:           pointer;
         z-index:          2;
@@ -400,11 +399,14 @@ aside {
     }
 
         #style-selector-text-box h3 {
+            text-transform:  uppercase;
+
             font-family:     "Shadows Into Light", cursive;
             font-size:       clamp(1.25rem, 2vw, 2rem);
             font-weight:     bold;
+
             letter-spacing:  clamp(0.125rem, 0.2vw, 0.2rem);
-            line-height:     clamp(1.5rem, 2vw, 2rem);
+            line-height:     clamp(1.5rem, 2.2vw, 2.2rem);
             color:           rgba(255, 255, 255, 1);
             text-shadow:     -0.125rem -0.125rem rgba(0, 0, 0, 0.625), 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.625);
 
@@ -412,13 +414,13 @@ aside {
         }
 
         #vertical-label {
-            display:         inline-block;
-            user-select:     none;
-            pointer-events:  none;
-            z-index:         2;
+            user-select:      none;
+            pointer-events:   none;
+            width:            6vw;   /* Csak a fül látszik */
+            height:           auto;
+            z-index:          2;
         }
-
-            #vertical-label span {display: block;}
+            #vertical-label span {display:  block;}
 
     #style-selector-list-box {
         display:          flex;
@@ -429,14 +431,19 @@ aside {
 
         width:            24vw;
         height:           auto;
-        margin:           0vh 0vw 0vh 0vw;
-        padding:          3vh 0vw 2vh 0vw;
+        margin:           4vh 0vw 0vh 0vw;
+        padding:          2vh 0vw 2vh 0vw;
 
         border:           0.125rem solid rgba(0, 0, 0, 0.5);   /* 2px */
         border-radius:    10vh 0vh 0vh 5vh;
 
         /*background-color: aqua; /* Csak teszteléshez */
     }
+
+        aside:not(.open) #style-selector-list-box {
+            opacity:         0;
+            pointer-events:  none;
+        }
 
         .style-selector-list-one,
         .style-selector-list-two {
@@ -514,18 +521,20 @@ aside {
 
 @media screen and (max-width: 768px) {
     aside {
-        position:   fixed;
-        top:        25vh; /* Mobil nézetben a teteje */
-        right:      0; /* Mobil nézetben a jobb széle */
+        position:    fixed;
+        top:         25vh; /* Mobil nézetben a teteje */
+        right:       0; /* Mobil nézetben a jobb széle */
 
-        width:      60vw;
-        height:     auto; /* Mobil nézetben automatikus magasság */
+        width:       12vw;
+        height:      auto; /* Mobil nézetben automatikus magasság */
 
-        transform:  translateX(80%);  /* Kezdetben el van rejtve */
+        transition:  width 1s cubic-bezier(.77,0,.18,1);
+        z-index:     1000;
 
     }
         aside.open {
-            transform:  translateX(0);  /* Megjelenik */
+            width:   60vw;  /* Mobil nézetben teljes szélesség */
+            height:  auto;  /* Mobil nézetben automatikus magasság */
         }
 
     #style-selector-text-box {
@@ -533,12 +542,25 @@ aside {
         max-width:  12vw;
     }
 
+        #vertical-label {
+            user-select:      none;
+            pointer-events:   none;
+            width:            12vw;   /* Csak a fül látszik */
+            height:           auto;
+            z-index:          2;
+        }
+            #vertical-label span {display:  block;}
+
     #style-selector-list-box {
         width:   48vw; /* Mobil nézetben szélesebb */
         height:  auto; /* Mobil nézetben automatikus magasság */
-        margin:  0vh 0vw 0vh 0vw;
+        margin:  4vh 0vw 0vh 0vw;
         padding: 3vh 0vw 2vh 0vw;
     }
+        aside:not(.open) #style-selector-list-box {
+            opacity:         0;
+            pointer-events:  none;
+        }
 
         .style-selector-list-one,
         .style-selector-list-two {

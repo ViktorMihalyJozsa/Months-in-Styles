@@ -172,47 +172,40 @@ function changeBackgroundImageWithBlur(newImageUrl) {
 function setupAsideDropDown() {
     const aside = document.querySelector('aside');
     const toggle = document.getElementById('style-selector-text-box');
+    const styleButtons = aside ? aside.querySelectorAll('.style-selector-list-box button') : [];
 
     // Alapértelmezett állapot: zárt
     if (aside) {
         aside.classList.remove('open');
     }
 
-    // Nyit/zár logika
-    function toggleAside(e) {
-        e.stopPropagation();
-        aside.classList.toggle('open');
+    function openAside() {
+        aside.classList.add('open');
+    }
+    function closeAside() {
+        aside.classList.remove('open');
     }
 
-    // Fülre kattintva nyit/zár
     if (aside && toggle) {
-        toggle.addEventListener('click', toggleAside);
-        // Érintőképernyő támogatás
-        toggle.addEventListener('touchend', function(e) {
-            e.preventDefault();
-            toggleAside(e);
+        toggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            aside.classList.toggle('open');
         });
     }
 
-    // Bárhová máshová kattintva zár
-    document.addEventListener('click', (e) => {
-        if (
-            aside.classList.contains('open') &&
-            !aside.contains(e.target) &&
-            e.target !== toggle
-        ) {
-            aside.classList.remove('open');
-        }
+    styleButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            closeAside();
+        });
     });
 
-    // Érintőképernyőn is bárhová máshová érintve zár
-    document.addEventListener('touchend', (e) => {
+    document.body.addEventListener('click', (e) => {
         if (
             aside.classList.contains('open') &&
             !aside.contains(e.target) &&
             e.target !== toggle
         ) {
-            aside.classList.remove('open');
+            closeAside();
         }
     });
 }
