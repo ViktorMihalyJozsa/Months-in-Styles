@@ -133,7 +133,7 @@ header {
     grid-row:       1;           /* A fejléc az első sorban helyezkedik el */
 
     width:          100%;  /* Automatikus szélesség */
-    height:         21.25vh;
+    height:         auto;  /* Automatikus magasság */
     margin:         0;
     padding:        0vh 5vw 0vh 5vw;
 
@@ -165,7 +165,7 @@ header {
         width:    100%;
         height:   auto;
         margin:   0;
-        padding:  1vh 0.5vw 1vh 0.5vw;
+        padding:  1vh 1vw 1vh 1vw;
 
         /* background-color: aqua; /* Csak teszthez */
     }
@@ -241,7 +241,7 @@ header {
         width:       auto;
         height:      auto;
         margin:      0;
-        padding:     1vh 5vw 1vh 0.5vw;
+        padding:     1vh 1vw 1vh 1vw;
 
         border-top:  0.125rem solid rgba(0, 0, 0, 0.25);   /* 2px */
 
@@ -595,7 +595,7 @@ footer {
     text-align:       center;  /* Szöveg középre igazítása */
 
     width:            100%; /* Teljes szélesség */
-    height:           7.75vh; /* Teljes magasság */
+    height:           auto; /* Teljes magasság */
     margin:           0;
     padding:          0.75vh 0vw 0.75vh 0vw;
 
