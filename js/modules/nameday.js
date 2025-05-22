@@ -1,18 +1,25 @@
 /* ======================================================================== *\
 
-    N A M E ' S  D A Y  J A V A S C R I P T
+    N A M E ' S  D A Y  J A V A S C R I P T  ( ES6 modul verzió )
 
-   ------------------------------------------------------------------------
-   
-    A JavaScript kód a névnapok megjelenítésére és kezelésére szolgál
-    Tartalom:
-    - Böngésző nyelvének lekérdezése
-    - Névnapok tárolása hónapok szerint
-    - Névnap lekérdezése
-    - Dátum lekérdezése
-    - Többnyelvű szövegek
-    - Névnap köszöntő beállítása
-    - Meghívás DOMContentLoaded után
+    ------------------------------------------------------------------------
+
+    A névnapok megjelenítése a böngésző nyelvének megfelelően.
+
+    A névnapok tárolása hónapok szerint, ahol a hónapok tömbje tartalmazza
+    a napokat és a hozzájuk tartozó neveket.
+
+    A névnapok lekérdezése a havinev() függvény segítségével történik,
+    amely visszaadja a megadott hónapban és napon található névnapot.
+
+    A névnapok megjelenítése a setNamedayGreeting() függvény segítségével történik,
+    amely a böngésző nyelvének megfelelő szöveget jeleníti meg.
+
+    A névnapok szövegei több nyelven is elérhetők, és a böngésző nyelvének
+    megfelelően jelennek meg.
+
+    A névnapok szövegei a namedayTexts objektumban találhatók, ahol a kulcsok
+    a nyelvek kódjai, és az értékek a megfelelő szövegek.
 
 \* ======================================================================== */
 
@@ -51,12 +58,6 @@ function havinev(ev, ho, nap) {
   return honapok[ho][nap - 1];
 }
 
-// Dátum lekérdezése
-const ido = new Date();
-const ev = ido.getFullYear();
-const ho = ido.getMonth() + 1;
-const nap = ido.getDate();
-
 // Többnyelvű szövegek
 const namedayTexts = {
   hu: {
@@ -74,6 +75,11 @@ const namedayTexts = {
 
 // Névnap köszöntő beállítása
 function setNamedayGreeting() {
+  const ido = new Date();
+  const ev = ido.getFullYear();
+  const ho = ido.getMonth() + 1;
+  const nap = ido.getDate();
+
   const lang = getUserLang();
   const texts = namedayTexts[lang] || namedayTexts['en'];
   const greetingContainer = document.getElementById('nameday-greeting');
@@ -92,10 +98,11 @@ function setNamedayGreeting() {
   }
 }
 
-// Meghívás DOMContentLoaded után
-document.addEventListener('DOMContentLoaded', setNamedayGreeting);
-
+// Fő inicializáló függvény exportálása
+export function initNameday() {
+  setNamedayGreeting();
+}
 
 /* ======================================================================== *\
-  E N D  O F  N A M E ' S  D A Y  J A V A S C R I P T
+    E N D  O F  N A M E ' S  D A Y  J A V A S C R I P T
 \* ======================================================================== */

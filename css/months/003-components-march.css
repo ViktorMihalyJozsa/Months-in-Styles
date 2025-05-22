@@ -4,7 +4,7 @@
 
 /* Alap háttérkép */
 body {
-    background-image:       url('../../images/background-images/003-background-march.webp');
+    background-image:       url('../../images/background/003-march.webp');
     background-size:        cover;
     background-repeat:      no-repeat;
     background-attachment:  fixed;

@@ -4,7 +4,7 @@
 
 /* Alap háttérkép */
 body {
-    background-image:       url('../../images/background-images/012-background-december.webp');
+    background-image:       url('../../images/background/012-december.webp');
     background-size:        cover;
     background-repeat:      no-repeat;
     background-attachment:  fixed;

@@ -1,28 +1,29 @@
 /*  ========================================================================  *\
 
-     W A R N I N G  -  J a v a S c r i p t
+     W A R N I N G  -  J a v a S c r i p t   ( ES6 modul verzió )
 
-        A warning.js fájl a játék oldalának orientációját ellenőrzi.
+    ------------------------------------------------------------------------
 
-    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+     A figyelmeztető üzenet megjelenítése, ha a felhasználó vízszintes
+     tájolásban használja az oldalt, és a képernyő szélessége kisebb mint 768px.
 
-        A fájl tartalmazza a következő funkciókat:
+     A figyelmeztetés eltűnik, ha a felhasználó függőleges tájolásra vált.
 
-            1. checkOrientation() 
-                - Az oldal orientációjának ellenőrzése
-            2. window.addEventListener("resize") 
-                - Az oldal átméretezésének figyelése
-            3. window.addEventListener("orientationchange") 
-                - Az oldal orientációjának figyelése
+        A figyelmeztető üzenet a következő szöveget tartalmazza:
+        "Kérjük, állítsa a készülékét függőleges tájolásra a jobb élmény érdekében."
+        "Please rotate your device to portrait mode for a better experience."
 
-        A fájlhoz tartozó CSS:
-            - layout.css
-            - components.css
+        A figyelmeztető üzenet megjelenítése és eltűnése animálva van.
+        
+        A figyelmeztető üzenet csak egyszer jelenik meg, amíg a felhasználó
+        nem vált tájolást.
+
+        A figyelmeztető üzenet eltűnése után eltávolítja az eseményfigyelőt,
+        hogy ne halmozódjon fel.
 
 \*  ========================================================================  */
 
-
-document.addEventListener("DOMContentLoaded", () => {
+export function initWarning() {
     checkOrientation();
 
     let resizeTimeout;
@@ -32,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     window.addEventListener("orientationchange", checkOrientation);
-});
+}
 
 function checkOrientation() {
     const warning = document.getElementById("warning");
@@ -53,7 +54,6 @@ function checkOrientation() {
         }, { once: true }); // Eltávolítja az event listenert, hogy ne halmozódjon
     }
 }
-
 
 /*  ========================================================================  *\
       E N D   O F   W A R N I N G - J a v a S c r i p t   F I L E
