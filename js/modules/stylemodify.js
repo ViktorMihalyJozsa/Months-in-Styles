@@ -157,66 +157,6 @@ function changeBackgroundImageWithBlur(newImageUrl) {
     }, 2000);
 }
 
-// --- Aside drop-down logika ---------------------------------------------
-function setupAsideDropDown() {
-    const aside = document.querySelector('aside');
-    const toggle = document.getElementById('style-selector-text-box');
-    const styleButtons = aside ? aside.querySelectorAll('.style-selector-list-box button') : [];
-
-    if (aside) {
-        aside.classList.remove('open');
-    }
-
-    function openAside() {
-        aside.classList.add('open');
-    }
-    function closeAside() {
-        aside.classList.remove('open');
-    }
-
-    if (aside && toggle) {
-        toggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            aside.classList.toggle('open');
-        });
-    }
-
-    styleButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            closeAside();
-        });
-    });
-
-    document.body.addEventListener('click', (e) => {
-        if (
-            aside.classList.contains('open') &&
-            !aside.contains(e.target) &&
-            e.target !== toggle
-        ) {
-            closeAside();
-        }
-    });
-}
-
-// --- Függőleges felirat szétbontása -------------------------------------
-function splitVerticalLabel() {
-    const label = document.getElementById('vertical-label');
-    if (label) {
-        const labelText = label.textContent.trim();
-        label.innerHTML = '';
-        for (const char of labelText) {
-            if (char === ' ') {
-                label.appendChild(document.createElement('br'));
-            } else {
-                const span = document.createElement('span');
-                span.textContent = char;
-                label.appendChild(span);
-            }
-        }
-        label.setAttribute('aria-label', labelText);
-    }
-}
-
 // --- CSS fájlok ---------------------------------------------------------
 const defaultStyle = 'css/default.css';
 const FADE_DURATION = 1000;
@@ -373,6 +313,28 @@ function setActiveTheme(theme) {
   }
 }
 
+// --- Függőleges felirat szétbontása -------------------------------------
+function splitVerticalLabel() {
+
+    console.log('splitVerticalLabel fut');
+    
+    const label = document.getElementById('vertical-label');
+    if (label) {
+        const labelText = label.textContent.trim();
+        label.innerHTML = '';
+        for (const char of labelText) {
+            if (char === ' ') {
+                label.appendChild(document.createElement('br'));
+            } else {
+                const span = document.createElement('span');
+                span.textContent = char;
+                label.appendChild(span);
+            }
+        }
+        label.setAttribute('aria-label', labelText);
+    }
+}
+
 // --- Fő inicializáló függvény exportálása -------------------------------
 export function initStyleModify() {
     const lang = getUserLang();
@@ -381,8 +343,7 @@ export function initStyleModify() {
             const el = document.getElementById(id);
             if (el) el.textContent = text;
         }
-        splitVerticalLabel();
-        setupAsideDropDown();
+        splitVerticalLabel(); // <-- Itt a helye!
         preloadImages(backgroundImages);
         initTheme();
         setupEventListeners();

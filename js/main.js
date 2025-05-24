@@ -5,13 +5,15 @@
 \* ======================================================================== */
 
 import { initStyleModify } from './modules/stylemodify.js';
+import { setupAsideDropDown } from './modules/asideDropdown.js';
 import { initNameday } from './modules/nameday.js';
 import { initWarning } from './modules/warning.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    initStyleModify();
-    initNameday();
-    initWarning();
+    initStyleModify();         // Stílusváltás, idézetek, háttérkép stb.
+    setupAsideDropDown();      // Oldalsó stílusválasztó menü
+    initNameday();             // Névnap kijelzés
+    initWarning();             // Figyelmeztetés logika
 });
 
 /* ======================================================================== *\
