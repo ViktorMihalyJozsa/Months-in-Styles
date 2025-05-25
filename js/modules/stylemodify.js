@@ -7,50 +7,19 @@
     A stílusválasztó modul, amely lehetővé teszi a felhasználók számára,
     hogy különböző hónapokhoz tartozó stílusokat válasszanak.
 
-    A modul betölti a megfelelő CSS fájlokat, idézeteket és háttérképeket,
+    A modul betölti a megfelelő CSS fájlokat, háttérképeket,
     valamint kezeli a felhasználói felület eseményeit.
 
     A modul célja, hogy a felhasználók számára egyedi és vonzó élményt nyújtson
     a hónapok stílusainak megváltoztatásával.
 
     A modul a következő funkciókat tartalmazza:
-    - Nyelv kiválasztása és szövegek betöltése
-    - Háttérképek előtöltése
-    - Idézetek betöltése
-    - Stílusválasztó gombok eseménykezelése
-    - Háttérkép váltás elmosódással
-    - Stílusválasztó menü megjelenítése és eltüntetése
-    - Függőleges felirat szétbontása
-    - Aktív téma és fejléc cím frissítése
-    - Debug módok
-    - CSS fájlok betöltése és érvényesítése
-    - Eseménykezelők beállítása
-    - Fő inicializáló függvény
-    - A modul ES6 modul formátumban van, 
-      és exportálja a fő inicializáló függvényt.
 
 \* ======================================================================== */
 
-// --- Többnyelvű szövegek betöltése --------------------------------------
-function getUserLang() {
-    return navigator.language.split('-')[0].toLowerCase();
-}
-
-function loadLanguageFile(lang, callback) {
-    const langMap = {
-        en: "text/eng/text-eng.js",
-        hu: "text/hun/text-hun.js"
-        // további nyelvek...
-    };
-    const file = langMap[lang] || langMap["en"];
-    const script = document.createElement('script');
-    script.src = file;
-    script.onload = callback;
-    document.head.appendChild(script);
-}
-
 // --- Debug módok --------------------------------------------------------
 import { log, warn, error } from './debug.js';
+import { getUserLang, getQuoteFile, loadQuoteFile } from './lang.js';
 
 // --- Globális változók --------------------------------------------------
 const monthNames = [
@@ -74,57 +43,6 @@ const monthToStyle = [
   'css/default.css'
 ];
 
-// --- Idézetfájl kiválasztása nyelv szerint ------------------------------
-function getQuoteFile(monthIndex, lang) {
-  if (lang === 'hu') {
-    if (monthIndex >= 0 && monthIndex < 12) {
-      return `text/hun/quotes-hun/${String(monthIndex + 1).padStart(3, '0')}-${monthNames[monthIndex].toLowerCase()}-quotes-hun.html`;
-    } else {
-      return "text/hun/quotes-hun/default-quotes-hun.html";
-    }
-  } else {
-    if (monthIndex >= 0 && monthIndex < 12) {
-      return `text/eng/quotes-eng/${String(monthIndex + 1).padStart(3, '0')}-${monthNames[monthIndex].toLowerCase()}-quotes-eng.html`;
-    } else {
-      return "text/eng/quotes-eng/default-quotes-eng.html";
-    }
-  }
-}
-
-// --- Idézet betöltése ---------------------------------------------------
-function loadQuoteFile(filename) {
-  const quoteEl = document.getElementById('month-quote');
-  if (!quoteEl) return;
-
-  quoteEl.classList.remove('fade-in');
-  quoteEl.classList.add('fade-out');
-
-  setTimeout(() => {
-    fetch(filename)
-      .then(response => response.text())
-      .then(text => {
-        quoteEl.innerHTML = text;
-        quoteEl.classList.remove('fade-out');
-        quoteEl.classList.add('fade-in');
-      })
-      .catch(err => {
-        quoteEl.textContent = 'Idézet nem elérhető.';
-        quoteEl.classList.remove('fade-out');
-        quoteEl.classList.add('fade-in');
-        error(err);
-      });
-  }, 1000);
-}
-
-// --- Képek előtöltése ---------------------------------------------------
-function preloadImages(imageUrls) {
-  imageUrls.forEach(url => {
-    const img = new Image();
-    img.src = url;
-    log(`Kép előtöltése: ${url}`);
-  });
-}
-
 const backgroundImages = [
   'images/background/000-default.webp',
   'images/background/001-january.webp',
@@ -141,21 +59,29 @@ const backgroundImages = [
   'images/background/012-december.webp',
 ];
 
-// --- Háttérkép váltás elmosódással --------------------------------------
-function changeBackgroundImageWithBlur(newImageUrl) {
-    const body = document.body;
-    body.classList.add('bg-blur');
-    setTimeout(() => {
-        body.style.backgroundImage = `url('${newImageUrl}')`;
-        setTimeout(() => {
-            body.classList.remove('bg-blur');
-        }, 2000);
-    }, 2000);
-}
-
-// --- CSS fájlok ---------------------------------------------------------
 const defaultStyle = 'css/default.css';
 const FADE_DURATION = 1000;
+
+// --- Képek előtöltése ---------------------------------------------------
+function preloadImages(imageUrls) {
+  imageUrls.forEach(url => {
+    const img = new Image();
+    img.src = url;
+    log(`Kép előtöltése: ${url}`);
+  });
+}
+
+// --- Háttérkép váltás elmosódással --------------------------------------
+function changeBackgroundImageWithBlur(newImageUrl) {
+  const body = document.body;
+  body.classList.add('bg-blur');
+  setTimeout(() => {
+    body.style.backgroundImage = `url('${newImageUrl}')`;
+    setTimeout(() => {
+      body.classList.remove('bg-blur');
+    }, 1000);
+  }, 1000);
+}
 
 // --- Téma inicializálása ------------------------------------------------
 function initTheme() {
@@ -204,17 +130,20 @@ function applyActiveAndTitle(sheet) {
   setActiveTheme(sheet);
   updateHeaderTitle(sheet);
 
+  // --- Idézet frissítése stílusváltáskor ---
   const lang = getUserLang();
   const monthIndex = monthToStyle.indexOf(sheet);
-
-  if (sheet === defaultStyle) {
-    loadQuoteFile(lang === 'hu'
-      ? 'text/hun/quotes-hun/default-quotes-hun.html'
-      : 'text/eng/quotes-eng/default-quotes-eng.html');
-    return;
+  let quoteFile;
+  if (monthIndex >= 0 && monthIndex < 12) {
+    quoteFile = getQuoteFile(monthIndex, lang);
+    // Háttérkép váltás blur-rel
+    changeBackgroundImageWithBlur(backgroundImages[monthIndex + 1]);
+  } else {
+    quoteFile = getQuoteFile(-1, lang);
+    // Default háttérkép blur-rel
+    changeBackgroundImageWithBlur(backgroundImages[0]);
   }
-
-  loadQuoteFile(getQuoteFile(monthIndex, lang));
+  loadQuoteFile(quoteFile);
 }
 
 // --- Eseménykezelők -----------------------------------------------------
@@ -238,7 +167,7 @@ function setupEventListeners() {
 }
 
 // --- Fejléc cím animáció ------------------------------------------------
-function updateHeaderTitle(sheet) { 
+function updateHeaderTitle(sheet) {
   log('updateHeaderTitle hívás:', sheet);
 
   const headerWelcomeText = document.getElementById('header-welcome-text');
@@ -249,28 +178,18 @@ function updateHeaderTitle(sheet) {
   }
 
   const monthIndex = monthToStyle.indexOf(sheet);
-  let newTitle;
-
+  let titleKey = "header-title";
   if (monthIndex >= 0 && monthIndex < monthNames.length) {
-    newTitle = `${monthNames[monthIndex]} Style`;
-  } else {
-    newTitle = 'Monthly Styles';
+    titleKey = `header-title-${monthNames[monthIndex].toLowerCase()}`;
   }
-
-  log('Új cím:', newTitle);
 
   headerWelcomeText.classList.add('fade-out');
   headerTitle.classList.add('fade-out');
 
   setTimeout(() => {
-    headerWelcomeText.textContent = window.translations["header-welcome-text"] || 'Welcome';
-
-    if (monthIndex >= 0 && monthIndex < monthNames.length) {
-        const monthKey = `header-title-${monthNames[monthIndex].toLowerCase()}`;
-        headerTitle.textContent = window.translations[monthKey] || `${monthNames[monthIndex]} Style`;
-    } else {
-        headerTitle.textContent = window.translations["header-title"] || 'Monthly Styles';
-    }
+    // Fordítási objektum használata
+    headerWelcomeText.textContent = window.translations?.["header-welcome-text"] || "Üdvözlet";
+    headerTitle.textContent = window.translations?.[titleKey] || "Stílusos Hónapok";
 
     headerWelcomeText.classList.remove('fade-out');
     headerWelcomeText.classList.add('fade-in');
@@ -278,8 +197,8 @@ function updateHeaderTitle(sheet) {
     headerTitle.classList.add('fade-in');
 
     setTimeout(() => {
-        headerWelcomeText.classList.remove('fade-in');
-        headerTitle.classList.remove('fade-in');
+      headerWelcomeText.classList.remove('fade-in');
+      headerTitle.classList.remove('fade-in');
     }, FADE_DURATION);
 
   }, FADE_DURATION);
@@ -311,39 +230,30 @@ function setActiveTheme(theme) {
 
 // --- Függőleges felirat szétbontása -------------------------------------
 function splitVerticalLabel() {
-
-    log('splitVerticalLabel fut');
-    
-    const label = document.getElementById('vertical-label');
-    if (label) {
-        const labelText = label.textContent.trim();
-        label.innerHTML = '';
-        for (const char of labelText) {
-            if (char === ' ') {
-                label.appendChild(document.createElement('br'));
-            } else {
-                const span = document.createElement('span');
-                span.textContent = char;
-                label.appendChild(span);
-            }
-        }
-        label.setAttribute('aria-label', labelText);
+  log('splitVerticalLabel fut');
+  const label = document.getElementById('vertical-label');
+  if (label) {
+    const labelText = label.textContent.trim();
+    label.innerHTML = '';
+    for (const char of labelText) {
+      if (char === ' ') {
+        label.appendChild(document.createElement('br'));
+      } else {
+        const span = document.createElement('span');
+        span.textContent = char;
+        label.appendChild(span);
+      }
     }
+    label.setAttribute('aria-label', labelText);
+  }
 }
 
 // --- Fő inicializáló függvény exportálása -------------------------------
 export function initStyleModify() {
-    const lang = getUserLang();
-    loadLanguageFile(lang, () => {
-        for (const [id, text] of Object.entries(window.translations)) {
-            const el = document.getElementById(id);
-            if (el) el.textContent = text;
-        }
-        splitVerticalLabel(); // <-- Itt a helye!
-        preloadImages(backgroundImages);
-        initTheme();
-        setupEventListeners();
-    });
+  splitVerticalLabel();
+  preloadImages(backgroundImages);
+  initTheme();
+  setupEventListeners();
 }
 
 /* ======================================================================== *\

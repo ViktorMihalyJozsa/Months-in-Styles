@@ -26,10 +26,10 @@
 \* ======================================================================== */
 
 // --- A debug.js modul bővítése, hogy ES6 modul formátumban is használható legyen.
-export const debugModeOne = false;  // Itt állítható be az alapértelmezett debug mód
+export const debugModeOne = true;  // Itt állítható be az alapértelmezett debug mód
 export function log(...args) { if (debugModeOne) console.log(...args); }
 
-export const debugModeTwo = false;  // Itt állítható be a fejlettebb debug mód
+export const debugModeTwo = true;  // Itt állítható be a fejlettebb debug mód
 export function warn(...args) { if (debugModeTwo) console.warn(...args); }
 export function error(...args) { if (debugModeTwo) console.error(...args); }
 

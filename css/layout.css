@@ -62,10 +62,10 @@ body {
 
 /* Alapállapot – a háttérkép és a szűrő */
 body {
-    transition: background-image 2s, backdrop-filter 2s;
+    transition: background-image 1s, backdrop-filter 1s;
     backdrop-filter: blur(0px); /* vagy pl. blur(8px) */
 }
-    body.bg-blur {backdrop-filter: blur(16px);}
+    body.bg-blur {backdrop-filter: blur(64px);}
 
 /* Header, footer háttérszín animáció */
 header, footer {
