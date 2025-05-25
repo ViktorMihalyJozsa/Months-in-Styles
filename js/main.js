@@ -9,7 +9,7 @@
 \* ======================================================================== */
 
 import { initStyleModify } from './modules/stylemodify.js';
-import { setupAsideDropDown } from './modules/asideDropdown.js';
+import { setupAsideDropDown } from './modules/asideDropDown.js';
 import { initNameday } from './modules/nameday.js';
 import { initWarning } from './modules/warning.js';
 
