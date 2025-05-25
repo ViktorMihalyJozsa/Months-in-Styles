@@ -23,12 +23,19 @@
 
 \* ======================================================================== */
 
-// Böngésző nyelvének lekérdezése
+// --- Debug módok --------------------------------------------------------
+// Debugging eszközök, hibakeresés, naplózás és fejlesztői segédletek.
+import { log, warn, error } from './debug.js';
+
+// --- Névnapok és nyelvi beállítások ------------------------------------
+// A böngésző nyelvének lekérdezése, alapértelmezett nyelv: magyar
 function getUserLang() {
   return navigator.language.split('-')[0].toLowerCase();
 }
 
-// Névnapok tárolása hónapok szerint
+// --- Névnapok tárolása -----------------------------------------------
+// A névnapok hónapok szerint tárolva, ahol a hónapok tömbje tartalmazza
+// a napokat és a hozzájuk tartozó neveket.
 const honapok = [
   [], // 0. hónap (nincs használatban)
   ["ÚJÉV, Fruzsina", "Ábel", "Genovéva, Benjámin", "Titusz, Leona", "Simon", "Boldizsár", "Attila, Ramóna", "Gyöngyvér", "Marcell", "Melánia", "Ágota", "ErnŐ", "Veronika", "Bódog", "Lóránt, Loránd", "Gusztáv", "Antal, Antónia", "Piroska", "Sára, Márió", "Fábián, Sebestyén", "Ágnes", "Vince, Artúr", "Zelma, Rajmund", "Timót", "Pál", "Vanda, Paula", "Angelika", "Károly, Karola", "Adél", "Martina, Gerda", "Marcella"],
@@ -45,7 +52,7 @@ const honapok = [
   ["Elza", "Melinda, Vivien", "Ferenc, Olívia", "Borbála, Barbara", "Vilma", "Miklós", "Ambrus", "Mária", "Natália", "Judit", "Árpád", "Gabriella", "Luca, Otília", "Szilárda", "Valér", "Etelka, Aletta", "Lázár, Olimpia", "Auguszta", "Viola", "Teofil", "Tamás", "Zéno", "Viktória", "Ádám, Éva", "KARÁCSONY, Eugénia", "KARÁCSONY, István", "János", "Kamilla", "Tamás, Tamara", "Dávid", "Szilveszter"]
 ];
 
-// Névnap lekérdezése
+// --- Névnap lekérdezése -----------------------------------------------
 function havinev(ev, ho, nap) {
   if (ho < 1 || ho > 12) {
       console.error("Érvénytelen hónap:", ho);
@@ -58,7 +65,10 @@ function havinev(ev, ho, nap) {
   return honapok[ho][nap - 1];
 }
 
-// Többnyelvű szövegek
+// --- Névnap szövegek különböző nyelveken -------------------------------
+// A névnapok szövegei több nyelven is elérhetők, és a böngésző nyelvének
+// megfelelően jelennek meg. A szövegek a namedayTexts objektumban találhatók,
+// ahol a kulcsok a nyelvek kódjai, és az értékek a megfelelő szövegek.
 const namedayTexts = {
   hu: {
     none: "Ma nincs névnap.",
@@ -73,7 +83,7 @@ const namedayTexts = {
   // További nyelvek itt...
 };
 
-// Névnap köszöntő beállítása
+// --- Névnap köszöntő beállítása ---------------------------------------
 function setNamedayGreeting() {
   const ido = new Date();
   const ev = ido.getFullYear();
@@ -98,7 +108,7 @@ function setNamedayGreeting() {
   }
 }
 
-// Fő inicializáló függvény exportálása
+// --- Névnap inicializálása ---------------------------------------------
 export function initNameday() {
   setNamedayGreeting();
 }

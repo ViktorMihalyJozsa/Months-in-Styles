@@ -8,10 +8,18 @@
 
 \* ======================================================================== */
 
+// --- Debug módok --------------------------------------------------------
+// Debugging eszközök, hibakeresés, naplózás és fejlesztői segédletek.
+import { log, warn, error } from './debug.js';
+
+// --- Beállítások és változók --------------------------------------------
+// Az aside menü és a kapcsolódó elemek.
 let aside, toggle, styleButtons = [];
 let handleToggleClick, handleOutsideClick, handleEscapeKey;
 
-// Inicializálja az aside legördülő menüt.
+// --- Initializálás és eseménykezelők ------------------------------------
+// Inicializálja az aside menüt, beállítja a szükséges eseménykezelőket.
+// A menü megnyitása és bezárása, valamint a stílusválasztó gombok kezelése.
 export function setupAsideDropDown() {
     aside = document.querySelector('aside');
     if (!aside) return;
@@ -60,7 +68,8 @@ export function setupAsideDropDown() {
     document.addEventListener('keydown', handleEscapeKey);
 }
 
-// Eltávolítja az eseménykezelőket – például ha újrainicializálásra van szükség.
+// --- Teardown funkciók ---------------------------------------------------
+// Ez a funkció eltávolítja az aside menü eseménykezelőit és visszaállítja az állapotát.
 export function teardownAsideDropDown() {
     if (!aside || !toggle) return;
 

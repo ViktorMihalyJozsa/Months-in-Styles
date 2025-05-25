@@ -23,6 +23,11 @@
 
 \*  ========================================================================  */
 
+// --- Debug módok --------------------------------------------------------
+// Debugging eszközök, hibakeresés, naplózás és fejlesztői segédletek.
+import { log, warn, error } from './debug.js';
+
+// --- Figyelmeztetés inicializálása ---------------------------------------
 export function initWarning() {
     checkOrientation();
 
@@ -35,6 +40,7 @@ export function initWarning() {
     window.addEventListener("orientationchange", checkOrientation);
 }
 
+// --- Ellenőrzi a tájolást és megjeleníti a figyelmeztetést ---------------
 function checkOrientation() {
     const warning = document.getElementById("warning");
     if (!warning) return;
@@ -56,5 +62,7 @@ function checkOrientation() {
 }
 
 /*  ========================================================================  *\
+
       E N D   O F   W A R N I N G - J a v a S c r i p t   F I L E
+      
 \*  ========================================================================  */

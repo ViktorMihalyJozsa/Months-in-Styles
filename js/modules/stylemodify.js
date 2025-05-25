@@ -50,11 +50,7 @@ function loadLanguageFile(lang, callback) {
 }
 
 // --- Debug módok --------------------------------------------------------
-const debugModeOne = true;
-function log(...args) { if (debugModeOne) console.log(...args); }
-const debugModeTwo = true;
-function warn(...args) { if (debugModeTwo) console.warn(...args); }
-function error(...args) { if (debugModeTwo) console.error(...args); }
+import { log, warn, error } from './debug.js';
 
 // --- Globális változók --------------------------------------------------
 const monthNames = [
@@ -115,7 +111,7 @@ function loadQuoteFile(filename) {
         quoteEl.textContent = 'Idézet nem elérhető.';
         quoteEl.classList.remove('fade-out');
         quoteEl.classList.add('fade-in');
-        console.error(err);
+        error(err);
       });
   }, 1000);
 }
@@ -174,7 +170,7 @@ function initTheme() {
 function loadTheme(href) {
   const linkEl = document.getElementById('theme-style');
   if (!linkEl) {
-    console.error('A <link> elem nem található!');
+    error('A <link> elem nem található!');
     return;
   }
 
@@ -185,7 +181,7 @@ function loadTheme(href) {
       }
 
       linkEl.onload = () => {
-        console.log(`Betöltve: ${href}`);
+        log(`Betöltve: ${href}`);
         applyActiveAndTitle(href);
       };
 
@@ -196,7 +192,7 @@ function loadTheme(href) {
       applyActiveAndTitle(href);
     })
     .catch(error => {
-      console.warn(`Hiba történt: ${error.message}, visszatérés az alapértelmezett stílusra.`);
+      warn(`Hiba történt: ${error.message}, visszatérés az alapértelmezett stílusra.`);
       linkEl.setAttribute('href', defaultStyle);
       localStorage.setItem('selectedStyle', defaultStyle);
       applyActiveAndTitle(defaultStyle);
@@ -316,7 +312,7 @@ function setActiveTheme(theme) {
 // --- Függőleges felirat szétbontása -------------------------------------
 function splitVerticalLabel() {
 
-    console.log('splitVerticalLabel fut');
+    log('splitVerticalLabel fut');
     
     const label = document.getElementById('vertical-label');
     if (label) {
