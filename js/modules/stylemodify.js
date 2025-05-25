@@ -14,6 +14,15 @@
     a hónapok stílusainak megváltoztatásával.
 
     A modul a következő funkciókat tartalmazza:
+    - Debug módok: log, warn, error
+    - Hónapok nevei és stílusok
+    - Háttérképek előtöltése
+    - Háttérkép váltás elmosódással
+    - Téma inicializálása és betöltése
+    - Aktív téma és fejléc cím frissítése
+    - Eseménykezelők a stílusválasztó gombokhoz
+    - Függőleges felirat szétbontása
+    - Fő inicializáló függvény
 
 \* ======================================================================== */
 
@@ -79,8 +88,8 @@ function changeBackgroundImageWithBlur(newImageUrl) {
     body.style.backgroundImage = `url('${newImageUrl}')`;
     setTimeout(() => {
       body.classList.remove('bg-blur');
-    }, 1000);
-  }, 1000);
+    }, 800);
+  }, 800);
 }
 
 // --- Téma inicializálása ------------------------------------------------

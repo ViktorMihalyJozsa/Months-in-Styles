@@ -4,7 +4,10 @@
 
    ------------------------------------------------------------------------
 
-    Nyelvi fájlok, szövegek és idézetek betöltése, alkalmazása, böngésző nyelv lekérése.
+    Nyelvi fájlok, szövegek és idézetek betöltése, alkalmazása, 
+    böngésző nyelv lekérése.
+    A modul célja, hogy a felhasználói felület szövegeit és idézeteit
+    dinamikusan kezelje a böngésző nyelvi beállításai szerint.
 
 \* ======================================================================== */
 

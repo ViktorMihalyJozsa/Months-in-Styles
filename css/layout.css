@@ -60,25 +60,20 @@ body {
     }
 }
 
-/* Alapállapot – a háttérkép és a szűrő */
 body {
-    transition: background-image 1s, backdrop-filter 1s;
-    backdrop-filter: blur(0px); /* vagy pl. blur(8px) */
+    transition: background-image 1.2s cubic-bezier(.77,0,.18,1), backdrop-filter 0.8s cubic-bezier(.68,-0.55,.27,1.55);
 }
     body.bg-blur {backdrop-filter: blur(64px);}
 
-/* Header, footer háttérszín animáció */
 header, footer {
-    transition: background-color 2s ease-in-out;
+    transition: background-color 1.5s cubic-bezier(.68,-0.55,.27,1.55) 0.1s;
 }
-
-/* Aside háttérszín animáció */
 aside {
-    transition:  width 1s cubic-bezier(.77,0,.18,1), backdrop-filter 1s ease-in-out;
+    transition: width 1.1s cubic-bezier(.77,0,.18,1) 0.2s, backdrop-filter 0.9s cubic-bezier(.68,-0.55,.27,1.55) 0.2s;
 }
-    #style-selector-list-box {
-        transition:  opacity 1s cubic-bezier(.77,0,.18,1), width 1s ease-in-out, background-color 2s ease-in-out;
-    }
+#style-selector-list-box {
+    transition: opacity 0.7s cubic-bezier(.77,0,.18,1) 0.3s, width 1.1s cubic-bezier(.68,-0.55,.27,1.55) 0.3s, background-color 1.5s cubic-bezier(.77,0,.18,1) 0.3s;
+}
 
     #warning {
         display:          none; /* Alapértelmezetten rejtve van */
