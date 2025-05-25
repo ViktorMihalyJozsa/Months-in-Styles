@@ -1,15 +1,17 @@
 /* ======================================================================== *\
+
     A S I D E D R O P D O W N . J a v a S c r i p t   ( ES6 modul, bővített )
+
     ------------------------------------------------------------------------
+
     Menü (aside) kezelése: újraindítható, lezárható, bővíthető modul.
+
 \* ======================================================================== */
 
 let aside, toggle, styleButtons = [];
 let handleToggleClick, handleOutsideClick, handleEscapeKey;
 
-/**
- * Inicializálja az aside legördülő menüt.
- */
+// Inicializálja az aside legördülő menüt.
 export function setupAsideDropDown() {
     aside = document.querySelector('aside');
     if (!aside) return;
@@ -58,9 +60,7 @@ export function setupAsideDropDown() {
     document.addEventListener('keydown', handleEscapeKey);
 }
 
-/**
- * Eltávolítja az eseménykezelőket – például ha újrainicializálásra van szükség.
- */
+// Eltávolítja az eseménykezelőket – például ha újrainicializálásra van szükség.
 export function teardownAsideDropDown() {
     if (!aside || !toggle) return;
 
@@ -71,5 +71,7 @@ export function teardownAsideDropDown() {
 }
 
 /* ======================================================================== *\
+
     E N D   O F   A S I D E D R O P D O W N . J a v a S c r i p t
+
 \* ======================================================================== */
